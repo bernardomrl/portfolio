@@ -5,7 +5,7 @@ Bem-vindo(a) ao meu repositório de projetos recentes! Aqui você encontrará al
 ## Projetos
 
 - [Calculadora](https://github.com/bernardomrl/portfolio/tree/main/calculadora): Calculadora funcional utilizando HTML, CSS e JavaScript.
-[comment]: <> (Repetir com os outros projetos.)
+[comment]: # (Repetir com os outros projetos.)
 
 ## Como contribuir
 
