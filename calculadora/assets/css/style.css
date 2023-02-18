@@ -20,7 +20,18 @@ main
     align-items: center;
 }
 
-.author 
+.author-text 
+{
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    text-decoration: none;
+    color: #2c3136;
+    font-weight: 600;
+    transition: 300ms ease-in-out
+}
+
+.author-links
 {
     position: absolute;
     bottom: 1rem;
@@ -35,15 +46,16 @@ main
 
 .author-link
 {
-    color: #2c3136;
+    color: #59626d;
     text-decoration: none;
     font-size: 1.5rem;
     transition: 300ms ease-in-out;
 }
 
-.author-link:hover
+.author-link:hover,
+.author-text:hover
 {
-    transform: translateY(-0.2rem);
+    transform: translateY(-0.1rem);
     color: lightcoral;
 }
 
@@ -52,8 +64,8 @@ main
     padding: 2rem;
     border-radius: 30px;
     background: #e0e0e0;
-    box-shadow:  5px 5px 23px #cacaca,
-                -5px -5px 23px #f6f6f6;
+    box-shadow:  15px 15px 24px #cacaca,
+    -15px -15px 24px #f6f6f6;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,8 +74,8 @@ main
 
 .main-calculator:hover
 {
-    box-shadow:  5px 5px 25px #bebebe,
-                -5px -5px 25px #ffffff;
+    box-shadow:  15px 15px 24px #bebebe,
+    -15px -15px 24px #ffffff;
 }
 
 .calculator-display
@@ -71,17 +83,25 @@ main
     color: #59626d;
     display: flex;
     flex-direction: column;
-    height: 15rem;
+    height: auto;
+    min-height: 15rem;
+    word-wrap: break-word;
+    word-break: break-all;
     width: 25rem;
     justify-content: space-between;
     padding: 1.5rem;
-    margin-bottom: 1rem ;
+    margin:1rem;
+    border-radius: 1rem;
+    box-shadow: inset 5px 5px 20px #cacaca,
+                inset -5px -5px 20px #f6f6f6;
 }
 
 .calculator-display-current
 {
     align-self: flex-end;
     font-size: 3rem;
+    max-width: 22rem;
+    font-weight: 500;
 }
 
 .calculator-display-previous
@@ -95,6 +115,7 @@ main
 {
     margin-top: 2.5rem;
     width: 25rem;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
 }
@@ -108,7 +129,6 @@ main
 
 .calculator-row-button 
 {
-    
     border: 0;
     outline: 0;
     border-radius: .5rem;
