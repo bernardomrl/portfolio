@@ -7,7 +7,6 @@ Bem-vindo(a) ao meu repositório de projetos recentes! Aqui você encontrará al
 > Calculadora
 - Calculadora funcional utilizando HTML, CSS E JavaScript. Se quiser testar a calculadora [clique aqui](https://bernardo-calculator.netlify.app).
 > Portifólio
-> Portifolio
 - Portifolio responsivo e minimalista. Se quiser ver meu portifólio, [clique aqui](https://bernardomrl.netlify.app).
 
 ## Como contribuir
