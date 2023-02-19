@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Roboto+Mono&display=swap');
+
+*
+{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    background: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+main {
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow:  -10px -10px 29px #969696,
+    10px 10px 29px #ffffff;
+}
+
+.main-title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.main-result {
+    padding: 1rem;
+    border-radius: .65rem;
+    margin-bottom: 3rem;
+    box-shadow: inset 3px 3px 8px #9d9d9d,
+    inset -3px -3px 8px #ffffff;
+    width: 20rem;
+    font-family: "Roboto Mono", sans-serif;
+}
+
+.main-settings {
+
+    font-size: 1rem;
+    border-radius: .65rem;
+}
+
+.main-setting {
+    margin-bottom: .5rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Roboto Mono", sans-serif;
+}
+
+.main-setting-input {
+    background-color: transparent;
+    outline: 0;
+    border: none;
+    border-radius: .25rem;
+    padding: 0.5rem;
+    width: 5rem;
+}
+
+.main-setting-check {
+    padding: .75rem;
+    border-radius: 3px;
+    width: 2rem;
+    height: 2rem;
+}
+
+.main-setting-input,
+.main-setting-check {
+    box-shadow: inset 3px 3px 8px #9d9d9d,
+    inset -3px -3px 8px #ffffff;
+}
