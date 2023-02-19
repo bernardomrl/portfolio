@@ -4,10 +4,11 @@ Bem-vindo(a) ao meu repositório de projetos recentes! Aqui você encontrará al
 
 ## Projetos
 
-> [CALCULADORA](https://bernardo-calculator.netlify.app)
-- Calculadora funcional utilizando HTML, CSS E JavaScript. [arquivos](https://github.com/bernardomrl/portfolio/tree/main/calculadora)
-> [PORTIFOLIO](https://bernardomrl.netlify.app)
-- Portifolio responsivo e minimalista. [arquivos](https://github.com/bernardomrl/projetos/tree/main/portfolio-website)
+> Calculadora
+- Calculadora funcional utilizando HTML, CSS E JavaScript. Se quiser testar a calculadora [clique aqui](https://bernardo-calculator.netlify.app).
+> Portifólio
+> Portifolio
+- Portifolio responsivo e minimalista. Se quiser ver meu portifólio, [clique aqui](https://bernardomrl.netlify.app).
 
 ## Como contribuir
 
