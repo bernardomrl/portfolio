@@ -64,18 +64,12 @@ main
     padding: 2rem;
     border-radius: 30px;
     background: #e0e0e0;
-    box-shadow:  15px 15px 24px #cacaca,
-    -15px -15px 24px #f6f6f6;
+    box-shadow:  15px 15px 24px #bebebe,
+                -15px -15px 24px #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    transition: 250ms ease-in-out;
-}
-
-.main-calculator:hover
-{
-    box-shadow:  15px 15px 24px #bebebe,
-    -15px -15px 24px #ffffff;
+    user-select: none;
 }
 
 .calculator-display
@@ -92,8 +86,8 @@ main
     padding: 1.5rem;
     margin:1rem;
     border-radius: 1rem;
-    box-shadow: inset 5px 5px 20px #cacaca,
-                inset -5px -5px 20px #f6f6f6;
+    box-shadow: inset 12px 12px 24px #b3b3b3,
+                inset -12px -12px 24px #ffffff;
 }
 
 .calculator-display-current
@@ -140,18 +134,20 @@ main
     width: 4rem;
     margin: .5rem;
     font-size: 2rem;
-    color: #59626d;
+    /* color: #59626d; */
+    color: #67717e;
     font-weight: 600;
     transition: 200ms ease-in-out;
     background-color: #e0e0e0;
-    box-shadow:  5px 5px 20px #cacaca,
-                -5px -5px 20px #f6f6f6;
+    /* box-shadow:  5px 5px 20px #cacaca,
+                -5px -5px 20px #f6f6f6; */
+    box-shadow:  8px 8px 15px #bebebe,
+                -8px -8px 15px #ffffff;
 }
-
 .calculator-row-button:active
 {
-    box-shadow: inset 5px 5px 20px #cacaca,
-                inset -5px -5px 20px #f6f6f6;
+    box-shadow: inset 8px 8px 10px #bebebe,
+                inset -8px -8px 10px #ffffff;
 }
 
 .calculator-row-button:hover 
@@ -178,4 +174,56 @@ main
 .operator:hover 
 {
     color: red;
+}
+
+@media screen and (max-width: 350px)
+{
+    .main-calculator
+    {
+        width: 20rem;
+        padding: 0.25rem;
+    }
+
+    .calculator-display
+    {
+        width: auto;
+        height: 6rem;
+    }
+
+    .calculator-display-previous {
+        font-size: 1.25rem;
+    }
+
+    .calculator-display-current {
+        font-size: 2rem;
+    }
+
+    .calculator-row-button{
+        width: 3rem;
+        height: 3rem;
+        font-size: 1rem;
+        margin: .25rem;
+        box-shadow:  5px 5px 10px #cacaca,
+                    -5px -5px 10px #f6f6f6;
+    }
+
+    .calculator-buttons {
+        width: auto;
+    }
+
+    .large {
+        width: 7.75rem;
+    }
+
+    .author-links {
+        height: 6rem;
+    }
+
+    .author-text {
+        font-size: 1rem;
+    }
+
+    .author-link {
+        font-size: 1.25rem;
+    }
 }
