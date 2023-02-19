@@ -5,7 +5,7 @@ Bem-vindo(a) ao meu repositório de projetos recentes! Aqui você encontrará al
 ## Projetos
 
 - [Calculadora](https://github.com/bernardomrl/portfolio/tree/main/calculadora): Calculadora funcional utilizando HTML, CSS e JavaScript.
-- [Site Portifólio](https://github.com/bernardomrl/portfolio/tree/main/portfolio-site): Código fonte do meu [site](https://bernardomrl.netlify.app).
+- [Site Portifólio](https://github.com/bernardomrl/projetos/tree/main/portfolio-website): Código fonte do meu [site](https://bernardomrl.netlify.app).
 
 ## Como contribuir
 
