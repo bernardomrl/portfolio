@@ -1,6 +1,6 @@
 # Repositório de Projetos Recentes
 
-Bem-vindo(a) ao meu repositório de projetos recentes! Aqui você encontrará alguns dos meus projetos mais recentes, que mostram as minhas habilidades e conhecimentos em várias áreas.
+Bem-vindo(a) ao meu repositório de projetos recentes! Aqui você encontrará alguns dos meus projetos mais recentes, que mostram as minhas habilidades e conhecimentos.
 
 ## Projetos
 
