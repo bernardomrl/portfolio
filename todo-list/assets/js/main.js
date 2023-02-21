@@ -28,14 +28,6 @@ function submit(){
     } else {
         addItem()
     }
-    resetInput()
-}
-
-function warnTimeout(){
-
-}
-
-function resetInput(){
     input.value = ''
 }
 
