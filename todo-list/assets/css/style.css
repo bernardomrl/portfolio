@@ -49,7 +49,6 @@ main {
     font-size: 1.25rem;
     outline: 0;
     border: none;
-    border-radius: .5rem;
     border-bottom: .2rem solid rgba(0, 0, 0, 0.05);
     color: #212427;
     font-weight: 600;
@@ -66,10 +65,12 @@ main {
 
 .todo-input:hover {
     background-color: rgba(0, 0, 0, 0.05);
+    border-radius: .5rem;
 }
 
 .todo-input:focus {
     background-color: rgba(0, 0, 0, 0.025);
+    border-radius: .5rem;
 }
 
 .todo-list {
@@ -87,16 +88,14 @@ main {
     font-weight: 500;
     color: rgb(33, 36, 39, 0.7);
     word-wrap: break-word;
-    word-break: break-all;
-    border-radius: .5rem;
-    border: .2rem solid rgba(0, 0, 0, 0.05);
+    border-bottom: .2rem solid rgba(0, 0, 0, 0.05);
     margin: .5rem 0;
     padding: 1rem 2rem;
     transition: 300ms ease-in-out;
     cursor: pointer;
 }
 
-.completed {
+.checked {
     text-decoration: line-through;
     color: rgba(0, 0, 0, 0.35);
 }
@@ -122,6 +121,7 @@ main {
     margin-top: 2.5rem;
     text-align: center;
     font-size: .9rem;
+    user-select: none;
 }
 
 .instructions span {
@@ -129,8 +129,8 @@ main {
     color: #212427;
 }
 
-.effect::placeholder{
+.warning::placeholder{
     color: red;
-    opacity: 0.2;
+    opacity: 0.35;
     font-weight: 600;
 }
