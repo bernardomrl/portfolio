@@ -23,7 +23,7 @@ function submit(){
             input.classList.remove("effect")
             input.readOnly = false
             input.placeholder = "enter your to-do"
-          }, "2500")
+        }, "2500")
         setTim
     } else {
         addItem()
