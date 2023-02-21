@@ -48,7 +48,7 @@ function addItem(){                                     // funcao pra adicionar 
             item.classList.add('checked')
         }
     })
-    item.addEventListener('contextmenu', e => {             // addEventListener 'contextmenu' utiliza o botao direito do mouse como gatilho, e.preventDefault() remove o menu de context quando pressionado
+    item.addEventListener('contextmenu', e => {             // addEventListener 'contextmenu' utiliza o botao direito do mouse como gatilho, e.preventDefault() remove o menu de contexto quando pressionado
         e.preventDefault()                                      // item.remove() ira remover o item do HTML quando o menu de contexto for ativado
         item.remove()
     })
