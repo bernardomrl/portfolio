@@ -17,13 +17,22 @@ function(event){
 function submit(){
     if(input.value === ''){
         input.placeholder = "write something first.."
-        input.placeholder.style.color = "red"
-        console.log('EMPTY INPUT')
+        input.classList.add("effect")
+        input.readOnly = true
+        setTimeout(() => {
+            input.classList.remove("effect")
+            input.readOnly = false
+            input.placeholder = "enter your to-do"
+          }, "2500")
+        setTim
     } else {
         addItem()
-        input.placeholder = "enter your to-do"
     }
     resetInput()
+}
+
+function warnTimeout(){
+
 }
 
 function resetInput(){

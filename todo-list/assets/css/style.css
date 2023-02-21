@@ -5,7 +5,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    list-style: none;
+    list-style-position: inside;
     font-family: "Poppins", sans-serif;
 }
 
@@ -51,12 +51,17 @@ main {
     border: none;
     border-radius: .5rem;
     border-bottom: .2rem solid rgba(0, 0, 0, 0.05);
+    color: #212427;
+    font-weight: 600;
     background: #e0e0e0;
     transition: 300ms ease-in-out;
+    margin-bottom: 1rem;
 }
 
 .todo-input::placeholder {
-    opacity: 0.3;
+    opacity: 0.5;
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
 }
 
 .todo-input:hover {
@@ -75,13 +80,18 @@ main {
 }
 
 .todo-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     font-family: "Roboto Mono", monospace;
+    font-weight: 500;
+    color: rgb(33, 36, 39, 0.7);
     word-wrap: break-word;
     word-break: break-all;
-    margin-bottom: 1rem;
     border-radius: .5rem;
-    border-bottom: .2rem solid rgba(0, 0, 0, 0.05);
-    padding: 1rem;
+    border: .2rem solid rgba(0, 0, 0, 0.05);
+    margin: .5rem 0;
+    padding: 1rem 2rem;
     transition: 300ms ease-in-out;
     cursor: pointer;
 }
@@ -90,33 +100,22 @@ main {
     text-decoration: line-through;
     color: rgba(0, 0, 0, 0.35);
 }
+
 .author {
     position: absolute;
-    bottom: 0;
-    display: flex;
+    bottom: 1rem;
+    text-align: center;
     width: 100%;
-    justify-content: space-between;
-    padding: 0 1rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.15rem;
+    cursor: default;
 }
 
-.author-mail {
+.author a {
+    cursor: pointer;
     text-decoration: none;
     color: #212427;
-    font-weight: 600;
-    display: flex;
-    height: auto;
-    align-items: center;
-}
-
-.author-mail:hover,
-.author-link:hover {
-    color: gray;
-}
-
-.author-link {
-    color: #212427;
-    padding: .5rem;
-    font-size: 1.75rem;
 }
 
 .instructions {
@@ -128,4 +127,10 @@ main {
 .instructions span {
     font-weight: 600;
     color: #212427;
+}
+
+.effect::placeholder{
+    color: red;
+    opacity: 0.2;
+    font-weight: 600;
 }
