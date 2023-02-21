@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap');
+
+*
+{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background: #e0e0e0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.stop-transition {
+    transition: none !important;
+}
+
+main {
+    padding: 2rem;
+    border-radius: 2rem;
+    box-shadow:  20px 20px 25px #d5d5d5,
+    -20px -20px 25px #ebebeb;
+    width: 30rem;
+}
+
+.main-title {
+    color: #212427;
+    font-weight: 800;
+    font-size: 3rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+.main-container {
+    padding: 2rem;
+    font-size: 1.75rem;
+}
+
+.todo-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.25rem;
+    outline: 0;
+    border: none;
+    border-radius: .5rem;
+    border-bottom: .2rem solid rgba(0, 0, 0, 0.05);
+    background: #e0e0e0;
+    transition: 300ms ease-in-out;
+}
+
+.todo-input::placeholder {
+    opacity: 0.3;
+}
+
+.todo-input:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.todo-input:focus {
+    background-color: rgba(0, 0, 0, 0.025);
+}
+
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 1.5rem;
+}
+
+.todo-item {
+    font-family: "Roboto Mono", monospace;
+    word-wrap: break-word;
+    word-break: break-all;
+    margin-bottom: 1rem;
+    border-radius: .5rem;
+    border-bottom: .2rem solid rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    transition: 300ms ease-in-out;
+    cursor: pointer;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.35);
+}
+.author {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.author-mail {
+    text-decoration: none;
+    color: #212427;
+    font-weight: 600;
+    display: flex;
+    height: auto;
+    align-items: center;
+}
+
+.author-mail:hover,
+.author-link:hover {
+    color: gray;
+}
+
+.author-link {
+    color: #212427;
+    padding: .5rem;
+    font-size: 1.75rem;
+}
+
+.instructions {
+    margin-top: 2.5rem;
+    text-align: center;
+    font-size: .9rem;
+}
+
+.instructions span {
+    font-weight: 600;
+    color: #212427;
+}
