@@ -11,7 +11,7 @@
     --header-height: 3rem;
 
     /* COLOR */
-    --hue-color: 222;
+    --hue-color: 0;
     /* 
     ROSA = 340
     ROXO = 250
@@ -312,12 +312,8 @@ img {
 .home-blob {
   width: 200px;
   fill: var(--first-color);
-  filter: drop-shadow(0 0 0.5rem rgba(0,0,0, .4)); 
+  filter: drop-shadow(0px 0px 0.45rem rgba(0,0,0,0.7));
   transition: .3s ease-in-out;
-}
-
-.home-blob:hover {
-  filter: drop-shadow(0 0 0.5rem rgba(0,0,0, .7)); 
 }
 
 .home-blob-img {
@@ -386,7 +382,7 @@ img {
   background-color: var(--first-color);
   color: #FFF;
   padding: 1rem;
-  border-radius: .5rem;
+  border-radius: .6rem;
   font-weight: var(--font-medium);
 }
 
@@ -470,12 +466,12 @@ img {
 }
 
 .download-button {
-  transition: 0.25s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 .download-button:hover
 .download-button-icon {
-  transform: translateY(.05rem);
+  transform: translateY(.1rem);
 }
 
 /* SKILLS */
@@ -999,7 +995,7 @@ img {
 
 /* mostrar o scroll */
 .show-scroll {
-  bottom: 5rem;
+  bottom: 1rem;
 }
 
 /* - - - - - - SCROLL BAR - - - - - - */
@@ -1087,6 +1083,9 @@ img {
   }
   .home-data {
     grid-column: initial;
+  }
+  .home-blob {
+    width: 250px;
   }
   .home-img {
     order: 1;
