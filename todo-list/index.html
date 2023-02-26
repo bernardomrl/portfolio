@@ -6,22 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <title>Todo List</title>
+    <title>Lista de Tarefas</title>
 </head>
 <body class="transition">
     <main class="main" id="main">
-        <h1 class="main-title">to-do list ✏️</h1>
+        <h1 class="main-title">Tarefas ✏️</h1>
         <form class="main-form" data-form>
-            <input type="text" class="form-input" placeholder="enter your to-do" autocomplete="off" data-input>
+            <input type="text" class="form-input" placeholder="digite sua tarefa" autocomplete="off" data-input>
             <ul class="form-list" data-list></ul>
         </form>
     </main>
     <div class="instructions">
-        <span>Left Click</span> to toggle completed.<br>
-        <span>Right Click</span> to delete todo.
+        <div class="instruction">
+            <span class="instruction-bold" data-bold-1>Botão esquerdo</span><p class="instruction-text" data-itext-1>para marcar como concluido.</p>
+        </div>
+        <div class="instruction">
+            <span class="instruction-bold" data-bold-2>Botão direito</span><p class="instruction-text" data-itext-2>para apagar tarefa.</p>
+        </div>
     </div>
-    <div class="author">
+    <div class="footer">
         <a href="https://bernardomrl.netlify.app" target="_blank">@bernardomrl</a>
+        <div class="button"><i class="uil uil-globe"></i><button class="language-button brazilian">Português</button></div>
+
+        
     </div>
     <script src="assets/js/main.js"></script>
 </body>

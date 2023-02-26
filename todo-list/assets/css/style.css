@@ -76,15 +76,15 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
 }
 
 .form-item {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    font-family: "Comfortaa", cursive;
-    font-weight: 600;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 700;
     color: rgb(33, 36, 39, 0.7);
     word-wrap: break-word;
     border-bottom: .2rem solid rgba(0, 0, 0, 0.05);
@@ -98,7 +98,7 @@ main {
     color: rgba(0, 0, 0, 0.35);
 }
 
-.author {
+.footer {
     position: absolute;
     bottom: 1rem;
     text-align: center;
@@ -107,9 +107,12 @@ main {
     font-weight: 600;
     font-size: 1.15rem;
     cursor: default;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
-.author a {
+.footer a {
     cursor: pointer;
     text-decoration: none;
     color: #212427;
@@ -120,9 +123,36 @@ main {
     text-align: center;
     font-size: .9rem;
     user-select: none;
+    color: #212427;
+    display: flex;
+    flex-direction: column;
 }
 
-.instructions span {
+.instruction {
+    display: flex;
+    justify-content: center;
+}
+
+.instruction-bold {
     font-weight: 600;
-    color: #212427;
+    margin-right: .3rem;
+}
+
+.language-button {
+    outline: 0;
+    border: 0;
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent;
+    font-size: 1rem;
+    transition: 200ms ease-in-out;
+    align-items: center;
+}
+
+.language-button i {
+    font-size: 1.5rem;
+}
+
+.button {
+    display: flex;
 }
