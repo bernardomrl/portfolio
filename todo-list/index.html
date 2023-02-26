@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <title>To-do List</title>
+    <title>Todo List</title>
 </head>
-<body clas="stop-transition">
+<body class="transition">
     <main class="main" id="main">
         <h1 class="main-title">to-do list ✏️</h1>
-        <div class="main-container">
-            <input type="text" class="todo-input" placeholder="enter your to-do" data-input>
-            <ul class="todo-list" data-ul>
-            </ul>
-        </div>
+        <form class="main-form" data-form>
+            <input type="text" class="form-input" placeholder="enter your to-do" autocomplete="off" data-input>
+            <ul class="form-list" data-list></ul>
+        </form>
     </main>
     <div class="instructions">
         <span>Left Click</span> to toggle completed.<br>
