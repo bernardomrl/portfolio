@@ -1,11 +1,11 @@
 document.body.classList.remove('transition')
-const   form = document.querySelector('[data-form]'),
-        input = document.querySelector('[data-input]'),
-        list = document.querySelector('[data-list]'),
-        todos = JSON.parse(localStorage.getItem('todos')),
-        wait = 5000
+const form = document.querySelector('[data-form]'),
+    input = document.querySelector('[data-input]'),
+    list = document.querySelector('[data-list]'),
+    todos = JSON.parse(localStorage.getItem('todos')),
+    wait = 5000
 
-if(todos){
+if (todos) {
     todos.forEach(todo => addTodo(todo))
 }
 
@@ -14,15 +14,15 @@ form.addEventListener('submit', (e) => {
     addTodo()
 })
 
-function addTodo(todo){
+function addTodo(todo) {
     let todoText = input.value
-    if(todo){
+    if (todo) {
         todoText = todo.text
     }
-    if(todoText){
+    if (todoText) {
         const todoItem = document.createElement('li')
         todoItem.classList.add('form-item')
-        if(todo && todo.checked){
+        if (todo && todo.checked) {
             todoItem.classList.add('checked')
         }
         todoItem.innerText = todoText
@@ -43,7 +43,7 @@ function addTodo(todo){
     }
 }
 
-function updateLS(){
+function updateLS() {
     todoItem = document.querySelectorAll('li')
     const todos = []
 
@@ -58,20 +58,20 @@ function updateLS(){
 }
 
 
-const   button = document.querySelector('.language-button'),
-        pageTitle = document.querySelector('title'),
-        mainTitle = document.querySelector('.main-title'),
-        inputPlaceholder = document.querySelector('.form-input'),
-        instructionText1 = document.querySelector('[data-itext-1]'),
-        instructionText2 = document.querySelector('[data-itext-2]'),
-        instructionBoldText1 = document.querySelector('[data-bold-1]'),
-        instructionBoldText2 = document.querySelector('[data-bold-2]')
+const button = document.querySelector('.language-button'),
+    pageTitle = document.querySelector('title'),
+    mainTitle = document.querySelector('.main-title'),
+    inputPlaceholder = document.querySelector('.form-input'),
+    instructionText1 = document.querySelector('[data-itext-1]'),
+    instructionText2 = document.querySelector('[data-itext-2]'),
+    instructionBoldText1 = document.querySelector('[data-bold-1]'),
+    instructionBoldText2 = document.querySelector('[data-bold-2]')
 
 
 button.addEventListener('click', () => {
     const language = button.classList
 
-    if(language.contains('english')){
+    if (language.contains('english')) {
         language.remove('english')
         language.add('brazilian')
         button.textContent = 'Português'
