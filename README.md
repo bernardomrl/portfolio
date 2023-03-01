@@ -15,7 +15,7 @@ Se quiser testar a lista de tarefas, [clique aqui](https://bernardomrl-todo.netl
 - Portifólio responsivo e minimalista.<br> 
 Se quiser ver meu portifólio, [clique aqui](https://bernardomrl.netlify.app).
 
-#### Como contribuir
+### Como contribuir
 > Sinta-se livre para enviar sugestões, correções ou adições ao código fonte do meu site. Para contribuir:
 
     - Faça o fork deste repositório.
