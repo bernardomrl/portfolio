@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+    --poppins: 'Poppins', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: var(--poppins);
+}
+
+.container {
+    height: 10rem;
+    aspect-ratio: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.circles {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.circles::before {
+    content: '';
+    background-color: lightgray;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 3px;
+    width: 100%;
+    z-index: -2;
+}
+
+.progress {
+    background-color: lightgreen;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 3px;
+    width: 0%;
+    z-index: -1;
+    transition: 400ms ease-in-out;
+}
+
+.circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.5rem;
+    aspect-ratio: 1;
+    border: 3px solid lightgray;
+    border-radius: 50%;
+    background-color: white;
+    color: gray;
+    transition: 500ms ease;
+}
+
+.buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.buttons button {
+    flex-grow: 0.40;
+    background-color: lightgreen;
+    font-family: var(--poppins);
+    border: none;
+    padding: 0.25rem;
+    font-weight: 600;
+    border-radius: 3px;
+    transition: 100ms ease-in-out;
+    color: black;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color: limegreen;
+}
+
+.buttons button:active {
+    background-color: green;
+}
+
+.buttons button:disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+}
+
+.active {
+    border: 3px solid lightgreen;
+}
