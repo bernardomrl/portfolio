@@ -4,12 +4,13 @@ Bem-vindo(a) ao meu repositório de projetos recentes! Aqui você encontrará al
 
 ### Projetos
 
-> Calculadora
+<!-- > Calculadora
 - Calculadora funcional utilizando HTML, CSS e JavaScript.<br>
 Se quiser testar a calculadora, [clique aqui](https://bernardomrl-calculator.netlify.app).
 > Lista de tarefas
 - Uma lista de tarefas simples, utilizando pela primeira vez o localStorage.<br>
 Se quiser testar a lista de tarefas, [clique aqui](https://bernardomrl-todo.netlify.app).
+-->
 > Portifólio
 - Portifólio responsivo e minimalista.<br> 
 Se quiser ver meu portifólio, [clique aqui](https://bernardomrl.netlify.app).
