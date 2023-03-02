@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+    --poppins: 'Poppins', sans-serif;
+    --lato: 'Lato', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+body {
+    background-color: rgb(37, 37, 37);
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6.25rem 20%;
+    background-color: white;
+    transition: 550ms;
+    transform-origin: 0 0;
+    min-height: 100vh;
+    z-index: 2;
+}
+
+.container-title {
+    line-height: 2rem;
+    margin-bottom: 1rem;
+    font-family: var(--poppins);
+}
+
+.container-title h1 {
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.container-title h2 {
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+
+.container-title h3 {
+    font-size: .75rem;
+    font-weight: 500;
+    opacity: 0.6;
+}
+
+.container-text {
+    font-size: 1rem;
+    opacity: 0.75;
+    line-height: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    font-family: var(--lato);
+}
+
+.container-image {
+    margin-bottom: 2rem;
+}
+
+.container-image img {
+    object-fit: cover;
+    width: 100%;
+}
+
+.circle-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    translate: -50% -50%;
+    height: 12.5rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: lightblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 7.5rem 2.5rem 2.5rem 2.5rem;
+    transition: 550ms;
+    z-index: 3;
+}
+
+.circle-menu .uil {
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.menu-open {
+    rotate: -90deg;
+}
+
+.container-open {
+    rotate: -20deg;
+}
+
+.nav {
+    position: absolute;
+    bottom: 2.5rem;
+    left: -50%;
+    z-index: 1;
+    transition: 550ms ease;
+    text-transform: uppercase;
+}
+
+.nav-open {
+    left: 2.5rem;
+}
+
+.nav .uil {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
+.nav a {
+    font-size: 1rem;
+    font-family: var(--poppins);
+    text-decoration: none;
+    color: white;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    width: min-content;
+    transition: 300ms ease;
+}
+
+.nav a:hover {
+    transform: translateY(-10%);
+    opacity: 1;
+    color: lightblue;
+}
+
+.nav li {
+    margin-bottom: 1rem;
+}
+
+.nav li+li {
+    transform: translateX(10%);
+}
+
+.nav li+li+li {
+    transform: translateX(20%);
+}
+
+.nav li+li+li+li {
+    transform: translateX(30%);
+}
