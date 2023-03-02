@@ -108,3 +108,38 @@ body {
 .active {
     border: 3px solid lightgreen;
 }
+
+.author {
+    position: absolute;
+    bottom: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.author a {
+    text-decoration: none;
+    color: black;
+    font-family: var(--poppins);
+    font-weight: 600;
+    transition: 200ms ease-in-out;
+}
+
+.author a:hover {
+    opacity: 0.6;
+}
+
+@media (max-width : 380px) {
+    .container {
+        height: 8rem;
+    }
+}
+
+@media (max-width : 320px) {
+    .container {
+        height: 7rem;
+    }
+
+    .author a {
+        font-size: .8rem;
+    }
+}

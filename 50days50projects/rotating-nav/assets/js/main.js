@@ -9,9 +9,11 @@ openButton.addEventListener('click', () => {
     circle.classList.add('menu-open')
     container.classList.add('container-open')
     nav.classList.add('nav-open')
+    document.body.classList.add('scroll-disable')
 })
 closeButton.addEventListener('click', () => {
     circle.classList.remove('menu-open')
     container.classList.remove('container-open')
     nav.classList.remove('nav-open')
+    document.body.classList.remove('scroll-disable')
 })
