@@ -19,11 +19,11 @@ Segue o meu progresso até o momento:
 
 |  #  | Projeto                                                                                                                     | Demonstração                                                                      |
 | :-: | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| 01  | [Expanding Cards](https://github.com/bernardomrl/projetos/tree/main/50days50projects/01-expanding-cards)                    | [Demo](https://50projects50days.com/projects/expanding-cards/)            |
-| 02  | [Progress Steps](https://github.com/bernardomrl/projetos/tree/main/50days50projects/02-progress-steps)                      | [Demo](https://50projects50days.com/projects/progress-steps/)             |
-| 03  | [Rotating Navigation Animation](https://github.com/bernardomrl/projetos/tree/main/50days50projects/03-rotating-navigation)  | [Demo](https://50projects50days.com/projects/rotating-navigation-animation/)|
-| 04  | [Hidden Search Widget](https://github.com/bernardomrl/projetos/tree/main/50days50projects/04-hidden-search-widget)          | [Demo](https://50projects50days.com/projects/hidden-search-widget/)       |
-| 05  | [Blurry Loading](https://github.com/bernardomrl/projetos/tree/main/50days50projects/05-blurry-loading)                      | [Demo](https://50projects50days.com/projects/blurry-loading/)             |
+| 01  | [Expanding Cards](https://github.com/bernardomrl/projetos/tree/main/50days50projects/01-expanding-cards)                    | [Demo](https://bernardomrl-50days50projects.netlify.app/01-expanding-cards/)            |
+| 02  | [Progress Steps](https://github.com/bernardomrl/projetos/tree/main/50days50projects/02-progress-steps)                      | [Demo](https://bernardomrl-50days50projects.netlify.app/02-progress-steps/)             |
+| 03  | [Rotating Navigation Animation](https://github.com/bernardomrl/projetos/tree/main/50days50projects/03-rotating-navigation)  | [Demo](https://bernardomrl-50days50projects.netlify.app/03-rotating-navigation/)|
+| 04  | [Hidden Search Widget](https://github.com/bernardomrl/projetos/tree/main/50days50projects/04-hidden-search-widget)          | [Demo](https://bernardomrl-50days50projects.netlify.app/04-hidden-search-widget/)       |
+| 05  | [Blurry Loading](https://github.com/bernardomrl/projetos/tree/main/50days50projects/05-blurry-loading)                      | [Demo](https://bernardomrl-50days50projects.netlify.app/05-blurry-loading/)             |
 
 ### Como contribuir
 > Sinta-se livre para enviar sugestões, correções ou adições ao código fonte do meu site. Para contribuir:
