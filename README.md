@@ -23,5 +23,3 @@ Se quiser ver meu portifólio, [clique aqui](https://bernardomrl.netlify.app).
     - Faça o commit das suas alterações (git commit -m 'Minha contribuição').
     - Envie o seu branch para o repositório remoto (git push origin minha-contribuicao).
     - Abra um pull request explicando as suas alterações.
-
-> Eu vou revisar as suas alterações e decidir se elas serão incorporadas ao código fonte do meu site. Obrigado pela sua contribuição!
