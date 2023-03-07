@@ -13,10 +13,11 @@ Se quiser testar a lista de tarefas, [clique aqui](https://bernardomrl-todo.netl
 > Portifólio
 - Portifólio responsivo e minimalista.<br> 
 Se quiser ver meu portifólio, [clique aqui](https://bernardomrl.netlify.app).
-<br>
 > 50 Dias 50 Projetos
 - Projeto que tem como objetivo me ajudar a aprimorar minhas habilidades de programação através da prática diaria de pequenos projetos durante 50 dias.<br>
 Segue o meu progresso até o momento: 
+
+<br>
 <br>
 <br>
 
@@ -30,6 +31,8 @@ Segue o meu progresso até o momento:
 
 <br>
 <br>
+<br>
+
 ### Como contribuir
 > Sinta-se livre para enviar sugestões, correções ou adições ao código fonte do meu site. Para contribuir:
 
