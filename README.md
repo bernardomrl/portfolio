@@ -18,15 +18,15 @@ Se quiser ver meu portifólio, [clique aqui](https://bernardomrl.netlify.app).
 - Projeto que tem como objetivo me ajudar a aprimorar minhas habilidades de programação através da prática diaria de pequenos projetos durante 50 dias.<br>
 Segue o meu progresso até o momento: 
 <br>
-
-|  #  | Project                                                                                                                     | Demonstração                                                                      |
+<br>
+|  #  | Projeto                                                                                                                     | Demonstração                                                                      |
 | :-: | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| 01  | [Expanding Cards](https://github.com/bernardomrl/projetos/tree/main/50days50projects/01-expanding-cards)                    | [Live Demo](https://50projects50days.com/projects/expanding-cards/)               |
-| 02  | [Progress Steps](https://github.com/bernardomrl/projetos/tree/main/50days50projects/02-progress-steps)                      | [Live Demo](https://50projects50days.com/projects/progress-steps/)                |
-| 03  | [Rotating Navigation Animation](https://github.com/bernardomrl/projetos/tree/main/50days50projects/03-rotating-navigation)  | [Live Demo](https://50projects50days.com/projects/rotating-navigation-animation/) |
-| 04  | [Hidden Search Widget](https://github.com/bernardomrl/projetos/tree/main/50days50projects/04-hidden-search-widget)          | [Live Demo](https://50projects50days.com/projects/hidden-search-widget/)          |
-| 05  | [Blurry Loading](https://github.com/bernardomrl/projetos/tree/main/50days50projects/05-blurry-loading)                      | [Live Demo](https://50projects50days.com/projects/blurry-loading/)                |
-
+| 02  | [Progress Steps](https://github.com/bernardomrl/projetos/tree/main/50days50projects/02-progress-steps)                      | [Demonstração](https://50projects50days.com/projects/progress-steps/)                |
+| 03  | [Rotating Navigation Animation](https://github.com/bernardomrl/projetos/tree/main/50days50projects/03-rotating-navigation)  | [Demonstração](https://50projects50days.com/projects/rotating-navigation-animation/) |
+| 04  | [Hidden Search Widget](https://github.com/bernardomrl/projetos/tree/main/50days50projects/04-hidden-search-widget)          | [Demonstração](https://50projects50days.com/projects/hidden-search-widget/)          |
+| 05  | [Blurry Loading](https://github.com/bernardomrl/projetos/tree/main/50days50projects/05-blurry-loading)                      | [Demonstração](https://50projects50days.com/projects/blurry-loading/)                |
+<br>
+<br>
 ### Como contribuir
 > Sinta-se livre para enviar sugestões, correções ou adições ao código fonte do meu site. Para contribuir:
 
