@@ -1,0 +1,576 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+$poppins : 'Poppins',
+sans-serif;
+$inconsolata : 'Inconsolata',
+monospace;
+
+$highlight-color-alt : #966FD6;
+$highlight-color : #7B56BA;
+$main-color : #603E9F;
+$bg-color-alt : #452784;
+$bg-color : #290F6A;
+
+$white-color : #cccccc;
+
+$min-delay: 2.6s;
+
+// PAGE LOADER
+@mixin position-center($text-align: center) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: $text-align;
+}
+
+@keyframes blur-text {
+    0% {
+        filter: blur(0px);
+    }
+
+    100% {
+        filter: blur(4px);
+    }
+}
+
+@keyframes transform-text {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-510%);
+    }
+}
+
+@keyframes blur-container {
+    0% {
+        backdrop-filter: blur(2rem);
+    }
+
+    50% {
+        backdrop-filter: blur(0);
+        background-color: rgba($color: #000000, $alpha: 0);
+    }
+
+    100% {
+        backdrop-filter: blur(0);
+        background-color: rgba($color: #000000, $alpha: 0);
+        z-index: -1000;
+    }
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    backdrop-filter: blur(2rem);
+    animation: blur-container calc(3s + 0.25s) cubic-bezier(0.79, 0.14, 0.15, 0.86) 2s forwards;
+    background-color: rgba($color: black, $alpha: 0.8);
+    user-select: none;
+}
+
+.loading-text {
+    @include position-center;
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+
+    span {
+        display: inline-block;
+        margin: 0 5px;
+        color: $main-color;
+        font-size: 2rem;
+        font-family: $poppins;
+        font-weight: 600;
+        letter-spacing: -0.5rem;
+
+        @for $i from 0 through 7 {
+            &:nth-child(#{$i + 1}) {
+                filter: blur(0px);
+                animation: blur-text .75s (#{$i/6})+s infinite linear alternate;
+            }
+        }
+    }
+
+    animation: transform-text 1.5s cubic-bezier(0.45, 1, 0.5, 1) 1.5s forwards;
+}
+
+// BASE
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow: hidden;
+    background-color: black;
+    animation: body calc(3s + 0.5s) linear 2s forwards;
+}
+
+@keyframes body {
+    from {
+        overflow: hidden
+    } to {
+        overflow-y: visible;
+    }
+}
+// BACKGROUND
+
+.blob {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    height: 10rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: linear-gradient(to right, $bg-color 0%, $highlight-color-alt 100%);
+    animation: blob 20s infinite;
+    z-index: -3;
+}
+
+.blur {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    backdrop-filter: blur(10rem);
+    z-index: -2;
+}
+
+.dot {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    background-image: radial-gradient(rgba($main-color, 0.1) 9%, transparent 9%);
+    background-position: center 0%;
+    background-size: 50px 50px;
+    background-attachment: fixed;
+    margin: 0px;
+    z-index: -1;
+}
+
+// BLOB ANIMATION
+
+@keyframes bg-opacity {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes blob {
+    0% {
+        opacity: 0.25;
+        rotate: 0deg;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        rotate: 360deg;
+        opacity: 0.25;
+    }
+}
+
+// HEADER
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: $inconsolata;
+    font-weight: 600;
+    font-size: 1rem;
+    height: 5rem;
+    padding: 4rem 2rem;
+    z-index: 1;
+}
+
+.header-title {
+    svg {
+        width: 3rem;
+
+        a {
+            transition: 250ms ease;
+
+            circle {
+                transform: translateY(-55rem);
+
+            }
+
+            circle:nth-child(1) {
+                animation: headerTitle-anim 500ms ease $min-delay forwards;
+            }
+
+            circle:nth-child(2) {
+                animation: headerTitle-anim 500ms ease calc($min-delay + 0.15s) forwards;
+            }
+
+            circle:nth-child(3) {
+                animation: headerTitle-anim 500ms ease calc($min-delay + 0.30s) forwards;
+            }
+
+            &:hover {
+                opacity: 0.75;
+                transform: translatey(-1rem);
+            }
+        }
+    }
+}
+
+.header-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-item {
+    color: $highlight-color;
+    margin: 0 .75rem;
+    transform: translateY(-10rem);
+    cursor: default;
+
+    &:nth-child(1) {
+        animation: headerItem-anim 550ms ease calc($min-delay + 0.30s) forwards;
+        &::before {
+            content: "01.";
+            margin-right: 0.25rem;
+        }
+    }
+
+    &:nth-child(2) {
+        animation: headerItem-anim 550ms ease calc($min-delay + 0.35s) forwards;
+        &::before {
+            content: "02.";
+            margin-right: 0.25rem;
+        }
+    }
+
+    &:nth-child(3) {
+        animation: headerItem-anim 550ms ease calc($min-delay + 0.40s) forwards;
+        &::before {
+            content: "03.";
+            margin-right: 0.25rem;
+        }
+    }
+}
+
+.header-link {
+    margin: 0.25rem;
+    color: $white-color;
+    transition: color 250ms ease;
+
+    &:hover {
+        color: $highlight-color;
+    }
+}
+
+.header-button {
+    padding: 1rem;
+    border-radius: .5rem;
+    border: 2px solid $highlight-color;
+    color: $highlight-color;
+    transition: background-color 250ms ease;
+    transform: translateX(10rem);
+    animation: headerButton-anim 550ms ease calc($min-delay + 0.5s) forwards;
+
+    &:hover {
+        background-color: rgba($color: $highlight-color, $alpha: 0.25);
+    }
+}
+
+// HEADER ANIMATIONS
+
+@keyframes headerTitle-anim {
+    from {
+        transform: translateY(-55rem);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes headerItem-anim {
+    from {
+        transform: translateY(-10rem);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes headerButton-anim {
+    from {
+        transform: translateX(10rem);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+// MAIN
+
+.main {
+    padding: 0 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@mixin section() {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10vh 0;
+}
+
+@mixin section-wrapper() {
+    border: 3px solid rgba($color: $white-color, $alpha: 0.025);
+    background-color: rgba($color: $white-color, $alpha: 0.025);
+    backdrop-filter: blur(1rem);
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+@mixin section-title() {
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: $inconsolata;
+    color: $white-color;
+    margin-bottom: 2.5rem;
+}
+
+// MAIN - HOME
+
+.home {
+    @include section();
+}
+
+.home-data {
+    @include section-wrapper();
+    font-family: $poppins;
+    font-weight: 700;
+    padding: 2rem;
+    transform: translateY(-50rem);
+    animation: home-data 1.5s ease calc($min-delay + 0.5s) forwards;
+    margin-bottom: 1.5rem;
+}
+
+.home-greetings {
+    font-family: $inconsolata;
+    color: $highlight-color;
+    font-size: 1.25rem;
+    font-weight: 600;
+    opacity: 0;
+    animation: home-text 1s ease calc($min-delay + 2.1s) forwards;
+}
+
+.home-title {
+    font-size: 3.5rem;
+    color: rgba($color: $white-color, $alpha: 0.7);
+    letter-spacing: 0.15rem;
+    opacity: 0;
+    animation: home-text 1s ease calc($min-delay + 2.3s) forwards;
+}
+
+.home-subtitle {
+    font-family: $inconsolata;
+    font-size: 3rem;
+    height: 3rem;
+    color: rgba($color: $white-color, $alpha: 0.5);
+    padding-right: 0.75rem;
+    width: max-content;
+    animation: blink-cursor 1s linear infinite, home-text 1s ease calc($min-delay + 2.5s) forwards;
+    opacity: 0;
+    &::before {
+        content: "-";
+        margin-right: 1rem;
+    }
+}
+
+.home-scroll {
+    border: 3px solid rgba($color: $white-color, $alpha: 0.025);
+    background-color: rgba($color: $white-color, $alpha: 0.025);
+    backdrop-filter: blur(1rem);
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: $inconsolata;
+    cursor: pointer;
+    width: max-content;
+    transform: translateX(-55rem);
+    animation: home-scroll 1.5s calc($min-delay + 1.25s) forwards;
+
+    .scroll-down {
+        display: flex;
+        align-items: center;
+        padding: 2rem;
+        color: $highlight-color;
+        transition: all 250ms;
+
+        svg {
+            margin-right: 1rem;
+            color: $main-color;
+            transition: transform 500ms;
+        }
+
+        &:hover {
+
+            color: $white-color;
+            transform: translateY(.25rem);
+            svg {
+                transform: translateY(.25rem);
+            }
+        }
+    }
+}
+
+// HOME ANIMATIONS
+
+@keyframes blink-cursor {
+    from {
+        border: none;
+    }
+
+    to {
+        border-right: 5px solid rgba($color: $white-color, $alpha: 0.5);
+    }
+}
+
+@keyframes home-text {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes home-data {
+    from {
+        transform: translateY(-50rem)
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes home-scroll {
+    from {
+        transform: translateX(-55rem);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+// ABOUT
+
+.about {
+    @include section()
+}
+
+.about-data {
+    @include section-wrapper();
+
+}
+
+.about-title {
+    @include section-title();
+    &::before{
+        content: "01.";
+        margin-right: 1rem;
+        color: $main-color;
+    }
+}
+
+// SOCIALS
+
+.socials {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    opacity: 0;
+    left: 2rem;
+    animation: social-fadeIn 1.75s calc($min-delay + 750ms) forwards;
+
+    &::after {
+        content: "";
+        display: block;
+        width: 2px;
+        height: 90px;
+        margin: 0px auto;
+        background-color: rgba($color: $white-color, $alpha: 0.75);
+    }
+}
+
+.social {
+    margin: .75rem;
+    width: 1.25rem;
+    cursor: pointer;
+
+    .social-link {
+        color: rgba($color: $white-color, $alpha: 0.75);
+    }
+
+    .social-icon {
+        transition: 250ms ease;
+    }
+
+    &:last-child {
+        margin-bottom: 2rem;
+    }
+
+    &:hover {
+
+        .social-icon {
+            color: $highlight-color;
+            transform: translateY(-0.25rem);
+        }
+    }
+}
+
+// SOCIAL ANIMATION
+
+@keyframes social-fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
