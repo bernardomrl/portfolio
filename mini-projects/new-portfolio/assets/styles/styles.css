@@ -1,5 +1,117 @@
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@keyframes blur-text {
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  -webkit-backdrop-filter: blur(2rem);
+          backdrop-filter: blur(2rem);
+  background-color: rgba(0, 0, 0, 0.8);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  animation: loading 1.5s cubic-bezier(0.79, 0.14, 0.15, 0.86) 3s forwards;
+}
+
+.loading-text {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  opacity: 0;
+  animation: loading-text-opacity 1s ease forwards, loading-text-transform 1.5s cubic-bezier(0.45, 1, 0.5, 1) 3s forwards;
+}
+.loading-text span {
+  display: inline-block;
+  margin: 0 5px;
+  color: #603E9F;
+  font-size: 2rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.5rem;
+}
+.loading-text span:nth-child(1) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0s infinite linear alternate;
+}
+.loading-text span:nth-child(2) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.0625s infinite linear alternate;
+}
+.loading-text span:nth-child(3) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.125s infinite linear alternate;
+}
+.loading-text span:nth-child(4) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.1875s infinite linear alternate;
+}
+.loading-text span:nth-child(5) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.25s infinite linear alternate;
+}
+.loading-text span:nth-child(6) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.3125s infinite linear alternate;
+}
+.loading-text span:nth-child(7) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.375s infinite linear alternate;
+}
+.loading-text span:nth-child(8) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.4375s infinite linear alternate;
+}
+.loading-text span:nth-child(9) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.5s infinite linear alternate;
+}
+.loading-text span:nth-child(10) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.5625s infinite linear alternate;
+}
+.loading-text span:nth-child(11) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.625s infinite linear alternate;
+}
+.loading-text span:nth-child(12) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.6875s infinite linear alternate;
+}
+.loading-text span:nth-child(13) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.75s infinite linear alternate;
+}
+.loading-text span:nth-child(14) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.8125s infinite linear alternate;
+}
+.loading-text span:nth-child(15) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.875s infinite linear alternate;
+}
+.loading-text span:nth-child(16) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 0.9375s infinite linear alternate;
+}
+.loading-text span:nth-child(17) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 1s infinite linear alternate;
+}
+.loading-text span:nth-child(18) {
+  filter: blur(0px);
+  animation: loading-text-blur 1s 1.0625s infinite linear alternate;
+}
+
+@keyframes loading-text-blur {
   0% {
     filter: blur(0px);
   }
@@ -7,15 +119,15 @@
     filter: blur(4px);
   }
 }
-@keyframes transform-text {
+@keyframes loading-text-transform {
   from {
     transform: translateY(0);
   }
   to {
-    transform: translateY(-510%);
+    transform: translateY(-1000%);
   }
 }
-@keyframes blur-container {
+@keyframes loading {
   0% {
     -webkit-backdrop-filter: blur(2rem);
             backdrop-filter: blur(2rem);
@@ -32,77 +144,14 @@
     z-index: -1000;
   }
 }
-.loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  -webkit-backdrop-filter: blur(2rem);
-          backdrop-filter: blur(2rem);
-  animation: blur-container 3.25s cubic-bezier(0.79, 0.14, 0.15, 0.86) 2s forwards;
-  background-color: rgba(0, 0, 0, 0.8);
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+@keyframes loading-text-opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
-.loading-text {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  text-align: center;
-  width: 100%;
-  height: 100px;
-  line-height: 100px;
-  animation: transform-text 1.5s cubic-bezier(0.45, 1, 0.5, 1) 1.5s forwards;
-}
-.loading-text span {
-  display: inline-block;
-  margin: 0 5px;
-  color: #603E9F;
-  font-size: 2rem;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.5rem;
-}
-.loading-text span:nth-child(1) {
-  filter: blur(0px);
-  animation: blur-text 0.75s 0s infinite linear alternate;
-}
-.loading-text span:nth-child(2) {
-  filter: blur(0px);
-  animation: blur-text 0.75s 0.1666666667s infinite linear alternate;
-}
-.loading-text span:nth-child(3) {
-  filter: blur(0px);
-  animation: blur-text 0.75s 0.3333333333s infinite linear alternate;
-}
-.loading-text span:nth-child(4) {
-  filter: blur(0px);
-  animation: blur-text 0.75s 0.5s infinite linear alternate;
-}
-.loading-text span:nth-child(5) {
-  filter: blur(0px);
-  animation: blur-text 0.75s 0.6666666667s infinite linear alternate;
-}
-.loading-text span:nth-child(6) {
-  filter: blur(0px);
-  animation: blur-text 0.75s 0.8333333333s infinite linear alternate;
-}
-.loading-text span:nth-child(7) {
-  filter: blur(0px);
-  animation: blur-text 0.75s 1s infinite linear alternate;
-}
-.loading-text span:nth-child(8) {
-  filter: blur(0px);
-  animation: blur-text 0.75s 1.1666666667s infinite linear alternate;
-}
-
 * {
   padding: 0;
   margin: 0;
@@ -115,7 +164,7 @@
 body {
   overflow: hidden;
   background-color: black;
-  animation: body 3.5s linear 2s forwards;
+  animation: body 0ms 4.25s forwards;
 }
 
 @keyframes body {
@@ -131,11 +180,12 @@ body {
   top: 50%;
   left: 50%;
   translate: -50% -50%;
-  height: 10rem;
+  height: 35rem;
   aspect-ratio: 1;
   border-radius: 50%;
   background: linear-gradient(to right, #290F6A 0%, #966FD6 100%);
-  animation: blob 20s infinite;
+  opacity: 0;
+  animation: blob-opacity 2s ease 5.75s forwards, blob 60s 7.75s infinite;
   z-index: -3;
 }
 
@@ -154,15 +204,17 @@ body {
   height: 100%;
   width: 100%;
   top: 0;
-  background-image: radial-gradient(rgba(96, 62, 159, 0.1) 9%, transparent 9%);
+  background-image: radial-gradient(rgba(41, 15, 106, 0.175) 9%, transparent 9%);
   background-position: center 0%;
   background-size: 50px 50px;
   background-attachment: fixed;
+  animation: dot 2s ease 5.75s forwards;
   margin: 0px;
   z-index: -1;
+  opacity: 0;
 }
 
-@keyframes bg-opacity {
+@keyframes dot {
   from {
     opacity: 0;
   }
@@ -172,15 +224,21 @@ body {
 }
 @keyframes blob {
   0% {
-    opacity: 0.25;
     rotate: 0deg;
   }
   50% {
-    opacity: 1;
+    scale: 1 1.5;
   }
   100% {
     rotate: 360deg;
-    opacity: 0.25;
+  }
+}
+@keyframes blob-opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.3333333333;
   }
 }
 .header {
@@ -208,17 +266,16 @@ body {
   transform: translateY(-55rem);
 }
 .header-title svg a circle:nth-child(1) {
-  animation: headerTitle-anim 500ms ease 2.6s forwards;
+  animation: headerTitle-anim 500ms ease 3.75s forwards;
 }
 .header-title svg a circle:nth-child(2) {
-  animation: headerTitle-anim 500ms ease 2.75s forwards;
+  animation: headerTitle-anim 500ms ease 3.9s forwards;
 }
 .header-title svg a circle:nth-child(3) {
-  animation: headerTitle-anim 500ms ease 2.9s forwards;
+  animation: headerTitle-anim 500ms ease 4.05s forwards;
 }
 .header-title svg a:hover {
-  opacity: 0.75;
-  transform: translatey(-1rem);
+  transform: translateY(-1.5rem);
 }
 
 .header-items {
@@ -234,21 +291,22 @@ body {
   cursor: default;
 }
 .header-item:nth-child(1) {
-  animation: headerItem-anim 550ms ease 2.9s forwards;
+  animation: headerItem-anim 550ms ease 4.05s forwards;
 }
 .header-item:nth-child(1)::before {
   content: "01.";
   margin-right: 0.25rem;
 }
 .header-item:nth-child(2) {
-  animation: headerItem-anim 550ms ease 2.95s forwards;
+  animation: headerItem-anim 550ms ease 4.1s forwards;
 }
 .header-item:nth-child(2)::before {
   content: "02.";
   margin-right: 0.25rem;
 }
 .header-item:nth-child(3) {
-  animation: headerItem-anim 550ms ease 3s forwards;
+  animation: headerItem-anim 550ms ease 4.15s forwards;
+  margin-right: 3rem;
 }
 .header-item:nth-child(3)::before {
   content: "03.";
@@ -271,7 +329,7 @@ body {
   color: #7B56BA;
   transition: background-color 250ms ease;
   transform: translateX(10rem);
-  animation: headerButton-anim 550ms ease 3.1s forwards;
+  animation: headerButton-anim 550ms ease 4.25s forwards;
 }
 .header-button:hover {
   background-color: rgba(123, 86, 186, 0.25);
@@ -317,17 +375,17 @@ body {
 }
 
 .home-data {
-  border: 3px solid rgba(204, 204, 204, 0.025);
-  background-color: rgba(204, 204, 204, 0.025);
-  -webkit-backdrop-filter: blur(1rem);
-          backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(10rem);
+          backdrop-filter: blur(10rem);
   border-radius: 1rem;
   padding: 2rem;
+  border: 3px solid rgba(204, 204, 204, 0.05);
+  background-color: rgba(204, 204, 204, 0.025);
   font-family: "Poppins", sans-serif;
   font-weight: 700;
   padding: 2rem;
-  transform: translateY(-50rem);
-  animation: home-data 1.5s ease 3.1s forwards;
+  transform: translateY(-500%);
+  animation: home-data 1.5s ease 4.25s forwards;
   margin-bottom: 1.5rem;
 }
 
@@ -337,7 +395,7 @@ body {
   font-size: 1.25rem;
   font-weight: 600;
   opacity: 0;
-  animation: home-text 1s ease 4.7s forwards;
+  animation: home-text 1s ease 5.85s forwards;
 }
 
 .home-title {
@@ -345,18 +403,18 @@ body {
   color: rgba(204, 204, 204, 0.7);
   letter-spacing: 0.15rem;
   opacity: 0;
-  animation: home-text 1s ease 4.9s forwards;
+  animation: home-text 1s ease 6.05s forwards;
 }
 
 .home-subtitle {
   font-family: "Inconsolata", monospace;
-  font-size: 3rem;
-  height: 3rem;
+  font-size: 2rem;
+  height: 2rem;
   color: rgba(204, 204, 204, 0.5);
   padding-right: 0.75rem;
   width: -moz-max-content;
   width: max-content;
-  animation: blink-cursor 1s linear infinite, home-text 1s ease 5.1s forwards;
+  animation: blink-cursor 1s linear infinite, home-text 1s ease 6.25s forwards;
   opacity: 0;
 }
 .home-subtitle::before {
@@ -365,7 +423,7 @@ body {
 }
 
 .home-scroll {
-  border: 3px solid rgba(204, 204, 204, 0.025);
+  border: 3px solid rgba(204, 204, 204, 0.05);
   background-color: rgba(204, 204, 204, 0.025);
   -webkit-backdrop-filter: blur(1rem);
           backdrop-filter: blur(1rem);
@@ -374,11 +432,12 @@ body {
   justify-content: center;
   align-items: center;
   font-family: "Inconsolata", monospace;
+  font-weight: 800;
   cursor: pointer;
   width: -moz-max-content;
   width: max-content;
   transform: translateX(-55rem);
-  animation: home-scroll 1.5s 3.85s forwards;
+  animation: home-scroll 1.5s 5s forwards;
 }
 .home-scroll .scroll-down {
   display: flex;
@@ -390,7 +449,7 @@ body {
 .home-scroll .scroll-down svg {
   margin-right: 1rem;
   color: #603E9F;
-  transition: transform 500ms;
+  transition: transform 500ms ease-out;
 }
 .home-scroll .scroll-down:hover {
   color: #cccccc;
@@ -418,7 +477,7 @@ body {
 }
 @keyframes home-data {
   from {
-    transform: translateY(-50rem);
+    transform: translateY(-500%);
   }
   to {
     transform: translateY(0);
@@ -441,12 +500,12 @@ body {
 }
 
 .about-data {
-  border: 3px solid rgba(204, 204, 204, 0.025);
-  background-color: rgba(204, 204, 204, 0.025);
-  -webkit-backdrop-filter: blur(1rem);
-          backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(10rem);
+          backdrop-filter: blur(10rem);
   border-radius: 1rem;
   padding: 2rem;
+  border: 3px solid rgba(204, 204, 204, 0.05);
+  background-color: rgba(204, 204, 204, 0.025);
 }
 
 .about-title {
@@ -471,7 +530,7 @@ body {
   bottom: 0;
   opacity: 0;
   left: 2rem;
-  animation: social-fadeIn 1.75s 3.35s forwards;
+  animation: social-fadeIn 1.75s 4.5s forwards;
 }
 .socials::after {
   content: "";

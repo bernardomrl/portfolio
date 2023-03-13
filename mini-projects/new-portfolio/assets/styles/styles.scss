@@ -13,7 +13,7 @@ $bg-color : #290F6A;
 
 $white-color : #cccccc;
 
-$min-delay: 2.6s;
+$min-delay: 3.75s;
 
 // PAGE LOADER
 @mixin position-center($text-align: center) {
@@ -26,7 +26,50 @@ $min-delay: 2.6s;
     text-align: $text-align;
 }
 
-@keyframes blur-text {
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    backdrop-filter: blur(2rem);
+    background-color: rgba($color: black, $alpha: 0.8);
+    user-select: none;
+    animation: loading 1.5s cubic-bezier(0.79, 0.14, 0.15, 0.86) 3s forwards;
+}
+
+.loading-text {
+    @include position-center;
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    opacity: 0;
+
+    span {
+        display: inline-block;
+        margin: 0 5px;
+        color: $main-color;
+        font-size: 2rem;
+        font-family: $poppins;
+        font-weight: 600;
+        letter-spacing: -0.5rem;
+
+        @for $i from 0 through 17 {
+            &:nth-child(#{$i + 1}) {
+                filter: blur(0px);
+                animation: loading-text-blur 1s (#{$i/16})+s infinite linear alternate;
+            }
+        }
+    }
+
+    animation: loading-text-opacity 1s ease forwards,
+    loading-text-transform 1.5s cubic-bezier(0.45, 1, 0.5, 1) 3s forwards;
+}
+
+// PAGE LOADER KEYFRAMES
+
+@keyframes loading-text-blur {
     0% {
         filter: blur(0px);
     }
@@ -36,17 +79,17 @@ $min-delay: 2.6s;
     }
 }
 
-@keyframes transform-text {
+@keyframes loading-text-transform {
     from {
         transform: translateY(0);
     }
 
     to {
-        transform: translateY(-510%);
+        transform: translateY(-1000%);
     }
 }
 
-@keyframes blur-container {
+@keyframes loading {
     0% {
         backdrop-filter: blur(2rem);
     }
@@ -63,43 +106,14 @@ $min-delay: 2.6s;
     }
 }
 
-.loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    backdrop-filter: blur(2rem);
-    animation: blur-container calc(3s + 0.25s) cubic-bezier(0.79, 0.14, 0.15, 0.86) 2s forwards;
-    background-color: rgba($color: black, $alpha: 0.8);
-    user-select: none;
-}
-
-.loading-text {
-    @include position-center;
-    width: 100%;
-    height: 100px;
-    line-height: 100px;
-
-    span {
-        display: inline-block;
-        margin: 0 5px;
-        color: $main-color;
-        font-size: 2rem;
-        font-family: $poppins;
-        font-weight: 600;
-        letter-spacing: -0.5rem;
-
-        @for $i from 0 through 7 {
-            &:nth-child(#{$i + 1}) {
-                filter: blur(0px);
-                animation: blur-text .75s (#{$i/6})+s infinite linear alternate;
-            }
-        }
+@keyframes loading-text-opacity {
+    from {
+        opacity: 0;
     }
 
-    animation: transform-text 1.5s cubic-bezier(0.45, 1, 0.5, 1) 1.5s forwards;
+    to {
+        opacity: 1;
+    }
 }
 
 // BASE
@@ -116,7 +130,7 @@ $min-delay: 2.6s;
 body {
     overflow: hidden;
     background-color: black;
-    animation: body calc(3s + 0.5s) linear 2s forwards;
+    animation: body 0ms calc($min-delay + 0.5s) forwards;
 }
 
 @keyframes body {
@@ -136,11 +150,12 @@ body {
     top: 50%;
     left: 50%;
     translate: -50% -50%;
-    height: 10rem;
+    height: 35rem;
     aspect-ratio: 1;
     border-radius: 50%;
     background: linear-gradient(to right, $bg-color 0%, $highlight-color-alt 100%);
-    animation: blob 20s infinite;
+    opacity: 0;
+    animation: blob-opacity 2s ease calc($min-delay + 2s) forwards, blob 60s ($min-delay + 4s) infinite;
     z-index: -3;
 }
 
@@ -158,17 +173,19 @@ body {
     height: 100%;
     width: 100%;
     top: 0;
-    background-image: radial-gradient(rgba($main-color, 0.1) 9%, transparent 9%);
+    background-image: radial-gradient(rgba($bg-color, 0.175) 9%, transparent 9%);
     background-position: center 0%;
     background-size: 50px 50px;
     background-attachment: fixed;
+    animation: dot 2s ease calc($min-delay + 2s) forwards;
     margin: 0px;
     z-index: -1;
+    opacity: 0;
 }
 
 // BLOB ANIMATION
 
-@keyframes bg-opacity {
+@keyframes dot {
     from {
         opacity: 0;
     }
@@ -180,17 +197,25 @@ body {
 
 @keyframes blob {
     0% {
-        opacity: 0.25;
         rotate: 0deg;
     }
 
     50% {
-        opacity: 1;
+        scale: 1 1.5;
     }
 
     100% {
         rotate: 360deg;
-        opacity: 0.25;
+    }
+}
+
+@keyframes blob-opacity {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: calc(0.5 / 1.5);
     }
 }
 
@@ -221,23 +246,21 @@ body {
             circle {
                 transform: translateY(-55rem);
 
-            }
+                &:nth-child(1) {
+                    animation: headerTitle-anim 500ms ease $min-delay forwards;
+                }
 
-            circle:nth-child(1) {
-                animation: headerTitle-anim 500ms ease $min-delay forwards;
-            }
+                &:nth-child(2) {
+                    animation: headerTitle-anim 500ms ease calc($min-delay + 0.15s) forwards;
+                }
 
-            circle:nth-child(2) {
-                animation: headerTitle-anim 500ms ease calc($min-delay + 0.15s) forwards;
-            }
-
-            circle:nth-child(3) {
-                animation: headerTitle-anim 500ms ease calc($min-delay + 0.30s) forwards;
+                &:nth-child(3) {
+                    animation: headerTitle-anim 500ms ease calc($min-delay + 0.30s) forwards;
+                }
             }
 
             &:hover {
-                opacity: 0.75;
-                transform: translatey(-1rem);
+                transform: translateY(-1.5rem);
             }
         }
     }
@@ -275,6 +298,7 @@ body {
 
     &:nth-child(3) {
         animation: headerItem-anim 550ms ease calc($min-delay + 0.40s) forwards;
+        margin-right: 3rem;
 
         &::before {
             content: "03.";
@@ -357,11 +381,15 @@ body {
 }
 
 @mixin section-wrapper() {
-    border: 3px solid rgba($color: $white-color, $alpha: 0.025);
-    background-color: rgba($color: $white-color, $alpha: 0.025);
-    backdrop-filter: blur(1rem);
+    backdrop-filter: blur(10rem);
     border-radius: 1rem;
     padding: 2rem;
+    // ANTIGO
+    // border: 3px solid rgba($color: $white-color, $alpha: 0.025);
+    // background-color: rgba($color: $white-color, $alpha: 0.025);
+    // NOVO
+    border: 3px solid rgba($color: $white-color, $alpha: 0.05);
+    background-color: rgba($color: $white-color, $alpha: 0.025);
 }
 
 @mixin section-title() {
@@ -383,7 +411,7 @@ body {
     font-family: $poppins;
     font-weight: 700;
     padding: 2rem;
-    transform: translateY(-50rem);
+    transform: translateY(-500%);
     animation: home-data 1.5s ease calc($min-delay + 0.5s) forwards;
     margin-bottom: 1.5rem;
 }
@@ -407,8 +435,8 @@ body {
 
 .home-subtitle {
     font-family: $inconsolata;
-    font-size: 3rem;
-    height: 3rem;
+    font-size: 2rem;
+    height: 2rem;
     color: rgba($color: $white-color, $alpha: 0.5);
     padding-right: 0.75rem;
     width: max-content;
@@ -422,7 +450,7 @@ body {
 }
 
 .home-scroll {
-    border: 3px solid rgba($color: $white-color, $alpha: 0.025);
+    border: 3px solid rgba($color: $white-color, $alpha: 0.05);
     background-color: rgba($color: $white-color, $alpha: 0.025);
     backdrop-filter: blur(1rem);
     border-radius: 1rem;
@@ -430,6 +458,7 @@ body {
     justify-content: center;
     align-items: center;
     font-family: $inconsolata;
+    font-weight: 800;
     cursor: pointer;
     width: max-content;
     transform: translateX(-55rem);
@@ -445,7 +474,7 @@ body {
         svg {
             margin-right: 1rem;
             color: $main-color;
-            transition: transform 500ms;
+            transition: transform 500ms ease-out;
         }
 
         &:hover {
@@ -484,7 +513,7 @@ body {
 
 @keyframes home-data {
     from {
-        transform: translateY(-50rem)
+        transform: translateY(-500%)
     }
 
     to {
