@@ -1,6 +1,6 @@
-import './globals.css';
-
 import type { Metadata } from 'next';
+
+import '@/shared/ui/styles/globals.css';
 
 export const metadata: Metadata = {
   title: 'Create Next App',

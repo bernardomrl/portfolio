@@ -59,6 +59,10 @@ which is what `widgets/` is for. Pre-creating `features/hero`, `features/about` 
 decoration rather than as constraint. Before creating the first slice in either layer,
 justify why the code does not belong in `widgets/` or `shared/`.
 
+`bootstrap/`, `widgets/` and `shared/` are on-demand in a weaker sense. They are
+planned, they require no justification, and they simply appear when the task that
+writes their first file lands, because an empty directory is never committed.
+
 This is a narrower application of the same layer matrix, not a different architecture.
 Rules 1–5 below apply unchanged.
 
