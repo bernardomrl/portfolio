@@ -9,21 +9,21 @@ Normative rules for **code and architecture** only.
 
 ## 1. Stack
 
-| Concern | Choice |
-| --- | --- |
-| Framework | Next.js 16 (App Router) |
-| Runtime / package manager | Bun |
-| Language | TypeScript 5, `strict: true` |
-| Styling | Tailwind CSS 4 |
-| Component base | Shadcn on **Base UI** (not Radix) |
-| Internationalization | `next-intl` |
-| Content layer | **Velite** — build-time, Zod-validated |
-| Markdown extensions | `remark-gfm` |
-| Syntax highlighting | `shiki` via `rehype-pretty-code`, at build time |
-| Validation | Zod v4 |
-| Open Graph images | `next/og` |
-| Bundler | Turbopack (default in Next.js 16, dev and build) |
-| React Compiler | Not enabled (see `roadmap.md`, D-16) |
+| Concern                   | Choice                                           |
+| ------------------------- | ------------------------------------------------ |
+| Framework                 | Next.js 16 (App Router)                          |
+| Runtime / package manager | Bun                                              |
+| Language                  | TypeScript 5, `strict: true`                     |
+| Styling                   | Tailwind CSS 4                                   |
+| Component base            | Shadcn on **Base UI** (not Radix)                |
+| Internationalization      | `next-intl`                                      |
+| Content layer             | **Velite** — build-time, Zod-validated           |
+| Markdown extensions       | `remark-gfm`                                     |
+| Syntax highlighting       | `shiki` via `rehype-pretty-code`, at build time  |
+| Validation                | Zod v4                                           |
+| Open Graph images         | `next/og`                                        |
+| Bundler                   | Turbopack (default in Next.js 16, dev and build) |
+| React Compiler            | Not enabled (see `roadmap.md`, D-16)             |
 
 There is **no backend**. No database, no authentication, no session, no user data, no
 write path. Every byte the site serves is either a static asset or the compiled output
@@ -37,14 +37,14 @@ of a file in `content/`.
 
 Top to bottom. **A module may only import from layers strictly below it.**
 
-| Layer | Responsibility | May import from |
-| --- | --- | --- |
-| `app/` | Next.js routing only: `page.tsx`, `layout.tsx`, `error.tsx`, `sitemap.ts`, route handlers. No UI, no business logic. | all layers below |
-| `bootstrap/` | One-off global configuration and providers (theme, analytics, intl provider). Replaces the classic FSD `app` layer to avoid colliding with Next.js. | `widgets` and below |
-| `widgets/` | Composition of features and entities into self-contained page blocks. The only legal place for cross-feature communication. | `features`, `entities`, `shared` |
-| `features/` | Isolated user actions and interactions. | `entities`, `shared` |
-| `entities/` | Core domain objects — here, the content model — with their derived types and read helpers. | `shared` |
-| `shared/` | Design system, base UI, content access, pure utilities. **No domain knowledge.** | nothing |
+| Layer        | Responsibility                                                                                                                                      | May import from                  |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| `app/`       | Next.js routing only: `page.tsx`, `layout.tsx`, `error.tsx`, `sitemap.ts`, route handlers. No UI, no business logic.                                | all layers below                 |
+| `bootstrap/` | One-off global configuration and providers (theme, analytics, intl provider). Replaces the classic FSD `app` layer to avoid colliding with Next.js. | `widgets` and below              |
+| `widgets/`   | Composition of features and entities into self-contained page blocks. The only legal place for cross-feature communication.                         | `features`, `entities`, `shared` |
+| `features/`  | Isolated user actions and interactions.                                                                                                             | `entities`, `shared`             |
+| `entities/`  | Core domain objects — here, the content model — with their derived types and read helpers.                                                          | `shared`                         |
+| `shared/`    | Design system, base UI, content access, pure utilities. **No domain knowledge.**                                                                    | nothing                          |
 
 ### 2.2 On-demand materialization
 
@@ -81,6 +81,13 @@ Imports resolve through a single alias, `@/*` → `./src/*`. There is no per-lay
 and no `baseUrl`: the layer must stay visible in the import path, and a bare specifier
 must never resolve from the source root.
 
+Import order encodes the same hierarchy. `perfectionist/sort-imports` groups imports by
+layer, highest first, mirroring the table in §2.1, so the first layer group in a file's
+import block names the highest layer that file depends on — a downward-only violation is
+visible in the diff before the linter reports it. Custom groups are the mechanism: the
+plugin's own internal-import heuristic collapses every `@/` specifier into a single
+group, which would hide exactly what this ordering exists to expose.
+
 The Velite output is imported from the generated alias `#site/content`, mapped to
 `./.velite`. It is treated as an external package, not as a layer — see §5.4.
 
@@ -106,9 +113,9 @@ communication with a backend, and there is none.
 Two files live outside the layer hierarchy because the framework requires it.
 They are exceptions, not precedents:
 
-| File | Reason |
-| --- | --- |
-| `src/app/**` | Next.js file-system routing. Kept intentionally thin. |
+| File           | Reason                                                                                                                                                |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/app/**`   | Next.js file-system routing. Kept intentionally thin.                                                                                                 |
 | `src/proxy.ts` | Next.js 16 renamed `middleware.ts` to `proxy.ts` and requires it at the root of `src/`. It hosts the `next-intl` locale negotiation and nothing else. |
 
 Both are classified explicitly in the boundaries configuration — `src/app/**` as an
@@ -121,15 +128,15 @@ the exceptions are exactly where a silent rule gap is most expensive.
 
 Files are **kebab-case**, always. Suffixes are **singular**.
 
-| Suffix | Content |
-| --- | --- |
-| `.schema.ts` | Zod schemas |
-| `.query.ts` | Content read helpers (filter, sort, find by slug) |
-| `use-[name].ts` | Custom React hooks |
-| `.type.ts` | TypeScript types and interfaces |
-| `.config.ts` | Static configuration objects |
-| `.util.ts` | Pure functions |
-| *(no suffix)* | Visual components — `project-card.tsx`, `locale-switcher.tsx` |
+| Suffix          | Content                                                       |
+| --------------- | ------------------------------------------------------------- |
+| `.schema.ts`    | Zod schemas                                                   |
+| `.query.ts`     | Content read helpers (filter, sort, find by slug)             |
+| `use-[name].ts` | Custom React hooks                                            |
+| `.type.ts`      | TypeScript types and interfaces                               |
+| `.config.ts`    | Static configuration objects                                  |
+| `.util.ts`      | Pure functions                                                |
+| _(no suffix)_   | Visual components — `project-card.tsx`, `locale-switcher.tsx` |
 
 Identifiers: `PascalCase` for components and types, `camelCase` for functions and
 variables, `SCREAMING_SNAKE_CASE` for module-level constants.
@@ -190,10 +197,10 @@ content/
 
 This division is normative and is the most common place to get it wrong.
 
-| Kind of text | Where it lives | Why |
-| --- | --- | --- |
-| Prose — anything with paragraphs, links, emphasis or structure | `content/`, as markdown | It is edited as writing, benefits from markdown, and must be changeable without touching code |
-| UI strings — button labels, nav items, `aria-label`, form placeholders, date formats | `messages/<locale>.json`, via `next-intl` | It is interface, needs interpolation and pluralization, and has no structure to render |
+| Kind of text                                                                         | Where it lives                            | Why                                                                                           |
+| ------------------------------------------------------------------------------------ | ----------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Prose — anything with paragraphs, links, emphasis or structure                       | `content/`, as markdown                   | It is edited as writing, benefits from markdown, and must be changeable without touching code |
+| UI strings — button labels, nav items, `aria-label`, form placeholders, date formats | `messages/<locale>.json`, via `next-intl` | It is interface, needs interpolation and pluralization, and has no structure to render        |
 
 A heading that is part of the layout is a UI string. A heading inside a case study is
 prose. When in doubt: **if removing it would break the layout, it is a UI string.**
@@ -279,10 +286,10 @@ Portuguese and delivers English is worse than a shorter list.
 There is no write path, so there is no result contract to define. Errors fall into two
 classes:
 
-| Class | Handling |
-| --- | --- |
+| Class                                                      | Handling                                         |
+| ---------------------------------------------------------- | ------------------------------------------------ |
 | Content that does not exist (unknown slug, unknown locale) | `notFound()` → the route group's `not-found.tsx` |
-| Everything else (bug, unexpected throw) | `throw` → caught by `error.tsx` |
+| Everything else (bug, unexpected throw)                    | `throw` → caught by `error.tsx`                  |
 
 Malformed content is not a runtime class at all: Velite rejects it during the build.
 This is the point of validating at build time, and it is why no defensive parsing of
@@ -292,13 +299,13 @@ frontmatter is allowed in application code.
 
 ## 8. State management
 
-| State kind | Tool |
-| --- | --- |
-| Local UI state | `useState` |
-| Theme | The theme provider in `bootstrap/` |
-| Active section / scroll position | Local state in the owning widget |
-| Server state | Does not exist — content is compiled into the bundle |
-| Global client state | Avoided. No Zustand. |
+| State kind                       | Tool                                                 |
+| -------------------------------- | ---------------------------------------------------- |
+| Local UI state                   | `useState`                                           |
+| Theme                            | The theme provider in `bootstrap/`                   |
+| Active section / scroll position | Local state in the owning widget                     |
+| Server state                     | Does not exist — content is compiled into the bundle |
+| Global client state              | Avoided. No Zustand.                                 |
 
 Complex `useReducer` logic requires justification. `useEffect` for data fetching is
 forbidden; there is nothing to fetch.
@@ -309,8 +316,8 @@ forbidden; there is nothing to fetch.
 
 A single fail-fast Zod-validated module:
 
-| File | Contents |
-| --- | --- |
+| File             | Contents                    |
+| ---------------- | --------------------------- |
 | `browser-env.ts` | Only `NEXT_PUBLIC_*` values |
 
 It lives in `src/shared/config/` and is imported as `@/shared/config/browser-env`.
