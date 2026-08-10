@@ -1,0 +1,76 @@
+{
+  "languages": {
+    "TypeScript": {
+      "format_on_save": "on",
+      "formatter": [
+        { "code_action": "source.fixAll.eslint" },
+        {
+          "external": {
+            "command": "bunx",
+            "arguments": ["prettier", "--stdin-filepath", "{buffer_path}"]
+          }
+        }
+      ]
+    },
+    "TSX": {
+      "format_on_save": "on",
+      "formatter": [
+        { "code_action": "source.fixAll.eslint" },
+        {
+          "external": {
+            "command": "bunx",
+            "arguments": ["prettier", "--stdin-filepath", "{buffer_path}"]
+          }
+        }
+      ]
+    },
+    "JavaScript": {
+      "format_on_save": "on",
+      "formatter": [
+        { "code_action": "source.fixAll.eslint" },
+        {
+          "external": {
+            "command": "bunx",
+            "arguments": ["prettier", "--stdin-filepath", "{buffer_path}"]
+          }
+        }
+      ]
+    },
+    "JSON": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "bunx",
+          "arguments": ["prettier", "--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    },
+    "JSONC": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "bunx",
+          "arguments": ["prettier", "--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    },
+    "CSS": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "bunx",
+          "arguments": ["prettier", "--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    },
+    "Markdown": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "bunx",
+          "arguments": ["prettier", "--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    }
+  }
+}
