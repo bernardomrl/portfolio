@@ -399,6 +399,11 @@ feature that introduces one must create it in the same pull request, starting wi
   that renders the page. No hand-made image files per post.
 - `sitemap.ts` and `robots.ts` live in `app/` and derive from the content collections, so
   a new post is indexed by the act of existing.
+- While this site is served from `next.bernardomrl.dev`, every route declares
+  `robots: { index: false, follow: false }`. `robots.txt` must **not** block crawling
+  while the directive is in force: a crawler that cannot fetch the page never reads the
+  tag, and the URL can be listed anyway. Removing the directive belongs to the apex
+  cutover — O-05 in `roadmap.md` — and is not a cleanup task.
 
 ---
 
