@@ -74,8 +74,15 @@ Rules 1–5 below apply unchanged.
    `shared/` is exempt: it holds segments, not slices, so `@/shared/ui/button` and
    `@/shared/content` are the intended import form, not a violation.
 5. Rules 1–4 are enforced by `eslint-plugin-boundaries` at severity `error`, through the
-   `boundaries/dependencies` policy. Since Next.js 16 `next build` no longer lints, a
-   boundary violation fails the `lint` job, never the build.
+   `boundaries/dependencies` policy list. Three companion rules close the gaps the policy
+   list leaves open: `boundaries/no-unknown-files` requires every file under `src/` to
+   belong to a layer or to a declared exception, `boundaries/no-unknown-dependencies`
+   reports an import whose target belongs to no layer, and
+   `boundaries/no-ignored-dependencies` guards the empty `boundaries/ignore` list against
+   a future entry. An unresolved `@/` specifier is treated as a local unknown rather than
+   an external module, so a broken path alias fails the lint job instead of disabling the
+   rules in silence. Since Next.js 16 `next build` no longer lints, a boundary violation
+   fails the `lint` job, never the build.
 
 Imports resolve through a single alias, `@/*` → `./src/*`. There is no per-layer alias
 and no `baseUrl`: the layer must stay visible in the import path, and a bare specifier
