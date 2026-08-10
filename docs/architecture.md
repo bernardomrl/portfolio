@@ -149,6 +149,10 @@ Files are **kebab-case**, always. Suffixes are **singular**.
 | `.util.ts`      | Pure functions                                                |
 | _(no suffix)_   | Visual components — `project-card.tsx`, `locale-switcher.tsx` |
 
+`src/shared/config/browser-env.ts` keeps the name §9 fixes for it and takes no
+`.config.ts` suffix. The suffix marks a static configuration object; that module
+is a validated read of the environment, performed once at import time.
+
 Identifiers: `PascalCase` for components and types, `camelCase` for functions and
 variables, `SCREAMING_SNAKE_CASE` for module-level constants.
 
@@ -334,6 +338,18 @@ A single fail-fast Zod-validated module:
 It lives in `src/shared/config/` and is imported as `@/shared/config/browser-env`.
 `shared/` holds segments rather than slices, so §2.3 rule 4 does not apply and there is
 no barrel to route through. Never read `process.env` directly anywhere else.
+
+Next.js inlines `NEXT_PUBLIC_*` values by statically replacing literal
+`process.env.NEXT_PUBLIC_X` member expressions in the source text. The module
+therefore builds the object it validates as an object literal, with one literal
+member expression per key. Passing `process.env` itself, destructuring it, or
+indexing it with a variable is forbidden: none of those forms is inlined, so the
+value resolves on the server, the build succeeds, and the browser gets
+`undefined`.
+
+Every key is required and carries no default (D-54). Setting the value is the
+responsibility of each environment: `.env.local` locally, an `env:` block in CI,
+the Vercel dashboard in Preview and Production.
 
 `server-env.ts` does not exist in the MVP, because the MVP has no secret. The first
 feature that introduces one must create it in the same pull request, starting with
