@@ -1,0 +1,66 @@
+# The job id of each job is the name GitHub reports as a check, and the ruleset
+# on `main` requires those three names literally. Renaming a job here breaks the
+# required status checks silently — the old name stays required and never reports.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# why: nothing in this workflow writes. Narrowing the token here is cheaper than
+# auditing it later, and third-party actions run with whatever it is granted.
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  # why: a superseded pull request run is waste, but cancelling on `main` would
+  # leave the default branch without a check record for that commit.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '22'
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
+
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '22'
+      - run: bun install --frozen-lockfile
+      # why: `next typegen` emits route helpers and `next-env.d.ts`, neither of
+      # which is committed. A bare `tsc --noEmit` on a clean checkout would report
+      # errors that do not exist locally.
+      - run: bun run typecheck
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '22'
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+        env:
+          # why: the key is required and carries no default (D-54). `.invalid` is
+          # reserved by RFC 2606 and never resolves, so a CI artifact cannot be
+          # mistaken for a deployable build. Public by construction, not a secret.
+          NEXT_PUBLIC_SITE_URL: https://example.invalid
