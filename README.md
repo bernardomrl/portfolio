@@ -1,6 +1,9 @@
 # portfolio
 
-Personal portfolio and blog, published at [bernardomrl.dev](https://bernardomrl.dev).
+Personal portfolio and blog. Live at
+[next.bernardomrl.dev](https://next.bernardomrl.dev) — the apex `bernardomrl.dev` still
+serves the previous portfolio until the cutover (D-72 and O-05 in
+[`docs/roadmap.md`](./docs/roadmap.md)).
 
 [![CI](https://github.com/bernardomrl/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/bernardomrl/portfolio/actions/workflows/ci.yml)
 
@@ -14,9 +17,10 @@ The full stack, the layer architecture and the rules that govern both live in
 
 ## Prerequisites
 
-- **Node.js 22.** `package.json#engines` declares the floor (`>= 20.9.0`) and Vercel
-  resolves the build runtime from it, but CI pins major 22 and `next build` executes
-  under Node rather than under Bun. Build on 22 to reproduce CI and production.
+- **Node.js 22.** `package.json#engines` pins the major (`22.x`), and both CI and Vercel
+  resolve the build runtime from it — on Vercel it overrides the project's Node.js
+  Version setting, and `next build` executes under Node rather than under Bun. Build on
+  22 to reproduce CI and production.
 - **Bun**, at the version pinned in `package.json#packageManager`. Bun is the package
   manager and the script runner.
 
@@ -65,9 +69,9 @@ Every variable is public and prefixed `NEXT_PUBLIC_`. They are read exclusively 
 `src/shared/config/browser-env.ts`, which validates them at import time and fails fast.
 Never read `process.env` anywhere else.
 
-| Key                    | Required | Local                   | Preview and production                      |
-| ---------------------- | -------- | ----------------------- | ------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL` | Yes      | `http://localhost:3000` | Set per environment in the Vercel dashboard |
+| Key                    | Required | Local                   | Preview and production                                  |
+| ---------------------- | -------- | ----------------------- | ------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | Yes      | `http://localhost:3000` | `https://next.bernardomrl.dev`, in the Vercel dashboard |
 
 `NEXT_PUBLIC_SITE_URL` has no default and no development fallback, on purpose. A default
 would let a wrong host render successfully while every canonical URL, `hreflang`
