@@ -18,5 +18,7 @@
     "ui": "@/shared/ui",
     "lib": "@/shared/lib",
     "hooks": "@/shared/lib"
-  }
+  },
+  "rtl": false,
+  "registries": {}
 }
