@@ -114,11 +114,14 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* why: not circular. `inline` makes Tailwind substitute this value into the
-     utility rather than emit the variable, so `font-sans` compiles to
-     `font-family: var(--font-sans)` and resolves against the variable next/font
-     writes on <html>. */
-  --font-sans: var(--font-sans);
+  /* why: the font/theme variable is named apart from next/font's. Writing
+       `--font-sans: var(--font-sans)` — what `apply --only font` emits — is a CSS
+       cycle that only resolves because next/font's declaration is unlayered and
+       outranks `@layer theme`. It also drops the fallback stack, so a missing
+       next/font class degrades to invalid rather than to a system font. */
+  --font-sans:
+    var(--font-sans-inter), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 @layer base {

@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 
 import '@/shared/ui/styles/globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans-inter' });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
