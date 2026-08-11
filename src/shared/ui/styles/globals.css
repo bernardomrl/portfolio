@@ -120,7 +120,7 @@
        outranks `@layer theme`. It also drops the fallback stack, so a missing
        next/font class degrades to invalid rather than to a system font. */
   --font-sans:
-    var(--font-sans-inter), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    var(--font-sans-archivo), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 

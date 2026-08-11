@@ -16,6 +16,8 @@ Normative rules for **code and architecture** only.
 | Language                  | TypeScript 5, `strict: true`                     |
 | Styling                   | Tailwind CSS 4                                   |
 | Component base            | Shadcn on **Base UI** (not Radix)                |
+| Theme                     | `next-themes`                                    |
+| Icons                     | `@tabler/icons-react`                            |
 | Internationalization      | `next-intl`                                      |
 | Content layer             | **Velite** — build-time, Zod-validated           |
 | Markdown extensions       | `remark-gfm`                                     |
@@ -173,6 +175,16 @@ everything before the first dot and is shared across locales by definition.
   the rule stands so that the page never becomes the place where work happens.
 - Passing a server-only value into a client component is a boundary error — pass
   serialized data, never a module instance or a helper function.
+
+The leaf rule constrains the module graph, not the render tree. Providers in
+`bootstrap/` are its only exception: a provider carries `"use client"` and renders
+`{children}`, and it is legal because it never imports what it wraps. A Server Component
+that passes `children` as a prop renders that subtree on the server and hands the client
+boundary an opaque node to place in a slot — what ships is the provider's own module, not
+the tree below it. A provider that imports its subtree instead of receiving it converts
+that subtree into client code, and is a boundary error under the same rule. A module that
+only composes providers and forwards `children` carries no directive at all: the boundary
+belongs to each provider file.
 
 Every page in this project is statically generated. A page that cannot be statically
 generated requires a decision entry in `roadmap.md` explaining why.
@@ -362,6 +374,9 @@ feature that introduces one must create it in the same pull request, starting wi
 - Shadcn + Base UI primitives live in `shared/ui/`. Treat generated components as
   vendored source: edit them to fit the design system, but keep the API stable.
 - `cn()` (clsx + tailwind-merge) is mandatory for conditional class composition.
+- Icons come from `@tabler/icons-react` and are always imported by name. A namespace
+  import pulls the entire library into the bundle. No second icon set is introduced —
+  `components.json` declares Tabler, and the CLI emits those imports on its own.
 - Design tokens are CSS variables consumed by Tailwind. **No hardcoded hex values in
   components** — a portfolio is judged on visual coherence, and a stray colour is the
   fastest way to lose it.

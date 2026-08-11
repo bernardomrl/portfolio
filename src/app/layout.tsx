@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+
+import { fontSans } from '@/bootstrap/font';
+import { ThemeProvider } from '@/bootstrap/theme-provider';
 
 import '@/shared/ui/styles/globals.css';
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans-inter' });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -12,8 +12,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body>{children}</body>
+    <html lang="en" className={fontSans.variable} suppressHydrationWarning>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
