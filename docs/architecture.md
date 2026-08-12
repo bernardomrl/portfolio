@@ -270,6 +270,18 @@ Configured in `src/shared/config/i18n/routing.ts` via `defineRouting`:
 - `defaultLocale: "en"`
 - `localePrefix: "always"`
 
+`request.ts` sits beside `routing.ts`, in `src/shared/config/i18n/`. The Next.js
+plugin looks for `i18n/request.ts` at the project root or under `src/`, and neither
+is where the layer hierarchy puts it, so `createNextIntlPlugin` is given the path
+explicitly in `next.config.ts`. The two files are always co-located: `request.ts`
+validates against the contract `routing.ts` declares.
+
+The `[locale]` segment carries the root layout — there is no layout above it. It
+declares `generateStaticParams` over `routing.locales` and `dynamicParams = false`,
+which is what makes the static generation §4 requires hold per locale. The locale
+reaches `request.ts` through `next/root-params`; reading it from request headers
+would opt every route into dynamic rendering.
+
 `defaultLocale` is **not "the author's language"** — it is the fallback for a request
 that could not be identified. Crawlers generally send no `accept-language` header and
 therefore always resolve to it, which is why `en` is chosen: a Portuguese-speaking
