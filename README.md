@@ -48,20 +48,33 @@ bun dev
 
 ## Scripts
 
-| Script         | What it does                                        |
-| -------------- | --------------------------------------------------- |
-| `dev`          | Development server on `http://localhost:3000`       |
-| `build`        | Production build                                    |
-| `start`        | Serves the production build; requires `build` first |
-| `lint`         | ESLint over the project; warnings fail the run      |
-| `typecheck`    | Generated route types, then `tsc --noEmit`          |
-| `format`       | Prettier over the repository, writing in place      |
-| `format:check` | Prettier over the repository, reporting only        |
+| Script         | What it does                                                             |
+| -------------- | ------------------------------------------------------------------------ |
+| `dev`          | Compiles content, then the development server on `http://localhost:3000` |
+| `build`        | Compiles content, then the production build                              |
+| `start`        | Serves the production build; requires `build` first                      |
+| `lint`         | ESLint over the project; warnings fail the run                           |
+| `typecheck`    | Compiles content, generates route types, then `tsc --noEmit`             |
+| `format`       | Prettier over the repository, writing in place                           |
+| `format:check` | Prettier over the repository, reporting only                             |
 
 `lint`, `typecheck` and `build` are required status checks on `main`. Linting is not a
 side effect of the build: `next build` stopped running it in Next.js 16, so it is
 enforced by CI and by the `pre-commit` hook only. Formatting is enforced by the
 `pre-commit` hook alone — there is no formatting job in CI.
+
+`dev`, `build` and `typecheck` each run `velite build --clean --strict` first. Velite
+reads `content/`, validates every file against its collection schema and emits typed
+data into `.velite/`, which is generated, git-ignored and imported through the
+`#site/content` alias — no markdown parser ever reaches the browser. `--strict` is what
+makes a malformed document stop the build instead of reaching production; it is a
+command-line flag rather than a `velite.config.ts` option because the config value is
+never read when the CLI is the caller.
+
+There is no watch mode in the scripts. A change under `content/` is picked up by
+restarting `bun dev`, or by running `bun run velite --watch` in a second terminal —
+without `--strict` there, so a half-written file pauses the rebuild instead of killing
+the watcher.
 
 ## Environment variables
 

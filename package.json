@@ -6,11 +6,11 @@
   },
   "packageManager": "bun@1.3.14",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "velite build --clean --strict && next dev",
+    "build": "velite build --clean --strict && next build",
     "start": "next start",
     "lint": "eslint --max-warnings 0",
-    "typecheck": "next typegen && tsc --noEmit",
+    "typecheck": "velite build --clean --strict && next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky"
@@ -47,7 +47,8 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "shadcn": "4.16.2",
     "tailwindcss": "^4",
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "velite": "^0.4.0"
   },
   "trustedDependencies": [
     "sharp",
