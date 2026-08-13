@@ -78,6 +78,34 @@ would let a wrong host render successfully while every canonical URL, `hreflang`
 alternate, sitemap entry and Open Graph image pointed somewhere else — a failure with no
 symptom.
 
+## Internationalization
+
+The site ships in English and Brazilian Portuguese. Every URL carries its locale
+prefix, and a visible switcher preserves the current path across the change.
+
+UI strings — button labels, `aria-label`s, navigation items — live in
+`messages/<locale>.json` and are read through `next-intl`. Prose does not: it is
+authored as markdown under `content/`, and that workflow is documented separately.
+
+### Adding a locale
+
+1. Add the tag to `locales` in `src/shared/config/i18n/routing.ts`. Leave
+   `defaultLocale` alone unless the fallback for unidentified requests is meant to
+   change.
+2. Create `messages/<locale>.json` by copying `messages/en.json` and translating
+   every value.
+3. Register the catalog in the `catalogs` map of
+   `src/shared/config/i18n/request.ts`. The import specifiers there are static on
+   purpose: a missing catalog is a type error rather than a runtime one.
+4. Add the tag to the `name` and `short` objects of `LocaleSwitcher` in **every**
+   catalog, including the ones already translated — each locale names the others in
+   its own language.
+5. Run `bun run build`. The `[locale]` segment prerenders one route per locale, so
+   an unregistered catalog fails there rather than in production.
+
+Beyond two locales the switcher stops being a two-state button and needs a menu
+primitive. See D-116 in [`docs/roadmap.md`](./docs/roadmap.md).
+
 ## Architecture
 
 - [`docs/architecture.md`](./docs/architecture.md) — normative rules for code: the

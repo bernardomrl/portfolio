@@ -1,0 +1,16 @@
+{
+  "LocaleSwitcher": {
+    "switchTo": "Mudar para {language}",
+    "name": {
+      "en": "Inglês",
+      "pt-BR": "Português"
+    },
+    "short": {
+      "en": "EN",
+      "pt-BR": "PT"
+    }
+  },
+  "ThemeToggle": {
+    "label": "Alternar tema"
+  }
+}

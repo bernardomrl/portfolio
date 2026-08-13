@@ -85,6 +85,12 @@ const eslintConfig = defineConfig([
         // would forbid @/shared/ui importing @/shared/lib, which §2.3 rule 4
         // declares legal (D-42).
         { type: 'shared', pattern: 'src/shared', partialMatch: false },
+        // why: the catalogs are data outside src/, not a layer, but they resolve
+        // to local files — so under D-43 they are a local unknown and every
+        // import of them is an error until they are classified. Declaring the
+        // directory is what keeps the dependency reviewable instead of ignored
+        // (D-120). The Velite output of T-18 needs the same treatment.
+        { type: 'messages', pattern: 'messages', partialMatch: false },
       ],
       // why: proxy.ts is framework-mandated and outside the hierarchy (§2.5).
       // A file category classifies it explicitly instead of hiding it in ignore.
@@ -159,6 +165,18 @@ const eslintConfig = defineConfig([
             {
               from: { element: { type: 'entity' } },
               allow: { to: { element: { type: 'shared' } } },
+            },
+            {
+              from: { element: { type: 'entity' } },
+              allow: { to: { element: { type: 'shared' } } },
+            },
+            // why: the message catalogs are read by request.ts alone. The plugin
+            // can only express the layer, so the single-seam restriction lives in
+            // §6.1 and in the module's JSDoc — the same split §5.4 uses for
+            // #site/content (D-120).
+            {
+              from: { element: { type: 'shared' } },
+              allow: { to: { element: { type: 'messages' } } },
             },
             // why: proxy.ts belongs to a file category, not an element (§2.5).
             // It negotiates locale and reads routing config from shared, nothing else.

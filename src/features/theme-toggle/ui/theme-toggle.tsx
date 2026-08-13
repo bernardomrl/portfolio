@@ -1,6 +1,7 @@
 'use client';
 
 import { IconMoon, IconSun } from '@tabler/icons-react';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 
 import { Button } from '@/shared/ui/button';
@@ -14,13 +15,14 @@ import { Button } from '@/shared/ui/button';
  * control that exists to avoid a flash (D-104).
  */
 export function ThemeToggle() {
+  const t = useTranslations('ThemeToggle');
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      aria-label="Toggle theme"
+      aria-label={t('label')}
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
     >
       <IconSun className="dark:hidden" />
