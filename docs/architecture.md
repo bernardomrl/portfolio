@@ -104,6 +104,14 @@ group, which would hide exactly what this ordering exists to expose.
 The Velite output is imported from the generated alias `#site/content`, mapped to
 `./.velite`. It is treated as an external package, not as a layer — see §5.4.
 
+The `next-intl` catalogs in `messages/` are the same kind of target: data outside
+`src/`, not a layer. They resolve to local files, so the boundaries configuration
+classifies the directory as an element in order to see them at all, and one policy
+allows `shared` to reach it. Reading a catalog is confined to
+`shared/config/i18n/request.ts` — the plugin can only express the layer, and the
+seam is a rule of this document, exactly as §5.4 confines `#site/content` to
+`shared/content/`.
+
 ### 2.4 Slice anatomy
 
 ```
@@ -275,6 +283,13 @@ plugin looks for `i18n/request.ts` at the project root or under `src/`, and neit
 is where the layer hierarchy puts it, so `createNextIntlPlugin` is given the path
 explicitly in `next.config.ts`. The two files are always co-located: `request.ts`
 validates against the contract `routing.ts` declares.
+
+`navigation.ts` sits in the same directory and wraps `createNavigation(routing)`.
+It is the only legal source of locale-aware navigation: a component that needs the
+current pathname without its locale prefix, or that needs to send the visitor to
+the same document under another locale, imports from it rather than from
+`next/navigation`. Only the APIs with a consumer are exported, so the module grows
+with the tasks that need it.
 
 The `[locale]` segment carries the root layout — there is no layout above it. It
 declares `generateStaticParams` over `routing.locales` and `dynamicParams = false`,

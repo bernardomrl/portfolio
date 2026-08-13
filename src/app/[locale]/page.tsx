@@ -1,3 +1,4 @@
+import { LocaleSwitcher } from '@/features/locale-switcher';
 import { ThemeToggle } from '@/features/theme-toggle';
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
           routing only (§2.1) — the site-header of T-22 is the permanent mount
           and removes this (D-102). */}
       <ThemeToggle />
+      <LocaleSwitcher />
     </main>
   );
 }

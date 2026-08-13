@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import { fontSans } from '@/bootstrap/font';
-import { ThemeProvider } from '@/bootstrap/theme-provider';
+import { RootProvider } from '@/bootstrap/providers/root-provider';
 
 import { routing } from '@/shared/config/i18n/routing';
 import '@/shared/ui/styles/globals.css';
@@ -26,7 +26,7 @@ export default async function RootLayout({ children, params }: LayoutProps<'/[lo
   return (
     <html lang={locale} className={fontSans.variable} suppressHydrationWarning>
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );
