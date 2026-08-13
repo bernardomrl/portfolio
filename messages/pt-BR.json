@@ -10,6 +10,16 @@
       "pt-BR": "PT"
     }
   },
+  "Metadata": {
+    "siteName": "Bernardo Meirelles",
+    "title": "Bernardo Meirelles — Engenheiro Front-end",
+    "description": "Engenheiro front-end construindo aplicações web rápidas, acessíveis e arquitetadas com intenção. Projetos, case studies e artigos."
+  },
+  "NotFound": {
+    "heading": "Página não encontrada",
+    "description": "Esta página não existe, ou foi movida.",
+    "backToHome": "Voltar para o início"
+  },
   "ThemeToggle": {
     "label": "Alternar tema"
   }
