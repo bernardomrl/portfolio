@@ -277,6 +277,17 @@ Configured in `src/shared/config/i18n/routing.ts` via `defineRouting`:
 - `locales: ["en", "pt-BR"]`
 - `defaultLocale: "en"`
 - `localePrefix: "always"`
+- `alternateLinks: false`
+
+`alternateLinks` is disabled in the routing contract rather than in `proxy.ts`,
+because `next-intl` moved middleware options into `defineRouting`. Left on, the
+proxy answers every request with a `link` header carrying `rel="alternate"` for
+every locale of this contract. That set is unconditional, and §6.4 restricts
+alternates to the locales a document actually exists in — a distinction the
+network layer cannot make. Emitting an indexing directive would also be a
+second responsibility, which §6.2 denies the proxy. The `alternates` of each
+route's metadata is the single normative source, and the route is the owner of
+any correction.
 
 `request.ts` sits beside `routing.ts`, in `src/shared/config/i18n/`. The Next.js
 plugin looks for `i18n/request.ts` at the project root or under `src/`, and neither
@@ -433,10 +444,29 @@ feature that introduces one must create it in the same pull request, starting wi
 
 ## 12. SEO and metadata
 
-- Every route exports `generateMetadata`, localized. No route inherits a generic title.
-- `metadataBase` derives from `NEXT_PUBLIC_SITE_URL`. No hostname is ever hardcoded.
-- Every localized document declares `alternates.canonical` and `alternates.languages`
-  restricted to the locales it exists in (§6.4).
+- Metadata objects from the segments of one route are merged **shallowly**, and a
+  nested object declared in an earlier segment is replaced whole by the last
+  segment that declares it. The division below follows from that and is not a
+  matter of taste.
+- Site-level fields are declared once, in the `generateMetadata` of the
+  `[locale]` layout: `metadataBase`, the robots directive, and a `title` and
+  `description` that exist to be inherited by `not-found.tsx`, which cannot
+  export metadata of its own. `metadataBase` derives from
+  `NEXT_PUBLIC_SITE_URL` through `browser-env.ts`. No hostname is ever
+  hardcoded.
+- Document-level fields are declared by every route, localized, and inherited by
+  none: `title`, `description`, `alternates.canonical`, `alternates.languages`
+  restricted to the locales the document exists in (§6.4), and the **complete**
+  `openGraph` object. The Open Graph envelope — `type`, `siteName`, `locale`,
+  `alternateLocale` — is repeated per route rather than declared in the layout,
+  because a route declaring `openGraph` at all discards a parent's whole.
+- `alternates.languages` carries an `x-default` entry pointing at the document
+  of `defaultLocale`, never at `/`. With `localePrefix: "always"` the root is a
+  redirect and never a document, and an `hreflang` target that is never 200 is
+  the weaker form.
+- No route may declare `robots` while the directive below is in force. A partial
+  redeclaration replaces the object whole and drops `index` and `follow`
+  silently.
 - Open Graph images are generated with `next/og` per document, from the same frontmatter
   that renders the page. No hand-made image files per post.
 - `sitemap.ts` and `robots.ts` live in `app/` and derive from the content collections, so
