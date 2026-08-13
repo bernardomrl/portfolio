@@ -91,6 +91,12 @@ const eslintConfig = defineConfig([
         // directory is what keeps the dependency reviewable instead of ignored
         // (D-120). The Velite output of T-18 needs the same treatment.
         { type: 'messages', pattern: 'messages', partialMatch: false },
+        // why: the Velite output is generated data outside src/, not a layer,
+        // but it resolves to local files — the same case as the catalogs above,
+        // and the one D-43 named when it chose unresolvableAlias: false. §5.4
+        // confines the import to shared/content/, which the plugin cannot
+        // express; that half lives in the document and in the module's JSDoc.
+        { type: 'content', pattern: '.velite', partialMatch: false },
       ],
       // why: proxy.ts is framework-mandated and outside the hierarchy (§2.5).
       // A file category classifies it explicitly instead of hiding it in ignore.
@@ -177,6 +183,13 @@ const eslintConfig = defineConfig([
             {
               from: { element: { type: 'shared' } },
               allow: { to: { element: { type: 'messages' } } },
+            },
+            // why: shared/content/ is the single seam to #site/content (§5.4).
+            // The plugin sees the layer and nothing finer, so the confinement to
+            // that one directory is a rule of the document, not of the linter.
+            {
+              from: { element: { type: 'shared' } },
+              allow: { to: { element: { type: 'content' } } },
             },
             // why: proxy.ts belongs to a file category, not an element (§2.5).
             // It negotiates locale and reads routing config from shared, nothing else.
