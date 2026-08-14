@@ -2,6 +2,11 @@
    phantom utilities (.table, .block, .static). The base path is relative to this file. */
 @import 'tailwindcss' source('../../..');
 @import 'shadcn/tailwind.css';
+/* why: the prose sheet is the file D-91 said would justify the split. It enters
+   through `layer(components)` rather than unlayered, because an unlayered rule
+   outranks every layer regardless of specificity and would beat the utilities
+   of any component mapped into the prose — the mechanism D-97 measured. */
+@import './typeset.css' layer(components);
 
 @custom-variant dark (&:is(.dark *));
 
