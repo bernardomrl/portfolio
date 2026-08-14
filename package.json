@@ -45,7 +45,9 @@
     "lint-staged": "^17.3.0",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "rehype-pretty-code": "^0.14.5",
     "shadcn": "4.16.2",
+    "shiki": "^4.4.3",
     "tailwindcss": "^4",
     "typescript": "^5.8.0",
     "velite": "^0.4.0"
