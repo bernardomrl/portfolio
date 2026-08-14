@@ -418,13 +418,20 @@ feature that introduces one must create it in the same pull request, starting wi
 - Design tokens are CSS variables consumed by Tailwind. **No hardcoded hex values in
   components** — a portfolio is judged on visual coherence, and a stray colour is the
   fastest way to lose it.
-- The global stylesheet lives in `shared/ui/styles/`, not in `app/`. `app/` is routing.
-- Accessibility rests on Base UI primitives. Do not hand-roll dialogs, popovers, selects
+- Stylesheets live in `shared/ui/styles/`, not in `app/`. `app/` is routing.
+  `globals.css` is the single entry point; any other sheet is reached from it by a
+  CSS `@import`, never by a side-effect import in JavaScript.- Accessibility rests on Base UI primitives. Do not hand-roll dialogs, popovers, selects
   or menus.
 - `next/image` is mandatory for every image, local or remote. Content images are
   referenced from `public/` and resolved through the MDX component mapping.
-- Typography for compiled markdown is defined once, as a `prose` style in
-  `shared/ui/styles/`. Content files never carry styling instructions.
+- Typography for compiled markdown is defined once, as a `typeset` style in
+  `shared/ui/styles/typeset.css`, imported into `globals.css` with
+  `layer(components)`. The layer is load-bearing: an unlayered rule outranks every
+  `@layer` regardless of specificity, so an unlayered sheet would beat the utilities
+  of any component mapped into the prose. Every rule is wrapped in `:where()` for the
+  same reason, and `.not-typeset` is the opt-out for a subtree that must escape the
+  style. The class is applied by `shared/ui/mdx/mdx-content.tsx` and by nothing else.
+  Content files never carry styling instructions.
 
 ---
 
