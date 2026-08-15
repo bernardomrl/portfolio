@@ -9,7 +9,7 @@
     "dev": "velite build --clean --strict && next dev",
     "build": "velite build --clean --strict && next build",
     "start": "next start",
-    "lint": "eslint --max-warnings 0",
+    "lint": "velite build --clean --strict && eslint --max-warnings 0",
     "typecheck": "velite build --clean --strict && next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
