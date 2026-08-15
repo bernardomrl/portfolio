@@ -126,6 +126,9 @@ primitive. See D-116 in [`docs/roadmap.md`](./docs/roadmap.md).
   internationalization, rendering model, naming and TypeScript strictness.
 - [`docs/roadmap.md`](./docs/roadmap.md) — scope, execution order, the Definition of
   Done every change is held to, and the decisions log.
+- [`docs/design.md`](./docs/design.md) — normative rules for what the site contains: the
+  routes and their sections, where each piece of text comes from, the motion tiers and
+  the interaction catalogue.
 
 ## License
 
