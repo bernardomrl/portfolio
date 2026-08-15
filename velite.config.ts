@@ -1,5 +1,5 @@
 import rehypePrettyCode, { type Options as RehypePrettyCodeOptions } from 'rehype-pretty-code';
-import { defineConfig } from 'velite';
+import { defineConfig, s, z } from 'velite';
 
 // why: dual theme is not a preference. A single theme writes one set of colours
 // into the markup at build time, and the site has two — next-themes toggles the
@@ -18,6 +18,46 @@ const rehypePrettyCodeOptions = {
   defaultLang: 'plaintext',
 } satisfies RehypePrettyCodeOptions;
 
+// why: the locale set is repeated here rather than imported from
+// `src/shared/config/i18n/routing.ts`. This file is bundled by esbuild outside
+// the tsconfig paths and outside the FSD hierarchy, so the import is not
+// available, and a build config reaching into application code inverts the
+// dependency anyway. The duplication is guarded rather than accepted: the seam
+// in `shared/content/` types its parameter as the routing contract's own locale
+// union and assigns it to this collection's, so a divergence between the two
+// lists fails `typecheck` instead of shipping a document that resolves for no
+// locale (D-162).
+const PAGE_LOCALES = ['en', 'pt-BR'] as const;
+
+type PageLocale = (typeof PAGE_LOCALES)[number];
+
+const isPageLocale = (value: string): value is PageLocale =>
+  (PAGE_LOCALES as readonly string[]).includes(value);
+
+// why: `s.path()` returns the path relative to the content root with the
+// extension removed — `pages/about.en` for `content/pages/about.en.md`. It
+// carries the collection directory and the locale suffix, so neither `slug` nor
+// `locale` is readable without parsing, and neither belongs in frontmatter: §3
+// fixes the pair in the file name, and a frontmatter field repeating the file
+// name is a second source that can diverge with no error. A path this parser
+// cannot read fails the build carrying the value it received, so the schema
+// diagnoses itself (D-161).
+// why: positional captures rather than named groups. `(?<name>…)` is ES2018 and
+// `tsconfig.json` targets ES2017; raising the target is a global change with no
+// relation to this task. `noUncheckedIndexedAccess` types both captures as
+// possibly `undefined` either way, so the guard below is not a cost of this form.
+const PAGE_PATH = /^pages\/([a-z0-9]+(?:-[a-z0-9]+)*)\.([^.]+)$/;
+
+const parsePagePath = (path: string): null | { locale: PageLocale; slug: string } => {
+  const match = PAGE_PATH.exec(path);
+  const slug = match?.[1];
+  const locale = match?.[2];
+
+  if (slug === undefined || locale === undefined || !isPageLocale(locale)) return null;
+
+  return { locale, slug };
+};
+
 export default defineConfig({
   // why: root and output both equal the library defaults and are declared
   // anyway. project.md §1 fixes content/ at the repository root and §2.3 of
@@ -32,10 +72,42 @@ export default defineConfig({
   output: {
     data: '.velite',
   },
-  // why: empty until T-20. content/ does not exist and §1 of project.md forbids
-  // committing an empty directory, so this task ships the pipeline alone and
-  // T-20 ships the first collection together with the files that justify it.
-  collections: {},
+  // why: prose that backs a route of its own (§5.2). Landing copy is not here —
+  // it is fragmented into strings the layout animates separately and lives in
+  // `messages/` (D-152). The extension is `.md` and the body still compiles
+  // through `s.mdx()`; the two are not in tension. `s.mdx()` is a schema, not a
+  // file format: it hands the body to the MDX compiler with the file path, whose
+  // default `format: 'detect'` reads `.md` as markdown and disables JSX and ESM
+  // while still emitting the function-body a component mapping can consume. The
+  // restriction is the point — a page is prose and may not carry components
+  // (D-142, D-147).
+  collections: {
+    pages: {
+      name: 'Page',
+      pattern: 'pages/*.md',
+      schema: s
+        .object({
+          title: s.string().min(1).max(120),
+          body: s.mdx(),
+          path: s.path(),
+        })
+        .transform(({ path, ...fields }, ctx) => {
+          const parsed = parsePagePath(path);
+
+          if (parsed === null) {
+            ctx.addIssue({
+              code: 'custom',
+              fatal: true,
+              message: `Unreadable page path "${path}". Expected "pages/<kebab-slug>.<locale>.md" with locale in ${PAGE_LOCALES.join(', ')}.`,
+            });
+
+            return z.NEVER;
+          }
+
+          return { ...fields, locale: parsed.locale, slug: parsed.slug };
+        }),
+    },
+  },
   // why: only `mdx` is declared. `s.markdown()` has no consumer in this project
   // — every collection compiles through `s.mdx()` (D-142) — so a `markdown`
   // block would state an intent it never has, which is what D-134 and D-139
