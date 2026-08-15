@@ -3,7 +3,10 @@
 Normative rules for **code and architecture** only.
 
 > **Out of scope for this document:** infrastructure, deployment, CI/CD, Git workflow,
-> branching, commits, environments and repository operations.
+> branching, commits, environments and repository operations — those are `project.md`.
+> What the site contains — routes, sections, the origin of each piece of text, and the
+> motion catalogue — is `design.md`. This document governs the **how**; `design.md`
+> governs the **what**. Where they touch, this document prevails.
 
 ---
 
@@ -194,6 +197,16 @@ that subtree into client code, and is a boundary error under the same rule. A mo
 only composes providers and forwards `children` carries no directive at all: the boundary
 belongs to each provider file.
 
+A client leaf that owns a render loop — `requestAnimationFrame`, an `AudioContext`, a
+`pointermove` handler driving a custom property — carries three obligations beyond the
+leaf rule. It never routes per-frame values through React state, because a state update
+per frame is a re-render per frame; the value is written to a ref or to a CSS custom
+property and read by the loop. It suspends its own work when it is not observable, which
+means the viewport and the tab both. And it declares its `prefers-reduced-motion`
+behaviour as a mount condition rather than as a branch inside the loop: a loop that runs
+and does nothing still costs a frame. The motion tiers in §6 of `design.md` classify
+which effects are allowed to reach for this at all.
+
 Every page in this project is statically generated. A page that cannot be statically
 generated requires a decision entry in `roadmap.md` explaining why.
 
@@ -215,18 +228,26 @@ would reverse it.
 
 ```
 content/
-├── sections/         # prose blocks composed into the landing page
-│   ├── hero.en.md
-│   ├── hero.pt-BR.md
+├── pages/            # prose backing a route of its own
 │   ├── about.en.md
 │   └── about.pt-BR.md
 ├── projects/         # case studies
 │   ├── greenfield.en.mdx
 │   └── greenfield.pt-BR.mdx
-└── posts/            # blog
-    ├── some-post.en.mdx
-    └── some-post.pt-BR.mdx
+├── posts/            # blog
+│   ├── some-post.en.mdx
+│   └── some-post.pt-BR.mdx
+└── decisions/        # curated entries backing the Trail
+    ├── D-019.en.md
+    └── D-019.pt-BR.md
 ```
+
+There is no `sections/`. Landing copy is fragmented — an eyebrow, a headline split into
+addressable lines, a meta line, action labels — because the layout animates the fragments
+separately, and a compiled markdown body offers a widget one opaque block. By the test in
+§5.3 those fragments are UI strings: they carry no paragraphs, links, emphasis or
+structure, and removing one breaks the layout. They live in `messages/`. A directory here
+holds prose that backs a route, and nothing else (D-152).
 
 ### 5.3 Prose versus UI strings
 
@@ -249,18 +270,30 @@ that fails validation **fails the build** — a malformed post never reaches pro
 Velite's generated types are the source of truth for content shapes. Domain types derive
 from them; they are never re-declared by hand.
 
-Access to `#site/content` is confined to `shared/content/`, which re-exports the raw
-collections. Entities and widgets import from `shared/content/`, never from the generated
-alias directly. This keeps a single seam to change if the content layer is ever replaced.
+Access to `#site/content` is confined to `shared/content/`, which exposes narrowing
+lookups rather than the raw collections. `noUncheckedIndexedAccess` makes every indexed
+read of an array possibly `undefined`, so a consumer handed a raw collection either
+writes the narrowing itself or reaches for a non-null assertion — and the assertion is
+what the flag exists to prevent. Entities and widgets import from `shared/content/`,
+never from the generated alias directly. This keeps a single seam to change if the
+content layer is ever replaced.
+
+A lookup that finds nothing returns `undefined`. It does not call `notFound()`: the 404
+is a decision of the route (§7), the same absence is filtered by a listing (§6.4) and
+skipped by `sitemap.ts`, and calling a navigation API from a data module would bind the
+content layer to the routing runtime (D-153).
 
 ### 5.5 MDX pipeline
 
 Configured once, in `velite.config.ts`:
 
-- `remark-gfm` — tables, task lists, strikethrough, autolinks.
-- `rehype-pretty-code` with `shiki` — syntax highlighting resolved at build time, emitted
-  as HTML with inline styles. **Zero highlighting JavaScript ships to the client**, and
-  there is no post-hydration colour flash.
+- GFM — tables, task lists, strikethrough, autolinks. `remark-gfm` is **not** installed
+  and **not** declared: Velite defaults `gfm` to true and pushes the plugin itself, so
+  declaring it applies the transform twice (D-141).
+- `rehype-pretty-code` with `shiki` — syntax highlighting resolved at build time. Two
+  themes are emitted as CSS custom properties on each token, never as an inline `color`,
+  which is the only form that survives the runtime theme toggle. **Zero highlighting
+  JavaScript ships to the client**, and there is no post-hydration colour flash (D-148).
 
 MDX components (custom `<Callout>`, styled `<a>`, `next/image` wrappers) are registered
 in a single mapping in `shared/ui/mdx/`. A content file may only use components from that
@@ -420,7 +453,8 @@ feature that introduces one must create it in the same pull request, starting wi
   fastest way to lose it.
 - Stylesheets live in `shared/ui/styles/`, not in `app/`. `app/` is routing.
   `globals.css` is the single entry point; any other sheet is reached from it by a
-  CSS `@import`, never by a side-effect import in JavaScript.- Accessibility rests on Base UI primitives. Do not hand-roll dialogs, popovers, selects
+  CSS `@import`, never by a side-effect import in JavaScript.
+- Accessibility rests on Base UI primitives. Do not hand-roll dialogs, popovers, selects
   or menus.
 - `next/image` is mandatory for every image, local or remote. Content images are
   referenced from `public/` and resolved through the MDX component mapping.
@@ -446,6 +480,10 @@ feature that introduces one must create it in the same pull request, starting wi
 - Focus is never removed. Any interaction that moves the viewport must also move focus to
   the destination, or keyboard users are silently left behind.
 - Colour contrast targets WCAG AA at minimum, in both themes.
+
+The rules above are the floor. Which effect is permitted where, and at what cost, is the
+interaction catalogue in §7 of `design.md` — including the effects each surface is
+forbidden from using, which is the part that keeps a gesture a signal instead of noise.
 
 ---
 
