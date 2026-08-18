@@ -456,8 +456,20 @@ feature that introduces one must create it in the same pull request, starting wi
   CSS `@import`, never by a side-effect import in JavaScript.
 - Accessibility rests on Base UI primitives. Do not hand-roll dialogs, popovers, selects
   or menus.
-- `next/image` is mandatory for every image, local or remote. Content images are
-  referenced from `public/` and resolved through the MDX component mapping.
+- `next/image` is mandatory for every image, local or remote. Content carries images in
+  two positions and they do not share a mechanism:
+  - **Frontmatter images** — a cover, a portrait — are declared with `s.image()` and
+    authored **beside the document that owns them**, as a relative path. Velite reads the
+    file, copies it into `output.assets` under a content hash and emits an object
+    structurally assignable to `StaticImageData`, so it is passed to `next/image` whole:
+    `<Image src={doc.cover} placeholder="blur" />`, with no `width`, no `height` and no
+    spread. A frontmatter image is the only source of intrinsic dimensions in this
+    project, and a broken path fails the build. `output.assets` is build output and is
+    git-ignored; the authored file lives in `content/` (D-168).
+  - **Body images** — an image inside compiled prose — carry no dimensions, because
+    markdown has nowhere to put them. They are referenced from `public/` and resolved
+    through the MDX component mapping, whose shape is decided by the task that authors the
+    first one (D-147, D-173).
 - Typography for compiled markdown is defined once, as a `typeset` style in
   `shared/ui/styles/typeset.css`, imported into `globals.css` with
   `layer(components)`. The layer is load-bearing: an unlayered rule outranks every
