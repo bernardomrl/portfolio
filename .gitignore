@@ -32,10 +32,7 @@ yarn-error.log*
 
 # velite
 /.velite/
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+/public/static/
 
 # typescript
 *.tsbuildinfo
