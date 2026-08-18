@@ -1,6 +1,11 @@
 import rehypePrettyCode, { type Options as RehypePrettyCodeOptions } from 'rehype-pretty-code';
+// why: the `z` re-exported below is Velite 0.4's own Zod and it is v3 — `z.url`
+// is `undefined` on it, measured in T-21. The project's direct dependency is
+// `zod@4.4.3`, which `browser-env.ts` uses, so two majors coexist in the tree
+// and the v4 API is not reachable from this file. Importing `zod` directly here
+// instead would put a v4 schema in front of a v3 validator, a pairing neither
+// library states a contract for (D-186).
 import { defineConfig, s, z } from 'velite';
-
 // why: dual theme is not a preference. A single theme writes one set of colours
 // into the markup at build time, and the site has two — next-themes toggles the
 // `.dark` class on `html` (D-86) long after Velite has run. With two themes shiki
@@ -78,6 +83,44 @@ const parseProjectPath = (path: string): null | { locale: ContentLocale; slug: s
   if (slug === undefined || locale === undefined || !isContentLocale(locale)) return null;
 
   return { locale, slug };
+};
+
+// why: the third occurrence of the path transform and the first with a shape the
+// other two do not have. The case study owning an entry is a path segment, so
+// this parser returns three fields where the others return two, and a shared
+// parser would have to be parameterized by segment count to cover all three.
+// D-163 pre-committed the extraction to the third case; the third case is the
+// one that does not fit it. The extraction moves to `posts` in T-29, which is
+// `posts/<slug>.<locale>` and is the third *identical* occurrence (D-180).
+// why: the project lives in the path rather than in frontmatter. A decision does
+// not exist outside the case study it belongs to, so the two move, rename and get
+// deleted as one unit — the ownership argument D-168 made for the cover. Neither
+// form is validated by Zod, but choosing an existing directory fails less often
+// than typing a free string, and `ls content/decisions/` answers which case
+// studies have a Trail (D-179).
+// why: the entry identifier is the slug and nothing else. `d-139` is the original
+// `D-xx` in the file name, and a frontmatter field repeating it is the second
+// source D-161 refused. `\d{2,}` rejects `d-9`: a missing leading zero publishes
+// a cross-reference that points at nothing (D-184).
+const DECISION_PATH = /^decisions\/([a-z0-9]+(?:-[a-z0-9]+)*)\/(d-\d{2,})\.([^.]+)$/;
+
+const parseDecisionPath = (
+  path: string,
+): null | { locale: ContentLocale; project: string; slug: string } => {
+  const match = DECISION_PATH.exec(path);
+  const project = match?.[1];
+  const slug = match?.[2];
+  const locale = match?.[3];
+
+  if (
+    project === undefined ||
+    slug === undefined ||
+    locale === undefined ||
+    !isContentLocale(locale)
+  )
+    return null;
+
+  return { locale, project, slug };
 };
 
 export default defineConfig({
@@ -191,6 +234,75 @@ export default defineConfig({
           return { ...fields, locale: parsed.locale, slug: parsed.slug };
         }),
     },
+    // why: a Trail entry is prose that backs no route of its own — it is rendered
+    // inside the case study panel of §4.4 — so it carries the §5.4 minimum and
+    // nothing else. No `order` field: whether the panel sorts by the `D-xx`
+    // number or editorially is a decision of T-28, and a field no route reads is
+    // a guess with a migration cost across every authored document. No `summary`
+    // and no date: §2.3 lists neither (D-184).
+    // why: `decisions/**/*.md` rather than `decisions/*/*.md`. The single-level
+    // glob would silently skip a file dropped at `decisions/orphan.md`; the
+    // recursive one picks it up and the parser fails the build carrying the path
+    // it received. Loud over silent, which is the whole reason D-161 put the
+    // diagnosis in the transform.
+    decisions: {
+      name: 'Decision',
+      pattern: 'decisions/**/*.md',
+      schema: s
+        .object({
+          title: s.string().min(1).max(120),
+          body: s.mdx(),
+          path: s.path(),
+        })
+        .transform(({ path, ...fields }, ctx) => {
+          const parsed = parseDecisionPath(path);
+
+          if (parsed === null) {
+            ctx.addIssue({
+              code: 'custom',
+              fatal: true,
+              message: `Unreadable decision path "${path}". Expected "decisions/<project-slug>/d-<number>.<locale>.md" with locale in ${CONTENT_LOCALES.join(', ')}.`,
+            });
+
+            return z.NEVER;
+          }
+
+          return {
+            ...fields,
+            locale: parsed.locale,
+            project: parsed.project,
+            slug: parsed.slug,
+          };
+        }),
+    },
+  },
+  // why: Zod validates one document at a time and cannot see another collection,
+  // so the reference from an entry to its case study has no schema-level check.
+  // `prepare` is the only hook handed every collection, and it runs after the
+  // build and before the output is written, so aborting here leaves no stale
+  // `.velite` behind for the next command to read.
+  // why: the pair `(project, locale)` is checked, not the slug alone. An entry in
+  // a locale its case study does not exist in has no surface to appear on under
+  // §6.4, which makes it invisible content — the one thing a curated Trail
+  // cannot ship. The reverse direction is deliberately not checked: §4.4 says
+  // only this site's Trail is complete, so a case study with no entries is
+  // expected (D-181).
+  // why: the message names `<project>/<slug>.<locale>` and not a file path —
+  // `path` is consumed by the transform and is gone by the time this runs. The
+  // file is `content/decisions/<project>/<slug>.<locale>.md` and reconstructs
+  // from the three values.
+  prepare: ({ decisions, projects }) => {
+    const authored = new Set(projects.map((project) => `${project.slug}.${project.locale}`));
+
+    const orphans = decisions
+      .filter((decision) => !authored.has(`${decision.project}.${decision.locale}`))
+      .map((decision) => `${decision.project}/${decision.slug}.${decision.locale}`);
+
+    if (orphans.length > 0) {
+      throw new Error(
+        `Trail entries reference a case study that does not exist in their locale: ${orphans.join(', ')}.`,
+      );
+    }
   },
   // why: only `mdx` is declared. `s.markdown()` has no consumer in this project
   // — every collection compiles through `s.mdx()` (D-142) — so a `markdown`
