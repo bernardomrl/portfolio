@@ -267,6 +267,13 @@ Each directory in `content/` is a Velite collection with an explicit Zod schema.
 schema carries at minimum `title`, `slug`, `locale` and the compiled `body`. Frontmatter
 that fails validation **fails the build** — a malformed post never reaches production.
 
+A schema validates one document and cannot see another collection. A reference from one
+collection to another is therefore checked in the `prepare` hook, which receives every
+collection after the build and before the output is written, and which fails the build on
+a reference that resolves to nothing. Locale is part of the reference: a document whose
+target does not exist in its own locale is unreachable under §6.4 and is a broken
+reference, not a partial translation.
+
 Velite's generated types are the source of truth for content shapes. Domain types derive
 from them; they are never re-declared by hand.
 
