@@ -127,6 +127,16 @@
   --font-sans:
     var(--font-sans-archivo), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  /* why: same shape as `--font-sans` above, for the same reason — the next/font
+         variable is named apart from the theme's, and the fallback stack is
+         explicit so a missing class degrades to a system face instead of to
+         invalid. The stacks are Tailwind's own serif and mono defaults. */
+  --font-display:
+    var(--font-display-fraunces), ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono:
+    var(--font-mono-plex), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
 }
 
 @layer base {
