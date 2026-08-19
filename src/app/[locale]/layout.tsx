@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
-import { fontSans } from '@/bootstrap/font';
+import { fontVariables } from '@/bootstrap/font';
 import { RootProvider } from '@/bootstrap/providers/root-provider';
 
 import { env } from '@/shared/config/browser-env';
@@ -59,7 +59,7 @@ export default async function RootLayout({ children, params }: LayoutProps<'/[lo
   const { locale } = await params;
 
   return (
-    <html lang={locale} className={fontSans.variable} suppressHydrationWarning>
+    <html lang={locale} className={fontVariables} suppressHydrationWarning>
       <body>
         <RootProvider>{children}</RootProvider>
       </body>
