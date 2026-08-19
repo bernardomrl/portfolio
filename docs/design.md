@@ -506,17 +506,32 @@ See §2.2 and §6.5.
 
 ## 8. Typography
 
-**Sans — Archivo.** Neutral grotesque, already in the project. In a sans-serif pairing
-the sans is the one that should stay quiet.
+**Sans — Archivo.** Neutral grotesque, the application typeface. In a pairing this size
+the sans is the one that should stay quiet, and it carries body copy and every interface
+string.
 
-**Display serif — Fraunces or Instrument Serif.** See O-07: both are prototyped against
-the real headline in both locales and decided by looking, not by describing.
+**Display serif — Fraunces.** Variable, requested with the `opsz` axis alone so the
+browser tracks optical size against font-size. `WONK` stays at its default of 1: the axis
+is not requested, so the leaning n/m/h cannot be turned off, and that is the form the
+prototype chose (D-188).
 
-**Mono — see O-08.** One weight, one subset, restricted to eyebrows, meta lines, numbers
-and code. It is what makes the technical register read as technical.
+**Mono — IBM Plex Mono, 400, `latin`.** One weight, one subset. It carries eyebrows, meta
+lines and numbers, and it is the family of every compiled code block under §10 of
+`architecture.md`.
+
+**The display face stops at large sizes.** It is legal on headlines and on any text set
+large enough to read as titling, and it is forbidden on the eyebrow, the meta line,
+captions, labels and any running text. Small factual text is mono; everything else is
+Archivo. Measured at the T-47 prototype: the meta line set in Fraunces was materially
+harder to read than the same line in mono, and the fix is not a second serif for small
+sizes — it is one rule about where the serif ends (D-190).
 
 Every family is SIL Open Font License, loaded through `next/font/google`. Abril Fatface
-is rejected: a fat didone contradicts a structural direction (D-92).
+is rejected: a fat didone contradicts a structural direction (D-92). Instrument Serif is
+rejected: it reads better than Fraunces at small sizes, which is a strength the rule above
+makes irrelevant, and it buys no optical size axis for the sizes that matter.
+
+---
 
 ---
 
@@ -525,8 +540,6 @@ is rejected: a fat didone contradicts a structural direction (D-92).
 Questions about the site rather than about the order of work. They share the `O-xx`
 namespace with `roadmap.md`. Resolving one produces a numbered entry in the Decisions Log.
 
-| #    | Question                                                                            | State                |
-| ---- | ----------------------------------------------------------------------------------- | -------------------- |
-| O-06 | Whether `/about` carries an experience list, and whether it is frontmatter or prose | Open                 |
-| O-07 | Fraunces or Instrument Serif as the display face                                    | Decided by prototype |
-| O-08 | Which mono family, and how it is subset                                             | Open                 |
+| #    | Question                                                                            | State |
+| ---- | ----------------------------------------------------------------------------------- | ----- |
+| O-06 | Whether `/about` carries an experience list, and whether it is frontmatter or prose | Open  |
