@@ -39,7 +39,7 @@ export const fontSans = Archivo({
  */
 export const fontDisplay = Fraunces({
   axes: ['opsz'],
-  preload: true,
+  preload: false,
   subsets: ['latin'],
   variable: '--font-display-fraunces',
 });
