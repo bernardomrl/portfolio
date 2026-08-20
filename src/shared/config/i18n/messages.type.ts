@@ -1,3 +1,5 @@
+import { routing } from '@/shared/config/i18n/routing';
+
 import type enMessages from '../../../../messages/en.json';
 
 /**
@@ -11,18 +13,21 @@ import type enMessages from '../../../../messages/en.json';
 export type Catalog = typeof enMessages;
 
 /**
- * why: without this augmentation `t()` takes `string` and a typo in a key is a
- * runtime miss that renders the key path and logs — invisible to `lint`,
- * `typecheck` and `build`. This task takes the catalogs from four namespaces to
- * seven, which is where that failure stops being theoretical.
+ * why: `Locale` is augmented here, closing the debt this module recorded in
+ * T-22. That note deferred it because narrowing the return of `useLocale()`
+ * and the props of `Link` reaches `features/locale-switcher`, whose source was
+ * out of scope then. T-40 is the first task that needs the narrow union — a
+ * locale-keyed constant cannot be indexed by `string` — and the narrowing was
+ * measured against the whole tree before being taken, not assumed safe.
  *
- * why: `Locale` is deliberately not augmented. It changes the return type of
- * `useLocale()` and the props of `Link` for `features/locale-switcher`, whose
- * source is not in scope here — Regra D. It belongs to whichever task next
- * touches that slice.
+ * why: the union is derived from `routing.ts` rather than written out. That
+ * file is the routing contract and a second list would diverge with no error,
+ * which is the argument D-161 made against repeating a file name in
+ * frontmatter and D-171 made against duplicating the locale tuple.
  */
 declare module 'next-intl' {
   interface AppConfig {
+    Locale: (typeof routing.locales)[number];
     Messages: Catalog;
   }
 }
