@@ -1,8 +1,7 @@
-import { getTranslations } from 'next-intl/server';
-
-import { REPOSITORY_LINKS, SOCIAL_LINKS } from '@/widgets/site-footer/config/social.config';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { Link } from '@/shared/config/i18n/navigation';
+import { CONNECT_LINKS, LINKEDIN_PROFILES, REPOSITORY_LINKS } from '@/shared/config/links.config';
 import { HoverFlip } from '@/shared/ui/hover-flip';
 
 /**
@@ -23,6 +22,10 @@ import { HoverFlip } from '@/shared/ui/hover-flip';
  */
 export async function SiteFooter() {
   const t = await getTranslations('Footer');
+  // why: the locale selects the LinkedIn profile version. `getLocale()` returns
+  // the narrowed union because `AppConfig.Messages` is augmented and the locale
+  // comes from the same contract (D-195).
+  const locale = await getLocale();
 
   return (
     <footer className="mt-24 border-t border-border/60">
@@ -50,7 +53,7 @@ export async function SiteFooter() {
           <ul className="mt-4 w-fit space-y-2 text-sm text-muted-foreground">
             <li>
               <a
-                href={SOCIAL_LINKS.github}
+                href={CONNECT_LINKS.github}
                 className="hover:text-foreground"
                 rel="me"
                 target="_blank"
@@ -60,7 +63,7 @@ export async function SiteFooter() {
             </li>
             <li>
               <a
-                href={SOCIAL_LINKS.linkedin}
+                href={LINKEDIN_PROFILES[locale]}
                 className="hover:text-foreground"
                 rel="me"
                 target="_blank"
@@ -69,7 +72,7 @@ export async function SiteFooter() {
               </a>
             </li>
             <li>
-              <a href={SOCIAL_LINKS.email} className="hover:text-foreground">
+              <a href={CONNECT_LINKS.email} className="hover:text-foreground">
                 <HoverFlip label={t('connect.email')} />
               </a>
             </li>
