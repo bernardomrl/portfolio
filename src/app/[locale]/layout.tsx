@@ -2,7 +2,11 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import { fontVariables } from '@/bootstrap/font';
+import { INTRO_SCRIPT } from '@/bootstrap/intro';
 import { RootProvider } from '@/bootstrap/providers/root-provider';
+
+import { SiteFooter } from '@/widgets/site-footer';
+import { SiteHeader } from '@/widgets/site-header';
 
 import { env } from '@/shared/config/browser-env';
 import { routing } from '@/shared/config/i18n/routing';
@@ -55,13 +59,35 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
+/**
+ * why: the shell owns the `main` landmark rather than each route. The skip link of the
+ * header needs one stable target, and a per-route id is a rule enforced by memory that
+ * the first forgotten file breaks in silence — the failure mode D-110 rejected
+ * `setRequestLocale` for. Routes render content and never the landmark.
+ *
+ * why: `body` is the flex column and `main` carries `flex-1`. The footer is in normal
+ * flow, so without it a short document leaves the footer floating mid-viewport.
+ *
+ * why: the container is declared here and not per route. Header, main and footer share
+ * one measure, and repeating it in three files is three chances to drift.
+ */
 export default async function RootLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params;
 
   return (
     <html lang={locale} className={fontVariables} suppressHydrationWarning>
-      <body>
-        <RootProvider>{children}</RootProvider>
+      <body className="flex min-h-dvh flex-col motion-reduce:animate-none first-visit:animate-intro">
+        {/* why: first child of `body`, so it runs before anything below it paints. The
+              script only sets an attribute on `html`, and the stylesheet is already parsed
+              by the time it runs, so the gate is decided before the first frame. */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
+        <RootProvider>
+          <SiteHeader />
+          <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
+            {children}
+          </main>
+          <SiteFooter />
+        </RootProvider>
       </body>
     </html>
   );

@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
-import { LocaleSwitcher } from '@/features/locale-switcher';
-import { ThemeToggle } from '@/features/theme-toggle';
-
 import { getPathname } from '@/shared/config/i18n/navigation';
 import { OG_LOCALES } from '@/shared/config/i18n/og-locale.config';
 import { routing } from '@/shared/config/i18n/routing';
@@ -67,14 +64,5 @@ export async function generateMetadata({
 }
 
 export default function Home() {
-  return (
-    <main>
-      <div>Hello world!</div>
-      {/* why: provisional host. widgets/ does not exist until T-22 and app/ is
-          routing only (§2.1) — the site-header of T-22 is the permanent mount
-          and removes this (D-102). */}
-      <ThemeToggle />
-      <LocaleSwitcher />
-    </main>
-  );
+  return <div>Hello world!</div>;
 }

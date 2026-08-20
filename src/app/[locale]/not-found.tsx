@@ -17,10 +17,10 @@ export default async function NotFound() {
   const t = await getTranslations('NotFound');
 
   return (
-    <main>
+    <>
       <h1>{t('heading')}</h1>
       <p>{t('description')}</p>
       <Link href="/">{t('backToHome')}</Link>
-    </main>
+    </>
   );
 }
