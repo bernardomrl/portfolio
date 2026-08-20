@@ -154,10 +154,22 @@ export function Console() {
             initialFocus={(openType) => openType !== 'touch'}
           >
             <ConsoleProvider value={contextValue}>
-              {current === 'root' ? <RootPanel /> : null}
-              {current === 'theme' ? <ThemePanel /> : null}
-              {current === 'locale' ? <LocalePanel /> : null}
-              {current === 'reach-out' ? <ReachOutPanel /> : null}
+              {/* why: the key is the panel id, so a panel change unmounts one
+                  subtree and mounts another. Without it React reconciles the two
+                  panels into the same nodes, the mount animation never fires,
+                  and the focus effect of `ConsolePanel` never runs again — the
+                  same failure that killed the arrow keys on the first version of
+                  the Reach out panel.
+
+                  why: `flex flex-col` is repeated here. The wrapper sits between
+                  `Dialog.Popup` and the panel, and without it the panel stops
+                  being a flex item of the popup. */}
+              <div className="flex flex-col motion-safe:animate-panel-in" key={current}>
+                {current === 'root' ? <RootPanel /> : null}
+                {current === 'theme' ? <ThemePanel /> : null}
+                {current === 'locale' ? <LocalePanel /> : null}
+                {current === 'reach-out' ? <ReachOutPanel /> : null}
+              </div>
             </ConsoleProvider>
 
             <ConsoleFooter isRoot={isRoot} status={status} />
