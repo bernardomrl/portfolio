@@ -3,7 +3,7 @@
     "switchTo": "Switch to {language}",
     "name": {
       "en": "English",
-      "pt-BR": "Portuguese"
+      "pt-BR": "Português"
     },
     "short": {
       "en": "EN",
@@ -21,6 +21,45 @@
     "backToHome": "Back to home"
   },
   "ThemeToggle": {
-    "label": "Toggle theme"
+    "short": "Theme",
+    "switchTo": "Theme: {current}. Switch to {next}",
+    "modes": {
+      "light": "L",
+      "dark": "D",
+      "system": "A"
+    },
+    "names": {
+      "light": "light",
+      "dark": "dark",
+      "system": "automatic"
+    }
+  },
+  "Error": {
+    "heading": "Something went wrong",
+    "description": "This page failed to render. Trying again usually resolves it.",
+    "retry": "Try again"
+  },
+  "Footer": {
+    "tagline": "Front-end engineer. I build fast, accessible interfaces and write down why they are built that way.",
+    "pages": {
+      "heading": "Pages",
+      "home": "Home"
+    },
+    "connect": {
+      "heading": "Connect",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    },
+    "legal": {
+      "heading": "Legal",
+      "source": "Source code",
+      "license": "License"
+    },
+    "copyright": "© {year} Bernardo Meirelles"
+  },
+  "Header": {
+    "skipToContent": "Skip to content",
+    "console": "Console"
   }
 }
