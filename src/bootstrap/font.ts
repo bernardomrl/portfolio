@@ -32,14 +32,15 @@ export const fontSans = Archivo({
  * at the T-47 prototype, so the cheaper declaration and the chosen one are the
  * same declaration (D-188).
  *
- * why: `preload: false`. Nothing renders this family until T-22, and a
- * preloaded face with no consumer is a request paid on every route for markup
- * that does not exist. The `@font-face` still ships; the file is fetched the
- * first time a glyph asks for it (D-191).
+ * why: `preload: true`. The condition D-191 set is met — the wordmark of §3.1
+ * renders this family in the header of every route, above the fold, which is what
+ * a preloaded face is for. The alternative is a face discovered only when the CSS
+ * that references it has parsed, which is a flash of fallback serif on the first
+ * text of the document.
  */
 export const fontDisplay = Fraunces({
   axes: ['opsz'],
-  preload: false,
+  preload: true,
   subsets: ['latin'],
   variable: '--font-display-fraunces',
 });
@@ -52,8 +53,10 @@ export const fontDisplay = Fraunces({
  * why: the static 400 rather than a variable mono. §8 asks for one weight, and
  * for a single weight the static cut is the smaller file.
  *
- * why: `preload: false`, for the reason given above. T-22 is its first
- * consumer.
+ * why: `preload: false`, unlike the display face above. The two mono surfaces T-22
+ * ships are the footer column headings and the copyright line, both below the fold.
+ * The condition moves to T-23, where the meta line of §4.1.1 reads this family above
+ * it (D-196).
  */
 export const fontMono = IBM_Plex_Mono({
   preload: false,
