@@ -10,6 +10,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* why: the variant matches while the attribute is absent, which is the first view of the
+   session — the inline script of `bootstrap/intro.ts` writes it once the run is over.
+   With JavaScript disabled the attribute never arrives and the fade plays on every
+   navigation, which is a degradation and not a defect: the animation ends visible. */
+@custom-variant first-visit (html:not([data-intro='done']) &);
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -137,6 +143,21 @@
   --font-mono:
     var(--font-mono-plex), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
+}
+
+/* why: `@theme` and not `@theme inline`. Inline substitutes the value at the point of
+   use and emits no variable, which is what §8's font tokens want and what an animation
+   utility cannot work with. */
+@theme {
+  --animate-intro: intro 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  /* why: opacity alone. A translate on `body` moves the whole document and can flash a
+     scrollbar on the first frame, for a difference nobody sees at 700ms. */
+  @keyframes intro {
+    from {
+      opacity: 0;
+    }
+  }
 }
 
 @layer base {
