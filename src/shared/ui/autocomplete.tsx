@@ -61,7 +61,7 @@ function AutocompleteList({ className, ...props }: AutocompletePrimitive.List.Pr
   return (
     <AutocompletePrimitive.List
       data-slot="autocomplete-list"
-      className={cn('flex flex-col gap-4 p-2', className)}
+      className={cn('flex flex-col gap-1 p-2', className)}
       {...props}
     />
   );
@@ -71,7 +71,7 @@ function AutocompleteGroup({ className, ...props }: AutocompletePrimitive.Group.
   return (
     <AutocompletePrimitive.Group
       data-slot="autocomplete-group"
-      className={cn('flex flex-col gap-1', className)}
+      className={cn('flex flex-col gap-1 pb-2 last:pb-0', className)}
       {...props}
     />
   );
@@ -101,7 +101,7 @@ function AutocompleteItem({ className, ...props }: AutocompletePrimitive.Item.Pr
     <AutocompletePrimitive.Item
       data-slot="autocomplete-item"
       className={cn(
-        'flex cursor-default items-center justify-between gap-3 rounded-md px-2 py-2 text-sm text-muted-foreground transition-colors select-none data-highlighted:bg-muted data-highlighted:text-foreground',
+        "flex cursor-default items-center gap-3 rounded-md px-2 py-2 text-sm text-muted-foreground transition-colors select-none data-highlighted:bg-muted data-highlighted:text-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -113,7 +113,7 @@ function AutocompleteEmpty({ className, ...props }: AutocompletePrimitive.Empty.
   return (
     <AutocompletePrimitive.Empty
       data-slot="autocomplete-empty"
-      className={cn('px-4 py-8 text-center text-sm text-muted-foreground', className)}
+      className={cn('px-4 py-6 text-center text-sm text-muted-foreground empty:hidden', className)}
       {...props}
     />
   );
