@@ -72,11 +72,31 @@
     "shortcutHint": "Pressione ⌘K para abrir o console de qualquer lugar.",
     "groups": {
       "pages": "Páginas",
+      "preferences": "Preferências",
       "connect": "Contato",
       "legal": "Legal"
     },
     "pages": {
       "home": "Início"
+    },
+    "preferences": {
+      "theme": "Tema",
+      "locale": "Idioma"
+    },
+    "themePanel": {
+      "title": "Tema"
+    },
+    "localePanel": {
+      "title": "Idioma"
+    },
+    "themes": {
+      "light": "Claro",
+      "dark": "Escuro",
+      "system": "Automático"
+    },
+    "languages": {
+      "en": "English",
+      "pt-BR": "Português"
     },
     "connect": {
       "reachOut": "Fale comigo",
