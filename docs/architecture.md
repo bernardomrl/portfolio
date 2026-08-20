@@ -210,6 +210,24 @@ which effects are allowed to reach for this at all.
 Every page in this project is statically generated. A page that cannot be statically
 generated requires a decision entry in `roadmap.md` explaining why.
 
+### 4.1 Session-scoped state
+
+A preference that belongs to the arrival rather than to the visitor lives in
+`sessionStorage`, is read by an inline script before the first paint, and never passes
+through React state. `bootstrap/` owns the script and exports it as a string; `app/`
+renders it as the first child of `body`.
+
+Read after hydration, such a preference produces a document that appears, corrects itself
+and appears again. The mechanism is the one `next-themes` already uses for the theme
+class, and the reason is the same.
+
+`localStorage` is for preferences that outlive the tab — the theme is the only one today.
+Session scope is the default for anything about a visit.
+
+A value that exists only after hydration passes through the same gate wherever it
+appears, including in attributes. React repairs a diverged text node and does not repair
+a diverged attribute.
+
 ---
 
 ## 5. Content layer

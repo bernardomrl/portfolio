@@ -88,21 +88,27 @@ artifact behind it took months to accumulate.
 
 ### 3.1 Header
 
-Present on every route. Fixed, with a background blur, and reduces in height once the
-page has scrolled past the first viewport.
+Present on every route, in normal flow, aligned to the same measure as the content and
+the footer. There is no band, no bottom border and no fixed positioning: the header
+scrolls away with the document.
 
-| Slot            | Origin     | Notes                                       |
-| --------------- | ---------- | ------------------------------------------- |
-| Wordmark        | —          | Links to `/` in the current locale          |
-| Console trigger | `messages` | Shows the `⌘K` hint on pointer devices only |
-| Theme toggle    | `messages` | `aria-label` only; the control is an icon   |
-| Locale switcher | `messages` | Two-state button; §6.3 of `architecture.md` |
+| Slot            | Origin     | Notes                                                                |
+| --------------- | ---------- | -------------------------------------------------------------------- |
+| Wordmark        | —          | Links to `/` in the current locale. Display face; carries §7.13      |
+| Locale switcher | `messages` | The target language in full, the two-letter code below `sm`          |
+| Theme control   | `messages` | Label carries the current mode — `THEME[L]`, `[D]`, `[A]`            |
+| Console trigger | `messages` | Labelled with the name of the surface, not with one of its functions |
+
+The three controls are set in the mono face and share one gesture. A skip link is the
+first focusable element: invisible until focused, positioned absolutely so it displaces
+nothing.
 
 ### 3.2 The Console
 
 An overlay, not a route. It never changes the URL and is dismissible with `Escape`, with
 an overlay click, and with a visible close control. Focus is trapped while open and
-returns to the trigger on close.
+returns to the trigger on close. The `⌘K` hint is shown inside the overlay on pointer
+devices, not on the trigger.
 
 Three panels, moved between laterally with a back affordance:
 
@@ -461,17 +467,7 @@ An element persists visually across a route change.
 | **Forbidden**      | Locale changes — the whole document changes language and the continuity would be a lie |
 | **Reduced motion** | Plain cross-fade                                                                       |
 
-### 7.8 Header collapse
-
-The header reduces height and increases blur past the first viewport.
-
-|                    |                                            |
-| ------------------ | ------------------------------------------ |
-| **Tier**           | 1                                          |
-| **Where**          | Every route                                |
-| **Reduced motion** | Collapsed state applied without transition |
-
-### 7.9 Reading progress
+### 7.8 Reading progress
 
 A thin indicator tracking scroll position.
 
@@ -482,7 +478,7 @@ A thin indicator tracking scroll position.
 | **Forbidden**      | The landing, `/about`, index routes            |
 | **Reduced motion** | Retained — it conveys position, not decoration |
 
-### 7.10 The Field
+### 7.9 The Field
 
 See §2.2 and §6.5.
 
@@ -494,13 +490,62 @@ See §2.2 and §6.5.
 | **Touch**          | Static gradient                                              |
 | **Reduced motion** | Static gradient; canvas never mounted                        |
 
-### 7.11 Console panel transitions
+### 7.10 Console panel transitions
 
 |                    |                                             |
 | ------------------ | ------------------------------------------- |
 | **Tier**           | 3 or 4 — decided by the task that builds it |
 | **Where**          | The Console only                            |
 | **Reduced motion** | Instant panel change, no transition         |
+
+### 7.11 Text decode
+
+The label resolves out of random glyphs, character by character.
+
+|                    |                                                                    |
+| ------------------ | ------------------------------------------------------------------ |
+| **Tier**           | 2                                                                  |
+| **Where**          | Header control labels, on mount and whenever the label changes     |
+| **Forbidden**      | Prose; headings; any label whose value never changes; the wordmark |
+| **Touch**          | Identical — the trigger is the label, not the pointer              |
+| **Reduced motion** | Not attached; the label is present                                 |
+
+### 7.12 Hover flip
+
+The label rolls out through the bottom while an identical face arrives from above,
+staggered per letter and settling on a spring.
+
+|                    |                                                                |
+| ------------------ | -------------------------------------------------------------- |
+| **Tier**           | 4 — spring physics                                             |
+| **Where**          | Footer links only                                              |
+| **Forbidden**      | The header; prose; headings; any label longer than three words |
+| **Touch**          | Not attached                                                   |
+| **Reduced motion** | Not attached                                                   |
+
+### 7.13 Variable weight
+
+Letters gain weight as the pointer passes over them, retuning the cut rather than scaling
+the glyph.
+
+|                    |                                                   |
+| ------------------ | ------------------------------------------------- |
+| **Tier**           | 2                                                 |
+| **Where**          | The wordmark, and nowhere else                    |
+| **Forbidden**      | Prose; headings; any text set in the sans or mono |
+| **Touch**          | Not attached; the wordmark rests at 400           |
+| **Reduced motion** | Not attached                                      |
+
+### 7.14 Intro fade
+
+The document fades in on the first view of a session.
+
+|                    |                                                       |
+| ------------------ | ----------------------------------------------------- |
+| **Tier**           | 1                                                     |
+| **Where**          | `body`, once per session                              |
+| **Forbidden**      | Every subsequent navigation, including locale changes |
+| **Reduced motion** | Not played; the document is present                   |
 
 ---
 
@@ -519,6 +564,10 @@ prototype chose (D-188).
 lines and numbers, and it is the family of every compiled code block under §10 of
 `architecture.md`.
 
+The mono also carries navigation and control labels: the footer column headings and the
+three header controls. It is the register of the thing being named rather than of the
+thing being said, and the footer already operated this way before the rule was written.
+
 **The display face stops at large sizes.** It is legal on headlines and on any text set
 large enough to read as titling, and it is forbidden on the eyebrow, the meta line,
 captions, labels and any running text. Small factual text is mono; everything else is
@@ -533,13 +582,13 @@ makes irrelevant, and it buys no optical size axis for the sizes that matter.
 
 ---
 
----
-
 ## 9. Open design decisions
 
 Questions about the site rather than about the order of work. They share the `O-xx`
 namespace with `roadmap.md`. Resolving one produces a numbered entry in the Decisions Log.
 
-| #    | Question                                                                            | State |
-| ---- | ----------------------------------------------------------------------------------- | ----- |
-| O-06 | Whether `/about` carries an experience list, and whether it is frontmatter or prose | Open  |
+| #    | Question                                                                                                                                                                                                                                            | State                                                  |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| O-06 | Whether `/about` carries an experience list, and whether it is frontmatter or prose                                                                                                                                                                 | Open                                                   |
+| O-09 | Whether the Console is reachable on touch without the virtual keyboard consuming the panel — (a) whether the search field takes focus on open, owned by T-40, and (b) whether the header carries route navigation beyond the trigger, owned by T-22 | (b) resolved by D-200; (a) open                        |
+| O-10 | Whether an intro sequence covers the first load — it only has a wait to cover once The Field and the hero exist, and if it lands it owns the session gate that §7.14 holds today                                                                    | Open; owned by whichever of T-23 and T-41 lands second |

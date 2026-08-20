@@ -2,7 +2,7 @@
   "LocaleSwitcher": {
     "switchTo": "Mudar para {language}",
     "name": {
-      "en": "Inglês",
+      "en": "English",
       "pt-BR": "Português"
     },
     "short": {
@@ -21,6 +21,45 @@
     "backToHome": "Voltar para o início"
   },
   "ThemeToggle": {
-    "label": "Alternar tema"
+    "short": "Tema",
+    "switchTo": "Tema: {current}. Mudar para {next}",
+    "modes": {
+      "light": "C",
+      "dark": "E",
+      "system": "A"
+    },
+    "names": {
+      "light": "claro",
+      "dark": "escuro",
+      "system": "automático"
+    }
+  },
+  "Error": {
+    "heading": "Algo deu errado",
+    "description": "Esta página falhou ao renderizar. Tentar de novo costuma resolver.",
+    "retry": "Tentar novamente"
+  },
+  "Footer": {
+    "tagline": "Engenheiro front-end. Construo interfaces rápidas e acessíveis, e registro por que elas são assim.",
+    "pages": {
+      "heading": "Páginas",
+      "home": "Início"
+    },
+    "connect": {
+      "heading": "Contato",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "email": "E-mail"
+    },
+    "legal": {
+      "heading": "Legal",
+      "source": "Código-fonte",
+      "license": "Licença"
+    },
+    "copyright": "© {year} Bernardo Meirelles"
+  },
+  "Header": {
+    "skipToContent": "Pular para o conteúdo",
+    "console": "Console"
   }
 }

@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/shared/config/i18n/navigation';
 import { routing } from '@/shared/config/i18n/routing';
 import { Button } from '@/shared/ui/button';
+import { TextDecode } from '@/shared/ui/text-decode';
 
 /**
  * Switches the document between the configured locales, preserving the current
@@ -34,11 +35,16 @@ export function LocaleSwitcher() {
   return (
     <Button
       variant="ghost"
-      size="icon"
       aria-label={t('switchTo', { language: t(`name.${target}`) })}
+      className="font-mono text-xs tracking-wider uppercase"
       onClick={() => router.replace(pathname, { locale: target })}
     >
-      {t(`short.${target}`)}
+      <span className="sm:hidden">
+        <TextDecode label={t(`short.${target}`)} />
+      </span>
+      <span className="hidden sm:inline">
+        <TextDecode label={t(`name.${target}`)} />
+      </span>
     </Button>
   );
 }
