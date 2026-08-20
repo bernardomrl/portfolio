@@ -61,5 +61,38 @@
   "Header": {
     "skipToContent": "Pular para o conteúdo",
     "console": "Console"
+  },
+  "Console": {
+    "label": "Paleta de comandos",
+    "placeholder": "Buscar",
+    "empty": "Nenhum resultado.",
+    "close": "Fechar",
+    "back": "Voltar",
+    "activate": "Ativar",
+    "shortcutHint": "Pressione ⌘K para abrir o console de qualquer lugar.",
+    "groups": {
+      "pages": "Páginas",
+      "connect": "Contato",
+      "legal": "Legal"
+    },
+    "pages": {
+      "home": "Início"
+    },
+    "connect": {
+      "reachOut": "Fale comigo",
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    },
+    "legal": {
+      "source": "Código-fonte",
+      "license": "Licença"
+    },
+    "reachOut": {
+      "title": "Fale comigo",
+      "description": "Copie o endereço, agende uma conversa, ou me encontre em outro lugar.",
+      "copyEmail": "Copiar endereço de e-mail",
+      "copied": "Copiado",
+      "scheduling": "Agendar uma conversa de 30 minutos"
+    }
   }
 }

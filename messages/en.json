@@ -61,5 +61,38 @@
   "Header": {
     "skipToContent": "Skip to content",
     "console": "Console"
+  },
+  "Console": {
+    "label": "Command palette",
+    "placeholder": "Search",
+    "empty": "No matches.",
+    "close": "Close",
+    "back": "Back",
+    "activate": "Activate",
+    "shortcutHint": "Press ⌘K to open the console from anywhere.",
+    "groups": {
+      "pages": "Pages",
+      "connect": "Connect",
+      "legal": "Legal"
+    },
+    "pages": {
+      "home": "Home"
+    },
+    "connect": {
+      "reachOut": "Reach out",
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    },
+    "legal": {
+      "source": "Source code",
+      "license": "License"
+    },
+    "reachOut": {
+      "title": "Reach out",
+      "description": "Copy the address, book a call, or find me elsewhere.",
+      "copyEmail": "Copy email address",
+      "copied": "Copied",
+      "scheduling": "Book a 30-minute call"
+    }
   }
 }
