@@ -486,6 +486,14 @@ feature that introduces one must create it in the same pull request, starting wi
 - Icons come from `@tabler/icons-react` and are always imported by name. A namespace
   import pulls the entire library into the bundle. No second icon set is introduced —
   `components.json` declares Tabler, and the CLI emits those imports on its own.
+- The one exception is this site's own mark, and it is an exception to the sentence
+  above rather than a category: a mark is identity, not iconography, and there is no
+  icon set that ships it. It is a single component in `shared/ui/`, drawn from the
+  geometry §10 of `design.md` fixes, and a second file claiming the same exemption
+  needs its own entry. It does not adopt the `color` and `stroke` props of
+  `@tabler/icons-react`, which are the contract of an outline glyph and would be
+  accepted and dropped in silence by a fill-only drawing. It is filled with
+  `currentColor` and therefore never reaches the rule below.
 - Design tokens are CSS variables consumed by Tailwind. **No hardcoded hex values in
   components** — a portfolio is judged on visual coherence, and a stray colour is the
   fastest way to lose it.

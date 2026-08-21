@@ -151,11 +151,14 @@ leaves no trace on screen and is the one action that needs saying (D-237).
 
 ### 3.3 Footer
 
-Present on every route. Wordmark, a short line of prose, three link columns, copyright,
-and the sound toggle.
+Present on every route. The mark beside the wordmark, a short line of prose, three link
+columns, copyright, and the sound toggle. The mark is bare and takes the colour of the
+text around it; the plate belongs to the application icon, which sits on a surface this
+site does not control (D-241).
 
 | Slot                            | Origin                                |
 | ------------------------------- | ------------------------------------- |
+| Mark                            | Component — §10, in `currentColor`    |
 | Tagline                         | `messages`                            |
 | Column headings and link labels | `messages`                            |
 | Copyright                       | `messages`, with an interpolated year |
