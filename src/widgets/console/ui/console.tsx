@@ -32,7 +32,7 @@ const STATUS_DURATION = 10000;
  *
  * why: one surface, one mechanic. Every panel is a filterable list and nothing
  * is pinned outside it — an entry is reachable by typing its name while a pinned
- * toggle is reachable only by someone already looking at it (D-233).
+ * toggle is reachable only by someone already looking at it (D-231).
  *
  * why: closing and going back share one callback, so the reason separates them.
  * Above the root panel, `Escape` and a backdrop press pop a layer instead of
@@ -45,11 +45,13 @@ const STATUS_DURATION = 10000;
  * locale change asks for the overlay back, because there the navigation is the
  * preference rather than the destination.
  *
- * why: `initialFocus` reads the interaction type, resolving the first half of
- * O-09. On touch the popup takes focus and the virtual keyboard stays down, so
- * the panel opens fully visible and the keyboard rises only when the user taps
- * the field — the mitigation D-200 assumed existed. Written out rather than
- * inherited, so a default that shifts in a minor cannot move a decision (D-135).
+ * why: `initialFocus` reads the interaction type, which is the mechanism Base UI
+ * documents for keeping the virtual keyboard down on touch. It does not resolve
+ * O-09 on its own — measured on device, the keyboard rose anyway, because the
+ * focus effect of `ConsolePanel` runs on every panel mount and was
+ * unconditional. The `(pointer: coarse)` guard there is what resolves it; this
+ * stays because the two are complementary and a default that shifts in a minor
+ * should not move a decision (D-135, D-235).
  *
  * why: the shortcut is bound here and not on the trigger. The trigger scrolls
  * out of view with the header (D-202) while this component is mounted on every
