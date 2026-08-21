@@ -106,30 +106,48 @@ nothing.
 ### 3.2 The Console
 
 An overlay, not a route. It never changes the URL and is dismissible with `Escape`, with
-an overlay click, and with a visible close control. Focus is trapped while open and
-returns to the trigger on close. The `⌘K` hint is shown inside the overlay on pointer
-devices, not on the trigger.
+an overlay click, and with a visible close control in the footer. Focus is trapped while
+open and returns to the trigger on close. The `⌘K` hint is shown inside the overlay on
+pointer devices, not on the trigger.
 
-Three panels, moved between laterally with a back affordance:
+**One surface, one mechanic.** Every panel is a filterable list, and nothing is pinned
+outside it: a control that is neither navigable nor filterable occupies the most valuable
+space on the surface and is reachable only by someone already looking at it, while an
+entry is reachable by typing its name (D-231).
 
-**Root.** A search field, and grouped entries: Pages, Connect, Legal. Typing filters
-across pages, posts and projects at once. Arrow keys move, `Enter` activates. Theme and
-locale are toggles pinned in the panel header.
+**Panels are a stack.** `Escape` and the back control both mean the layer above, and the
+overlay closes only from the root. Typing does not push a panel — a query narrows the
+current list in place, which is filtering and not navigation (D-232).
 
-**Results.** Reached by typing. Groups results by kind — pages, projects, posts — with
-the title, kind and date of each.
+**Root.** A search field above a grouped list: Pages, Preferences, Connect, Legal.
+Activating a page entry closes the overlay and navigates, whether or not the destination
+differs from the current route. Cross-collection results extend this list under a query
+rather than replacing it, and are owned by T-52.
 
-**Reach out.** Reached from the root panel and from every contact call to action on the
-site. It holds a copy-to-clipboard email control, an external scheduling link, and
-profile links. There is no message form: the site has no backend, and a form that cannot
-send is worse than no form. The scheduling link is a link and never an embed — a
-third-party iframe on a static page costs Lighthouse, control, and a privacy disclosure.
+**Theme and Locale.** Each lists every state, including the current one, marked. A list
+that omits the current state cannot mark it, which is why these are panels and not entries
+that act directly. A locale change unmounts the overlay, so the panel to restore is carried
+in `sessionStorage` and the overlay reopens on it (D-236).
 
-| Slot                                            | Origin                                   |
-| ----------------------------------------------- | ---------------------------------------- |
-| Panel titles, group labels, placeholders, hints | `messages`                               |
-| Page entries                                    | `messages` for labels, routing for hrefs |
-| Post and project entries                        | `posts` and `projects` collections       |
+**Reach out.** Reached from the Connect group and from every contact call to action on the
+site. Copy the address, book a call, or open a profile. There is no message form: the site
+has no backend, and a form that cannot send is worse than no form. The scheduling
+destination is a link and never an embed — a third-party iframe on a static page costs
+Lighthouse, control, and a privacy disclosure.
+
+**Footer.** Present on every panel. Carries the close control, which reads Back above the
+root, the `Enter` hint, and the `⌘K` hint. Both hints are hidden on a coarse pointer, where
+neither key exists. It is also where a completed action reports itself — the clipboard write
+leaves no trace on screen and is the one action that needs saying (D-237).
+
+| Slot                                    | Origin                                    |
+| --------------------------------------- | ----------------------------------------- |
+| Panel titles, group labels, placeholder | `messages`                                |
+| Footer hints, close and back labels     | `messages`                                |
+| Page entries                            | `messages` for labels, routing for hrefs  |
+| Preference entries                      | `messages`                                |
+| Connect and Legal entries               | `shared/config/links.config.ts`           |
+| Post and project results                | `posts` and `projects` collections (T-52) |
 
 ### 3.3 Footer
 
@@ -145,7 +163,9 @@ and the sound toggle.
 ### 3.4 Theme and locale
 
 Dark and light are both first-class; neither is a filter of the other. The locale
-switcher preserves the current path. Both are also reachable from the Console.
+switcher preserves the current path. Both are also reachable from the Console, as entries
+of the Preferences group leading to a panel that lists every state, rather than as pinned
+controls (D-231).
 
 ---
 
@@ -490,13 +510,18 @@ See §2.2 and §6.5.
 | **Touch**          | Static gradient                                              |
 | **Reduced motion** | Static gradient; canvas never mounted                        |
 
-### 7.10 Console panel transitions
+### 7.10 Console panel changes
 
-|                    |                                             |
-| ------------------ | ------------------------------------------- |
-| **Tier**           | 3 or 4 — decided by the task that builds it |
-| **Where**          | The Console only                            |
-| **Reduced motion** | Instant panel change, no transition         |
+The entering panel arrives with a short travel and a fade. The leaving panel is gone: a
+panel change unmounts one subtree and mounts another, so there is no departure to animate.
+
+|                    |                                                                  |
+| ------------------ | ---------------------------------------------------------------- |
+| **Tier**           | 1                                                                |
+| **Where**          | The Console only, on every push and every pop                    |
+| **Forbidden**      | Direction: a pop enters from the same side as a push (D-233)     |
+| **Touch**          | Identical — the transition answers a state change, not a pointer |
+| **Reduced motion** | Instant panel change, no transition                              |
 
 ### 7.11 Text decode
 
@@ -590,5 +615,5 @@ namespace with `roadmap.md`. Resolving one produces a numbered entry in the Deci
 | #    | Question                                                                                                                                                                                                                                            | State                                                  |
 | ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
 | O-06 | Whether `/about` carries an experience list, and whether it is frontmatter or prose                                                                                                                                                                 | Open                                                   |
-| O-09 | Whether the Console is reachable on touch without the virtual keyboard consuming the panel — (a) whether the search field takes focus on open, owned by T-40, and (b) whether the header carries route navigation beyond the trigger, owned by T-22 | (b) resolved by D-200; (a) open                        |
+| O-09 | Whether the Console is reachable on touch without the virtual keyboard consuming the panel — (a) whether the search field takes focus on open, owned by T-40, and (b) whether the header carries route navigation beyond the trigger, owned by T-22 | Resolved: (b) by D-200, (a) by D-235                   |
 | O-10 | Whether an intro sequence covers the first load — it only has a wait to cover once The Field and the hero exist, and if it lands it owns the session gate that §7.14 holds today                                                                    | Open; owned by whichever of T-23 and T-41 lands second |

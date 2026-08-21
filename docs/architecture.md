@@ -184,8 +184,12 @@ everything before the first dot and is shared across locales by definition.
 - `app/[locale]/page.tsx` **never awaits**. It renders the shell and mounts widgets. Data
   here is compiled content imported synchronously, so there is nothing to suspend on;
   the rule stands so that the page never becomes the place where work happens.
-- Passing a server-only value into a client component is a boundary error — pass
-  serialized data, never a module instance or a helper function.
+- Passing a server-only value **across the boundary** into a client component is a
+  boundary error — pass serialized data, never a module instance or a helper function.
+  The rule is about the crossing, not about functions: between two client modules a
+  callback in a prop or in a context is ordinary React, and the Next client-entry check
+  that reports it as a non-serializable Server Action is reading the directive as if
+  every file carrying it were a boundary (D-238).
 
 The leaf rule constrains the module graph, not the render tree. Providers in
 `bootstrap/` are its only exception: a provider carries `"use client"` and renders
@@ -196,6 +200,15 @@ the tree below it. A provider that imports its subtree instead of receiving it c
 that subtree into client code, and is a boundary error under the same rule. A module that
 only composes providers and forwards `children` carries no directive at all: the boundary
 belongs to each provider file.
+
+A slice whose whole purpose is a client surface is the second exception, and the Console
+of §3.2 in `design.md` is the first of them. Its barrel exports one component, that
+component carries the directive, and every module below it is reached only from there —
+the module graph is closed and the boundary is one file. The leaf rule exists so that
+server code cannot become client code by accidental import; a slice that is client by
+construction has nothing to leak, and the alternative is a single file large enough that
+the next task adding to it has nowhere to put anything. The exception is this slice and
+not a category: another slice claiming it needs its own amendment and its own argument.
 
 A client leaf that owns a render loop — `requestAnimationFrame`, an `AudioContext`, a
 `pointermove` handler driving a custom property — carries three obligations beyond the

@@ -5,6 +5,7 @@ import { fontVariables } from '@/bootstrap/font';
 import { INTRO_SCRIPT } from '@/bootstrap/intro';
 import { RootProvider } from '@/bootstrap/providers/root-provider';
 
+import { Console } from '@/widgets/console';
 import { SiteFooter } from '@/widgets/site-footer';
 import { SiteHeader } from '@/widgets/site-header';
 
@@ -87,6 +88,7 @@ export default async function RootLayout({ children, params }: LayoutProps<'/[lo
             {children}
           </main>
           <SiteFooter />
+          <Console />
         </RootProvider>
       </body>
     </html>
