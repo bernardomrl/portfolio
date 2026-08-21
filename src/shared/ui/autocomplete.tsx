@@ -49,7 +49,7 @@ function AutocompleteInput({ className, ...props }: AutocompletePrimitive.Input.
     <AutocompletePrimitive.Input
       data-slot="autocomplete-input"
       className={cn(
-        'h-12 w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground',
+        'h-12 w-full bg-transparent text-base text-foreground outline-none placeholder:text-muted-foreground sm:text-sm',
         className,
       )}
       {...props}

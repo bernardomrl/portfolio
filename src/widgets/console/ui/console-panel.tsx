@@ -4,6 +4,8 @@ import { IconArrowLeft } from '@tabler/icons-react';
 import { useTranslations } from 'next-intl';
 import { type ReactNode, useEffect, useRef } from 'react';
 
+import { useCoarsePointer } from '@/widgets/console/model/use-coarse-pointer';
+
 import {
   AutocompleteEmpty,
   AutocompleteInput,
@@ -43,8 +45,21 @@ interface ConsolePanelProps {
 export function ConsolePanel({ children, onBack, placeholder }: ConsolePanelProps) {
   const t = useTranslations('Console');
   const inputRef = useRef<HTMLInputElement>(null);
+  const coarse = useCoarsePointer();
 
   useEffect(() => {
+    if (coarse) return;
+
+    inputRef.current?.focus();
+  }, [coarse]);
+
+  useEffect(() => {
+    // why: focus is not moved on a coarse pointer. The effect exists so arrow
+    // keys have an owner, and a device without arrow keys pays only the virtual
+    // keyboard for it — which then covers the panel the reader just opened
+    // (§6.4).
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
     inputRef.current?.focus();
   }, []);
 

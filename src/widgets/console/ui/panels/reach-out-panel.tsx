@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 
 import { useConsole } from '@/widgets/console/model/console.context';
 import type { Entry } from '@/widgets/console/model/entry.type';
+import { useCoarsePointer } from '@/widgets/console/model/use-coarse-pointer';
 import { ConsoleEntry } from '@/widgets/console/ui/console-entry';
 import { ConsolePanel } from '@/widgets/console/ui/console-panel';
 
@@ -20,6 +21,7 @@ import { Autocomplete, AutocompleteList } from '@/shared/ui/autocomplete';
 export function ReachOutPanel() {
   const t = useTranslations('Console');
   const locale = useLocale();
+  const coarse = useCoarsePointer();
   const { pop, setStatus } = useConsole();
 
   const entries = useMemo<Entry[]>(
@@ -28,10 +30,17 @@ export function ReachOutPanel() {
         id: 'copy-email',
         icon: IconCopy,
         label: t('reachOut.copyEmail'),
+        // why: the status is set on the gesture rather than in `.then`. On the
+        // mobile browser the write succeeds and the promise stays pending, so a
+        // status set on resolution never arrives — measured on device. Reporting
+        // the gesture is also the better shape: the message answers the tap, and
+        // the `.catch` is what corrects it if the write actually failed.
         run: () => {
-          void navigator.clipboard
-            .writeText(EMAIL_ADDRESS)
-            .then(() => setStatus(t('reachOut.copied')));
+          setStatus(t('reachOut.copied'));
+
+          void navigator.clipboard.writeText(EMAIL_ADDRESS).catch(() => {
+            setStatus(t('reachOut.copyFailed', { email: EMAIL_ADDRESS }));
+          });
         },
       },
       {
@@ -57,7 +66,13 @@ export function ReachOutPanel() {
   );
 
   return (
-    <Autocomplete autoHighlight="always" inline items={entries} keepHighlight open>
+    <Autocomplete
+      autoHighlight={coarse ? false : 'always'}
+      inline
+      items={entries}
+      keepHighlight
+      open
+    >
       <ConsolePanel onBack={pop} placeholder={t('reachOut.title')}>
         <AutocompleteList>
           {(entry: Entry) => <ConsoleEntry entry={entry} key={entry.id} />}

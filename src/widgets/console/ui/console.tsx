@@ -20,7 +20,7 @@ import { ThemePanel } from '@/widgets/console/ui/panels/theme-panel';
 import { consoleHandle } from '@/shared/lib/console.handle';
 
 /** How long a footer status stays before clearing, in ms. */
-const STATUS_DURATION = 2000;
+const STATUS_DURATION = 10000;
 
 /**
  * The Console overlay — §3.2 of `design.md`. The first signature moment of §2.1.
@@ -80,8 +80,6 @@ export function Console() {
     return isPanelId(stored) ? stored : 'root';
   });
 
-  const [restored, setRestored] = useState(initialPanel !== 'root');
-
   const { current, isRoot, pop, push, reset } = usePanelStack(initialPanel);
   // why: memoized because it is a context value. A fresh object each render
   // re-renders every panel below it, which for a list under a filter is the one
@@ -123,14 +121,18 @@ export function Console() {
 
   return (
     <Dialog.Root
+      // why: `defaultOpen` and not `open`. The overlay only needs to start open
+      // on the mount that follows a locale change, which is an initial value and
+      // not ongoing control. Passing `open` made the dialog controlled, and
+      // alternating it back to `undefined` is the uncontrolled-to-controlled
+      // switch React warns about; controlling it permanently instead would mean
+      // owning a state the handle and the header trigger already own.
+      //
+      // why: not `consoleHandle.open()` in an effect either. Base UI ignores a
+      // handle call made while no root is attached, and that effect races the
+      // root's own registration — a race it loses silently.
+      defaultOpen={initialPanel !== 'root'}
       handle={consoleHandle}
-      // why: the restored overlay is controlled on the first mount instead of
-      // opened imperatively. Base UI ignores a handle call made while no root is
-      // attached, and the effect that would make it races the root's own
-      // registration effect — a race this loses silently. `undefined` after the
-      // first close returns the dialog to uncontrolled, where the handle and the
-      // header trigger work as before.
-      open={restored ? true : undefined}
       onOpenChange={(open, eventDetails) => {
         if (open) return;
 
@@ -140,7 +142,6 @@ export function Console() {
           return;
         }
 
-        setRestored(false);
         reset();
         setStatus(null);
       }}
@@ -150,7 +151,7 @@ export function Console() {
         <Dialog.Viewport className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-[15vh]">
           <Dialog.Popup
             aria-label={t('label')}
-            className="data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 flex w-full max-w-2xl flex-col overflow-hidden rounded-xl bg-popover text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none"
+            className="data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 flex w-full max-w-2xl origin-top flex-col overflow-hidden rounded-xl bg-popover text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none"
             initialFocus={(openType) => openType !== 'touch'}
           >
             <ConsoleProvider value={contextValue}>

@@ -1,6 +1,9 @@
 'use client';
 
+import { Dialog } from '@base-ui/react';
 import { useTranslations } from 'next-intl';
+
+import { useCoarsePointer } from '@/widgets/console/model/use-coarse-pointer';
 
 /**
  * why: the footer carries the keys rather than describing them in prose. The
@@ -14,25 +17,31 @@ import { useTranslations } from 'next-intl';
  */
 export function ConsoleFooter({ isRoot, status }: { isRoot: boolean; status: null | string }) {
   const t = useTranslations('Console');
-
+  const coarse = useCoarsePointer();
   return (
     <div className="flex items-center justify-between gap-4 border-t border-border px-4 py-2 font-mono text-xs text-muted-foreground">
-      <span aria-live="polite" className="min-w-0">
+      <span aria-live="polite" className="min-w-0 flex-1 truncate">
         {status ?? <span className="hidden pointer-fine:inline">{t('shortcutHint')}</span>}
       </span>
 
       <span className="flex shrink-0 items-center gap-3">
-        <span className="flex items-center gap-1.5">
-          {t('activate')}
-          <kbd className="rounded border border-border px-1 py-0.5">↵</kbd>
-        </span>
-        {/* why: the key does two things depending on the layer, so the label
-             names the one it does now. A footer that always says Close while the
-             key goes back teaches the reader to distrust the footer. */}
-        <span className="flex items-center gap-1.5">
+        {coarse ? null : (
+          <span className="flex items-center gap-1.5">
+            {t('activate')}
+            <kbd className="rounded border border-border px-1 py-0.5">↵</kbd>
+          </span>
+        )}
+        <Dialog.Close
+          render={
+            <button
+              className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-foreground"
+              type="button"
+            />
+          }
+        >
           {isRoot ? t('close') : t('back')}
-          <kbd className="rounded border border-border px-1 py-0.5">esc</kbd>
-        </span>
+          {coarse ? null : <kbd className="rounded border border-border px-1 py-0.5">esc</kbd>}
+        </Dialog.Close>
       </span>
     </div>
   );

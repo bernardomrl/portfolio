@@ -14,6 +14,7 @@ import { useMemo } from 'react';
 
 import { useConsole } from '@/widgets/console/model/console.context';
 import type { Entry, EntryGroup } from '@/widgets/console/model/entry.type';
+import { useCoarsePointer } from '@/widgets/console/model/use-coarse-pointer';
 import { ConsoleEntry } from '@/widgets/console/ui/console-entry';
 import { ConsolePanel } from '@/widgets/console/ui/console-panel';
 
@@ -38,7 +39,7 @@ export function RootPanel() {
   const t = useTranslations('Console');
   const locale = useLocale();
   const router = useRouter();
-
+  const coarse = useCoarsePointer();
   const { push } = useConsole();
 
   const groups = useMemo<EntryGroup[]>(
@@ -119,7 +120,13 @@ export function RootPanel() {
   );
 
   return (
-    <Autocomplete autoHighlight="always" inline items={groups} keepHighlight open>
+    <Autocomplete
+      autoHighlight={coarse ? false : 'always'}
+      inline
+      items={groups}
+      keepHighlight
+      open
+    >
       <ConsolePanel placeholder={t('placeholder')}>
         <AutocompleteList>
           {(group: EntryGroup) => (

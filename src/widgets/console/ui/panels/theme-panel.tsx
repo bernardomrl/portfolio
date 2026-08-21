@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 
 import { useConsole } from '@/widgets/console/model/console.context';
 import type { Entry } from '@/widgets/console/model/entry.type';
+import { useCoarsePointer } from '@/widgets/console/model/use-coarse-pointer';
 import { ConsoleEntry } from '@/widgets/console/ui/console-entry';
 import { ConsolePanel } from '@/widgets/console/ui/console-panel';
 
@@ -36,6 +37,7 @@ const THEME_ICONS = {
 export function ThemePanel() {
   const t = useTranslations('Console');
   const { setTheme, theme } = useTheme();
+  const coarse = useCoarsePointer();
   const { pop } = useConsole();
 
   const entries = useMemo<Entry[]>(
@@ -51,7 +53,13 @@ export function ThemePanel() {
   );
 
   return (
-    <Autocomplete autoHighlight="always" inline items={entries} keepHighlight open>
+    <Autocomplete
+      autoHighlight={coarse ? false : 'always'}
+      inline
+      items={entries}
+      keepHighlight
+      open
+    >
       <ConsolePanel onBack={pop} placeholder={t('themePanel.title')}>
         <AutocompleteList>
           {(entry: Entry) => <ConsoleEntry entry={entry} key={entry.id} />}

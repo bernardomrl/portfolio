@@ -112,6 +112,7 @@
       "description": "Copy the address, book a call, or find me elsewhere.",
       "copyEmail": "Copy email address",
       "copied": "Copied",
+      "copyFailed": "Could not copy — the address is {email}",
       "scheduling": "Book a 30-minute call"
     }
   }

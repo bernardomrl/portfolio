@@ -112,6 +112,7 @@
       "description": "Copie o endereço, agende uma conversa, ou me encontre em outro lugar.",
       "copyEmail": "Copiar endereço de e-mail",
       "copied": "Copiado",
+      "copyFailed": "Não foi possível copiar — o endereço é {email}",
       "scheduling": "Agendar uma conversa de 30 minutos"
     }
   }
