@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/shared/config/i18n/navigation';
 import { CONNECT_LINKS, LINKEDIN_PROFILES, REPOSITORY_LINKS } from '@/shared/config/links.config';
 import { HoverFlip } from '@/shared/ui/hover-flip';
+import { IconMark } from '@/shared/ui/icon-mark';
 
 /**
  * The footer of every route — §3.3 of `design.md`.
@@ -31,9 +32,12 @@ export async function SiteFooter() {
     <footer className="mt-24 border-t border-border/60">
       <div className="mx-auto grid w-full max-w-6xl grid-cols-2 gap-x-6 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-[1.6fr_repeat(3,1fr)]">
         <div className="col-span-2 md:col-span-1">
-          <p className="font-display text-2xl tracking-tight [font-optical-sizing:auto]">
-            bernardomrl
-          </p>
+          <div className="flex items-center gap-4">
+            <IconMark aria-hidden="true" className="shrink-0" size={24} />
+            <p className="font-display text-2xl tracking-tight [font-optical-sizing:auto]">
+              bernardomrl
+            </p>
+          </div>
           <p className="mt-3 max-w-xs text-sm text-muted-foreground">{t('tagline')}</p>
         </div>
 
