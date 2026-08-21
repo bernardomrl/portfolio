@@ -564,6 +564,11 @@ forbidden from using, which is the part that keeps a gesture a signal instead of
   silently.
 - Open Graph images are generated with `next/og` per document, from the same frontmatter
   that renders the page. No hand-made image files per post.
+- Application icons are file conventions in `app/`, never a `metadata.icons` object.
+  Declaring both emits two sets of `<link>` tags for one icon. `favicon.ico` is valid
+  only at the root of `app/` and cannot be generated from code; `icon` and `apple-icon`
+  may live in any segment and may be generated, and are not, because the mark does not
+  depend on data — see §10 of `design.md`.
 - `sitemap.ts` and `robots.ts` live in `app/` and derive from the content collections, so
   a new post is indexed by the act of existing.
 - While this site is served from `next.bernardomrl.dev`, every route declares

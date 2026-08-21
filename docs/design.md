@@ -617,3 +617,20 @@ namespace with `roadmap.md`. Resolving one produces a numbered entry in the Deci
 | O-06 | Whether `/about` carries an experience list, and whether it is frontmatter or prose                                                                                                                                                                 | Open                                                   |
 | O-09 | Whether the Console is reachable on touch without the virtual keyboard consuming the panel — (a) whether the search field takes focus on open, owned by T-40, and (b) whether the header carries route navigation beyond the trigger, owned by T-22 | Resolved: (b) by D-200, (a) by D-235                   |
 | O-10 | Whether an intro sequence covers the first load — it only has a wait to cover once The Field and the hero exist, and if it lands it owns the session gate that §7.14 holds today                                                                    | Open; owned by whichever of T-23 and T-41 lands second |
+
+---
+
+## 10. The mark
+
+A four-by-four grid of squares whose opacity falls along the anti-diagonal — the corner
+solid, then a deliberate empty band, then four decreasing steps. It is structural in the
+same sense §2.2 is, and it is not a letterform: the display face carries the wordmark and
+the mark carries nothing the wordmark already says.
+
+It ships in two dresses. As an application icon it sits on a white plate with a rounded
+corner and an inset, because a browser tab and an iOS home screen are surfaces this site
+does not control. Everywhere inside the document it is bare and takes the colour of the
+text around it.
+
+This section is appended rather than inserted: every `§` reference in the repository is
+positional, and renumbering §8 and §9 to open a slot would invalidate all of them.
