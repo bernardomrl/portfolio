@@ -32,6 +32,13 @@ export function isPanelId(value: null | string): value is PanelId {
  * navigation interrupted a reader who was one layer deep, so `Escape` has to
  * return them to the root exactly as it would have before.
  *
+ * why: `replace` exists alongside `push` because arriving and descending are not
+ * the same event. A reader who pressed a control asking for one panel never saw
+ * the root, so returning them to it presents a surface they did not ask for, in
+ * the gesture that means leave. Replacing makes that panel the bottom of the
+ * stack, and `Escape` then closes through the path that already exists rather
+ * than through an exception.
+ *
  * why: `?? 'root'` rather than a non-null assertion. `noUncheckedIndexedAccess`
  * types the indexed read as possibly `undefined`, and the fallback is the state
  * the stack is initialised to.
@@ -41,6 +48,10 @@ export function usePanelStack(initial: PanelId = 'root') {
 
   const push = useCallback((id: PanelId) => {
     setStack((previous) => [...previous, id]);
+  }, []);
+
+  const replace = useCallback((id: PanelId) => {
+    setStack([id]);
   }, []);
 
   const pop = useCallback(() => {
@@ -56,6 +67,7 @@ export function usePanelStack(initial: PanelId = 'root') {
     isRoot: stack.length === 1,
     pop,
     push,
+    replace,
     reset,
   };
 }

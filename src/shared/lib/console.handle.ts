@@ -24,3 +24,18 @@ import { Dialog } from '@base-ui/react/dialog';
  * consumer — the surface D-163 and D-170 refused twice.
  */
 export const consoleHandle = Dialog.createHandle();
+
+/**
+ * Attribute a detached trigger carries to ask for a panel above the root.
+ *
+ * why: an attribute and not a trigger `id`. The hero and the status strip are
+ * two triggers for one gesture, and T-26 is a third — one shared `id` would be
+ * invalid HTML, and one `id` per caller grows a constant and a branch with each
+ * consumer. The attribute carries the panel name itself, so the Console reads a
+ * value instead of matching an identity.
+ *
+ * why: no narrower union of externally reachable panels. `isPanelId` already
+ * validates a string against the set the stack accepts, and a second union here
+ * would be a second source for one fact — the failure D-161 named.
+ */
+export const CONSOLE_PANEL_ATTRIBUTE = 'data-console-panel';
