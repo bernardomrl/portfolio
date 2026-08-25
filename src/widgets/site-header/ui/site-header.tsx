@@ -7,6 +7,7 @@ import { LocaleSwitcher } from '@/features/locale-switcher';
 import { ThemeToggle } from '@/features/theme-toggle';
 
 import { Link } from '@/shared/config/i18n/navigation';
+import { IconMark } from '@/shared/ui/icon-mark';
 
 /**
  * The header of every route — §3.1 of `design.md`.
@@ -36,11 +37,21 @@ export async function SiteHeader() {
         {t('skipToContent')}
       </a>
 
-      <Link
-        href="/"
-        className="font-display text-lg tracking-tight text-foreground [font-optical-sizing:auto] sm:text-xl"
-      >
-        <Wordmark label="bernardomrl" />
+      <Link aria-label="bernardomrl" href="/" className="w-fit text-foreground">
+        {/* why: two elements and not one hidden by CSS. `Wordmark` carries `TextDecode`
+            and the variable-weight axis of §3.1, both client — rendered under `hidden`
+            they still mount and still run, paying hydration to animate a `display: none`
+            element. The mark is the identity below `md`, where four controls in 375px
+            leave the wordmark no room.
+
+            why: `aria-label` on the link rather than a title on the mark. The mark is
+            decorative in both branches and the link needs one stable name regardless of
+            which branch renders — a name that changes with the viewport is a name a
+            screen reader user cannot learn. */}
+        <span className="hidden font-display text-lg tracking-tight [font-optical-sizing:auto] md:block md:text-xl">
+          <Wordmark label="bernardomrl" />
+        </span>
+        <IconMark aria-hidden="true" className="block md:hidden" size={24} />
       </Link>
       <div className="flex items-center gap-2">
         <LocaleSwitcher />
