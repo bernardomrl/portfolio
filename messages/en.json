@@ -115,5 +115,29 @@
       "copyFailed": "Could not copy — the address is {email}",
       "scheduling": "Book a 30-minute call"
     }
+  },
+  "Hero": {
+    "eyebrow": "Front-end Engineer",
+    "headline": {
+      "one": "A portfolio is",
+      "two": "the easiest thing to rush.",
+      "three": "This one wasn’t."
+    },
+    "metaLine": "Belo Horizonte, Brazil — building for the web since 2024",
+    "primaryAction": "Reach out"
+  },
+  "StatusStrip": {
+    "now": {
+      "heading": "Now",
+      "value": "Front-end engineer, product team"
+    },
+    "building": {
+      "heading": "Building",
+      "value": "This site — Next.js 16, statically generated, documented as it is built"
+    },
+    "reachOut": {
+      "heading": "Reach out",
+      "action": "Open the console"
+    }
   }
 }
