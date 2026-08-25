@@ -116,8 +116,13 @@ space on the surface and is reachable only by someone already looking at it, whi
 entry is reachable by typing its name (D-231).
 
 **Panels are a stack.** `Escape` and the back control both mean the layer above, and the
-overlay closes only from the root. Typing does not push a panel — a query narrows the
-current list in place, which is filtering and not navigation (D-232).
+overlay closes only from the bottom of the stack. Typing does not push a panel — a query
+narrows the current list in place, which is filtering and not navigation (D-232).
+
+The bottom of the stack is not always the root panel. A detached trigger carrying a panel
+attribute replaces the stack rather than pushing onto it, so a reader who pressed Reach
+out closes from Reach out: they never saw the root, and returning them to it would present
+a surface they did not ask for in the gesture that means leave (D-258).
 
 **Root.** A search field above a grouped list: Pages, Preferences, Connect, Legal.
 Activating a page entry closes the overlay and navigates, whether or not the destination
@@ -181,24 +186,45 @@ the real navigation. This resolves O-01 in favour of option (a).
 
 **4.1.1 Hero — The Field**
 
-| Slot             | Origin     | Notes                                        |
-| ---------------- | ---------- | -------------------------------------------- |
-| Eyebrow          | `messages` | Role, short                                  |
-| Headline         | `messages` | Array of lines; each line is a separate slot |
-| Meta line        | `messages` | Location and years, monospaced               |
-| Primary action   | `messages` | Opens the Console at the Reach out panel     |
-| Secondary action | `messages` | Anchors to selected work                     |
+| Slot             | Origin     | Notes                                             |
+| ---------------- | ---------- | ------------------------------------------------- |
+| Eyebrow          | `messages` | Role, short                                       |
+| Headline         | `messages` | Array of lines; each line is a separate slot      |
+| Meta line        | `messages` | Location and years, monospaced                    |
+| Primary action   | `messages` | Opens the Console at the Reach out panel          |
+| Secondary action | `messages` | Anchors to selected work; ships with T-25 (D-252) |
+
+The headline breaks into three authored lines, and each line is masked independently.
+Below `sm` the lines wrap on their own and there is no per-line box to mask, so §7.4
+degrades to a per-word fade there — same tier, same stagger, different mechanism (D-259).
+
+The two locales carry different sentences rather than a translation of one. Short copy is
+authored per locale: a literal rendering of a three-line headline keeps the meaning and
+loses the rhythm, which is the whole of what a headline is (D-254).
 
 **4.1.2 Status strip**
 
 Four columns immediately under the hero. Dense, scannable, factual.
 
-| Column    | Content                      | Origin     |
-| --------- | ---------------------------- | ---------- |
-| Now       | Current role and company     | `messages` |
-| Building  | Current project and one line | `messages` |
-| Writing   | Latest post title and date   | `posts`    |
-| Reach out | Action opening the Console   | `messages` |
+| Column    | Content                      | Origin         |
+| --------- | ---------------------------- | -------------- |
+| Now       | Current role and company     | `messages`     |
+| Building  | Current project and one line | `messages`     |
+| Writing   | Latest post title and date   | `posts` (T-29) |
+| Reach out | Action opening the Console   | `messages`     |
+
+The Writing column ships with T-29, which creates the collection it reads. T-23 ships the
+other three: a column carrying an invented title on the most factual surface of the site
+is worse than a column that is not there yet (D-253).
+
+The three columns carry equal weight, and the Reach out entry is a link in appearance and
+a trigger in behaviour. A filled button here would read as the row's purpose rather than
+as its third entry, with the primary action of §4.1.1 two hundred pixels above opening the
+same panel.
+
+§7.5 fires on load here rather than on viewport entry. The hero is 70svh, so the strip is
+partially visible at the fold by design, and an entrance triggered by scroll would animate
+content the reader has already seen (D-260).
 
 **4.1.3 Evidence — the public face of The Trail**
 
@@ -449,17 +475,20 @@ A highlight follows the pointer along the border or surface of a bordered elemen
 
 Text enters from behind a mask, staggered per line or per word.
 
-|                         |                                                                               |
-| ----------------------- | ----------------------------------------------------------------------------- |
-| **Tier**                | 1                                                                             |
-| **Where**               | Hero headline, per word, on load. Section headings, per line, on scroll entry |
-| **Forbidden**           | Body prose; anything inside a post; any text longer than two lines            |
-| **Why forbidden there** | Revealing a paragraph word by word delays reading to perform                  |
-| **Reduced motion**      | Text present, no animation                                                    |
+|                         |                                                                                           |
+| ----------------------- | ----------------------------------------------------------------------------------------- |
+| **Tier**                | 1                                                                                         |
+| **Where**               | Hero headline, per word, on load, above `sm`. Section headings, per line, on scroll entry |
+| **Narrow viewports**    | Below `sm` the mask is dropped and the per-word stagger becomes a fade (D-259)            |
+| **Forbidden**           | Body prose; anything inside a post; any text longer than two lines                        |
+| **Why forbidden there** | Revealing a paragraph word by word delays reading to perform                              |
+| **Reduced motion**      | Text present, no animation                                                                |
 
 ### 7.5 Staggered entry
 
-A group rises and fades as it enters the viewport, with a per-child delay.
+A group rises and fades with a per-child delay, on viewport entry or on load. The status
+strip of §4.1.2 uses the load form, because it is partially visible at the fold and an
+entrance on scroll would arrive after the reading (D-260).
 
 |                    |                                                               |
 | ------------------ | ------------------------------------------------------------- |
