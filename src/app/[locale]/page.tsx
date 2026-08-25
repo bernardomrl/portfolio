@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
+import { Hero } from '@/widgets/hero';
+import { StatusStrip } from '@/widgets/status-strip';
+
 import { getPathname } from '@/shared/config/i18n/navigation';
 import { OG_LOCALES } from '@/shared/config/i18n/og-locale.config';
 import { routing } from '@/shared/config/i18n/routing';
@@ -64,5 +67,10 @@ export async function generateMetadata({
 }
 
 export default function Home() {
-  return <div>Hello world!</div>;
+  return (
+    <>
+      <Hero />
+      <StatusStrip />
+    </>
+  );
 }
