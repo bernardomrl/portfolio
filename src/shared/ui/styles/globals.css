@@ -172,6 +172,40 @@
       transform: translateX(0.75rem);
     }
   }
+  /* why: `both` fill. Before its delay elapses the word sits at the bottom of the
+     mask, which is what makes the stagger a reveal rather than a set of words
+     already on screen shifting. Without it every word paints in place first.
+
+     why: `translateY` past 100%. At exactly 100% a descender still shows below
+     the mask edge on the display face. */
+  --animate-word-reveal: word-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  @keyframes word-reveal {
+    from {
+      transform: translateY(130%);
+    }
+  }
+  /* why: a fade and not the masked reveal of §7.4 above. Below `sm` the headline
+     lines wrap on their own, so there is no per-line box to mask — and a mask
+     applied to a slot that renders as two visual lines comprimes the gap between
+     slots while leaving the gap inside one untouched, which is the irregular
+     rhythm this replaces. The stagger stays per word and stays Tier 1. */
+  --animate-word-fade: word-fade 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  @keyframes word-fade {
+    from {
+      opacity: 0;
+    }
+  }
+  /* why: §7.5 — staggered entrance, one step per child. Shorter and shallower than
+     the headline reveal above: the strip is a row of facts arriving after the
+     sentence, not the sentence itself, and matching its amplitude would make two
+     gestures compete for the same arrival. */
+  --animate-strip-in: strip-in 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  @keyframes strip-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+  }
 }
 
 @layer base {

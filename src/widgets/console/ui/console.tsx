@@ -17,10 +17,10 @@ import { ReachOutPanel } from '@/widgets/console/ui/panels/reach-out-panel';
 import { RootPanel } from '@/widgets/console/ui/panels/root-panel';
 import { ThemePanel } from '@/widgets/console/ui/panels/theme-panel';
 
-import { consoleHandle } from '@/shared/lib/console.handle';
+import { CONSOLE_PANEL_ATTRIBUTE, consoleHandle } from '@/shared/lib/console.handle';
 
 /** How long a footer status stays before clearing, in ms. */
-const STATUS_DURATION = 10000;
+const STATUS_DURATION = 2000;
 
 /**
  * The Console overlay — §3.2 of `design.md`. The first signature moment of §2.1.
@@ -35,8 +35,14 @@ const STATUS_DURATION = 10000;
  * toggle is reachable only by someone already looking at it (D-231).
  *
  * why: closing and going back share one callback, so the reason separates them.
- * Above the root panel, `Escape` and a backdrop press pop a layer instead of
- * dismissing the overlay, which is the convention a command palette teaches.
+ * Above the bottom of the stack, `Escape` and a backdrop press pop a layer
+ * instead of dismissing the overlay, which is the convention a command palette
+ * teaches.
+ *
+ * why: the bottom of the stack is not always the root panel. A detached trigger
+ * carrying a panel attribute replaces the stack rather than pushing onto it, so
+ * a reader who pressed Reach out closes from Reach out — they never saw the root
+ * and returning them to it would present a surface they did not ask for.
  *
  * why: a route change closes the overlay and nothing restores it. Base UI
  * documents that each `Dialog.Root` mount starts from fresh state, and the
@@ -82,7 +88,7 @@ export function Console() {
     return isPanelId(stored) ? stored : 'root';
   });
 
-  const { current, isRoot, pop, push, reset } = usePanelStack(initialPanel);
+  const { current, isRoot, pop, push, replace, reset } = usePanelStack(initialPanel);
   // why: memoized because it is a context value. A fresh object each render
   // re-renders every panel below it, which for a list under a filter is the one
   // place a wasted render is visible.
@@ -136,7 +142,27 @@ export function Console() {
       defaultOpen={initialPanel !== 'root'}
       handle={consoleHandle}
       onOpenChange={(open, eventDetails) => {
-        if (open) return;
+        // why: the opening branch reads which trigger asked. `eventDetails.trigger`
+        // is the element, and a detached trigger carrying the panel attribute is
+        // asking for a panel other than the root — the hero of §4.1.1 and the
+        // status strip of §4.1.2 both do. `isPanelId` validates the string, so an
+        // attribute carrying anything else opens the root and reports nothing,
+        // which is the correct outcome for a value that is not a panel.
+        //
+        // why: `replace` and not `push`. A reader who pressed Reach out never saw
+        // the root panel, so `Escape` returning them to it would present a surface
+        // they did not ask for in the gesture that means leave. Replacing makes the
+        // requested panel the bottom of the stack, `isRoot` is true from the first
+        // frame, and the closing path below is reached unchanged.
+        if (open) {
+          const requested = eventDetails.trigger?.getAttribute(CONSOLE_PANEL_ATTRIBUTE) ?? null;
+
+          if (isPanelId(requested) && requested !== 'root') {
+            replace(requested);
+          }
+
+          return;
+        }
 
         if (!isRoot) {
           eventDetails.cancel();

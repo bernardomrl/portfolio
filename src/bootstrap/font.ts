@@ -53,13 +53,17 @@ export const fontDisplay = Fraunces({
  * why: the static 400 rather than a variable mono. §8 asks for one weight, and
  * for a single weight the static cut is the smaller file.
  *
- * why: `preload: false`, unlike the display face above. The two mono surfaces T-22
- * ships are the footer column headings and the copyright line, both below the fold.
- * The condition moves to T-23, where the meta line of §4.1.1 reads this family above
- * it (D-196).
+ * why: `preload: true`. The amended condition of D-196 is met by the header alone —
+ * the four control labels of §3.1 are set in this family and sit above the fold on
+ * every route. Measured in T-23 against a production server: preloads go from 2 to 3
+ * per locale, the third attributed by `@font-face` to IBM Plex Mono; `woff2` on disk
+ * stays at 11 and `@font-face` at 14, so what changed is what is preloaded and not
+ * what is self-hosted. The cost is 10 052 bytes on 102 328 — a tenth of what the
+ * display face cost in D-196, for the family that carries every label, eyebrow and
+ * code block on the site.
  */
 export const fontMono = IBM_Plex_Mono({
-  preload: false,
+  preload: true,
   subsets: ['latin'],
   variable: '--font-mono-plex',
   weight: '400',
